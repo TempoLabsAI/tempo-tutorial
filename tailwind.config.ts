@@ -5,50 +5,82 @@ export default {
   theme: {
     extend: {
       colors: {
-        ink: "var(--ink)",
+        // Surfaces
+        bone: "var(--bone)",
         paper: "var(--paper)",
+        "paper-warm": "var(--paper-warm)",
+        "paper-dark": "var(--paper-dark)",
+        "paper-deep": "var(--paper-deep)",
+        // Ink
+        ink: "var(--ink)",
+        "ink-soft": "var(--ink-soft)",
+        "ink-quiet": "var(--ink-quiet)",
+        // Lines
+        rule: "var(--rule)",
+        // Brand
         terracotta: "var(--terracotta)",
+        "terracotta-light": "var(--terracotta-light)",
+        "terracotta-dark": "var(--terracotta-dark)",
+        accent: "var(--accent)",
+        "accent-hover": "var(--accent-hover)",
+        "accent-press": "var(--accent-press)",
+        "accent-soft": "var(--accent-soft)",
+        // Greys (legacy)
         moss: "var(--moss)",
+        "moss-light": "var(--moss-light)",
+        "moss-dark": "var(--moss-dark)",
+        oxblood: "var(--oxblood)",
+        patina: "var(--patina)",
+        gold: "var(--gold)",
         stone: "var(--stone)",
         "stone-light": "var(--stone-light)",
-        "paper-dark": "var(--paper-dark)",
+        "stone-soft": "var(--stone-soft)",
       },
       fontFamily: {
-        display: ["Fraunces", "Georgia", "serif"],
-        sans: ["Geist", "system-ui", "sans-serif"],
-        mono: ["Geist Mono", "monospace"],
+        // Single sans family — Geist as the system font
+        sans: ["Geist", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "Helvetica Neue", "Helvetica", "Arial", "sans-serif"],
+        display: ["Geist", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "Helvetica Neue", "Helvetica", "Arial", "sans-serif"],
+        mono: ["Geist Mono", "ui-monospace", "monospace"],
+        serif: ["Geist", "-apple-system", "BlinkMacSystemFont", "sans-serif"],
       },
       fontSize: {
-        "display-xl": ["clamp(3rem, 8vw, 7.5rem)", { lineHeight: "0.95", letterSpacing: "-0.03em" }],
-        "display-lg": ["clamp(2rem, 5vw, 4.5rem)", { lineHeight: "1.0", letterSpacing: "-0.02em" }],
-        "display-md": ["clamp(1.5rem, 3vw, 2.5rem)", { lineHeight: "1.1", letterSpacing: "-0.02em" }],
+        // Friendly Airbnb-style scale — clean & readable
+        "display-xl":  ["clamp(2.5rem, 5vw, 3.75rem)", { lineHeight: "1.05", letterSpacing: "-0.02em" }],
+        "display-lg":  ["clamp(2rem, 4vw, 3rem)",      { lineHeight: "1.1",  letterSpacing: "-0.018em" }],
+        "display-md":  ["clamp(1.625rem, 3vw, 2.25rem)", { lineHeight: "1.15", letterSpacing: "-0.015em" }],
+        "display-sm":  ["clamp(1.25rem, 2vw, 1.5rem)",   { lineHeight: "1.2",  letterSpacing: "-0.01em" }],
       },
       borderRadius: {
-        "4xl": "2rem",
-        "5xl": "2.5rem",
+        plate: "12px",
+        "4xl": "32px",
+        "5xl": "40px",
       },
       boxShadow: {
-        "card": "0 1px 3px rgba(26,24,21,0.06), 0 4px 16px rgba(26,24,21,0.04)",
-        "card-hover": "0 4px 8px rgba(26,24,21,0.08), 0 16px 40px rgba(26,24,21,0.10)",
-        "modal": "0 24px 80px rgba(26,24,21,0.18)",
+        plate: "var(--shadow-card)",
+        lift:  "var(--shadow-card-hover)",
+        press: "var(--shadow-modal)",
+        card: "var(--shadow-card)",
+        "card-hover": "var(--shadow-card-hover)",
+        modal: "var(--shadow-modal)",
+        pill:  "var(--shadow-pill)",
       },
       animation: {
-        "fade-in": "fadeIn 0.4s ease forwards",
-        "slide-up": "slideUp 0.35s cubic-bezier(0.34,1.56,0.64,1) forwards",
+        "fade-in": "fadeIn 0.4s var(--ease-out) forwards",
+        "rise":    "revealUp 0.45s var(--ease-out) forwards",
         "pulse-soft": "pulseSoft 2s ease-in-out infinite",
       },
       keyframes: {
         fadeIn: {
-          from: { opacity: "0", transform: "translateY(8px)" },
-          to: { opacity: "1", transform: "translateY(0)" },
+          from: { opacity: "0", transform: "translateY(6px)" },
+          to:   { opacity: "1", transform: "translateY(0)" },
         },
-        slideUp: {
-          from: { opacity: "0", transform: "translateY(20px)" },
-          to: { opacity: "1", transform: "translateY(0)" },
+        revealUp: {
+          from: { opacity: "0", transform: "translateY(8px)" },
+          to:   { opacity: "1", transform: "translateY(0)" },
         },
         pulseSoft: {
           "0%, 100%": { opacity: "1" },
-          "50%": { opacity: "0.6" },
+          "50%":      { opacity: "0.6" },
         },
       },
     },

@@ -1,4 +1,3 @@
-import { ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface FilterChipProps {
@@ -9,37 +8,42 @@ interface FilterChipProps {
   className?: string;
 }
 
-export function FilterChip({ label, count, active = false, onClick, className }: FilterChipProps) {
+/**
+ * FilterChip — Airbnb-style.
+ * White pill with grey border. Active flips to ink-bordered pill.
+ */
+export function FilterChip({
+  label,
+  count,
+  active = false,
+  onClick,
+  className,
+}: FilterChipProps) {
   return (
     <button
       onClick={onClick}
       className={cn(
-        "inline-flex items-center gap-1.5 h-9 px-3.5 rounded-full text-sm font-medium",
-        "border transition-all duration-150 whitespace-nowrap select-none",
-        "hover:border-stone active:scale-[0.97]",
+        "inline-flex items-center gap-1.5 h-9 px-4 rounded-full",
+        "text-[13px] font-medium",
+        "border transition-[border-color,background-color,color] duration-150 ease-out",
+        "whitespace-nowrap select-none",
         active
-          ? "bg-ink text-paper border-ink"
-          : "bg-paper text-ink border-stone-light",
-        className
+          ? "bg-paper-warm text-ink border-ink"
+          : "bg-white text-ink border-paper-deep hover:border-ink",
+        className,
       )}
     >
-      {count !== undefined && count > 0 ? (
-        <>
-          {label}
-          <span
-            className={cn(
-              "text-xs font-semibold rounded-full px-1.5 py-0.5 leading-none",
-              active ? "bg-paper/20 text-paper" : "bg-terracotta text-paper"
-            )}
-          >
-            {count}
-          </span>
-        </>
-      ) : (
-        <>
-          {label}
-          <ChevronDown size={14} className="opacity-60" />
-        </>
+      <span>{label}</span>
+      {count !== undefined && count > 0 && (
+        <span
+          className={cn(
+            "min-w-[20px] h-5 inline-flex items-center justify-center px-1.5",
+            "text-[11px] font-semibold rounded-full tabular-nums",
+            active ? "bg-ink text-white" : "bg-accent text-white",
+          )}
+        >
+          {count}
+        </span>
       )}
     </button>
   );

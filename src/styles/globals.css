@@ -2,45 +2,79 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ─── Design tokens ─────────────────────────────────────────────────── */
+/* ─────────────────────────────────────────────────────────────────────
+   Havn — Airbnb-style design system
+   White paper, near-black ink, coral red accent, single sans family.
+   ───────────────────────────────────────────────────────────────────── */
+
 :root {
-  --ink: #1a1815;
-  --paper: #f7f3ee;
-  --paper-dark: #ede8e1;
-  --terracotta: #c75d3f;
-  --terracotta-light: #e8967e;
-  --terracotta-dark: #a04530;
-  --moss: #5c6f4a;
-  --stone: #b8afa3;
-  --stone-light: #ddd8d2;
+  /* ── Surface ──────────────────────────────────────────────────────── */
+  --bg:             #ffffff;
+  --paper:          #ffffff;
+  --paper-warm:     #f7f7f7;
+  --paper-dark:     #ebebeb;
+  --paper-deep:     #dddddd;
+  --bone:           #f7f7f7;
 
-  /* Semantic */
-  --bg: var(--paper);
-  --fg: var(--ink);
-  --border: var(--stone-light);
-  --accent: var(--terracotta);
-  --muted: var(--stone);
+  /* ── Ink ──────────────────────────────────────────────────────────── */
+  --ink:            #222222;
+  --ink-soft:       #484848;
+  --ink-quiet:      #717171;
+  --fg:             var(--ink);
 
-  /* Motion */
-  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
-  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
-  --duration-fast: 150ms;
-  --duration-base: 250ms;
-  --duration-slow: 400ms;
+  /* ── Lines ────────────────────────────────────────────────────────── */
+  --border:         #dddddd;
+  --border-soft:    #ebebeb;
+  --rule:           #dddddd;
+  --rule-strong:    #222222;
+
+  /* ── Brand accent — Airbnb pink ───────────────────────────────────── */
+  --accent:         #ff385c;
+  --accent-hover:   #e31c5f;
+  --accent-press:   #c0145a;
+  --accent-soft:    #fff0f3;
+
+  /* legacy token names mapped to new palette so any leftover refs work */
+  --terracotta:       #ff385c;
+  --terracotta-light: #ff5a78;
+  --terracotta-dark:  #e31c5f;
+  --moss:           #008a05;
+  --moss-light:     #2ea437;
+  --moss-dark:      #006704;
+  --oxblood:        #c13515;
+  --patina:         #2c5282;
+  --gold:           #b08a3e;
+  --stone:          #717171;
+  --stone-light:    #ebebeb;
+  --stone-soft:     #f7f7f7;
+
+  /* ── Motion ───────────────────────────────────────────────────────── */
+  --ease-out:       cubic-bezier(0.2, 0.8, 0.2, 1);
+  --ease-in-out:    cubic-bezier(0.65, 0, 0.35, 1);
+  --duration-fast:  150ms;
+  --duration-base:  220ms;
+  --duration-slow:  360ms;
+
+  /* ── Radius ───────────────────────────────────────────────────────── */
+  --r-xs: 4px;
+  --r-sm: 8px;
+  --r-md: 12px;
+  --r-lg: 16px;
+  --r-xl: 24px;
+  --r-2xl: 32px;
+  --r-pill: 999px;
+
+  /* ── Shadows ──────────────────────────────────────────────────────── */
+  --shadow-card:        0 2px 4px rgba(0, 0, 0, 0.06), 0 6px 16px rgba(0, 0, 0, 0.08);
+  --shadow-card-hover:  0 6px 12px rgba(0, 0, 0, 0.08), 0 12px 28px rgba(0, 0, 0, 0.12);
+  --shadow-pill:        0 1px 2px rgba(0, 0, 0, 0.08), 0 6px 20px rgba(0, 0, 0, 0.10);
+  --shadow-modal:       0 24px 80px rgba(0, 0, 0, 0.25);
+  --shadow-plate:       var(--shadow-card);
+  --shadow-lift:        var(--shadow-card-hover);
+  --shadow-press:       var(--shadow-modal);
 }
 
-/* ─── Paper grain overlay ────────────────────────────────────────────── */
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 9999;
-  opacity: 0.028;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
-}
-
-/* ─── Base ───────────────────────────────────────────────────────────── */
+/* ─── Base ─────────────────────────────────────────────────────────── */
 *,
 *::before,
 *::after {
@@ -52,23 +86,25 @@ html {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   scroll-behavior: smooth;
+  text-rendering: optimizeLegibility;
+  background-color: var(--paper);
 }
 
 body {
   background-color: var(--paper);
   color: var(--ink);
-  font-family: "Geist", system-ui, sans-serif;
-  line-height: 1.6;
+  font-family: "Geist", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  line-height: 1.4;
   min-height: 100dvh;
 }
 
-/* ─── Typography ─────────────────────────────────────────────────────── */
+/* ─── Headings — also sans, just bolder/tighter ────────────────────── */
 h1, h2, h3, h4, h5, h6 {
-  font-family: "Fraunces", Georgia, serif;
-  font-optical-sizing: auto;
-  line-height: 1.1;
-  letter-spacing: -0.02em;
+  font-family: "Geist", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: 600;
+  letter-spacing: -0.015em;
   color: var(--ink);
+  line-height: 1.15;
 }
 
 a {
@@ -76,64 +112,87 @@ a {
   text-decoration: none;
 }
 
-/* ─── Scrollbar ──────────────────────────────────────────────────────── */
+/* ─── Scrollbar ────────────────────────────────────────────────────── */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 8px;
+  height: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: var(--paper-dark);
+  background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: var(--stone);
+  background: var(--paper-deep);
   border-radius: 999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--ink);
+  background: var(--ink-quiet);
 }
 
-/* ─── Focus ──────────────────────────────────────────────────────────── */
+/* ─── Focus ────────────────────────────────────────────────────────── */
 :focus-visible {
-  outline: 2px solid var(--terracotta);
-  outline-offset: 3px;
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
   border-radius: 4px;
 }
 
-/* ─── Image ──────────────────────────────────────────────────────────── */
+/* ─── Image ────────────────────────────────────────────────────────── */
 img {
   display: block;
   max-width: 100%;
 }
 
-/* ─── Selection ──────────────────────────────────────────────────────── */
+/* ─── Selection ────────────────────────────────────────────────────── */
 ::selection {
-  background: var(--terracotta);
+  background: var(--ink);
   color: var(--paper);
 }
 
-/* ─── Utilities ──────────────────────────────────────────────────────── */
+/* ─── Utilities ────────────────────────────────────────────────────── */
 @layer utilities {
-  .text-balance {
-    text-wrap: balance;
+  /* Subtle text wrap helpers */
+  .text-balance { text-wrap: balance; }
+  .text-pretty  { text-wrap: pretty; }
+
+  /* Hide scrollbars (chip rails / category rail) */
+  .scrollbar-none { scrollbar-width: none; }
+  .scrollbar-none::-webkit-scrollbar { display: none; }
+
+  /* Soft reveal — subtle, no bounce */
+  .reveal-up > * {
+    animation: revealUp 0.45s var(--ease-out) both;
+  }
+  .reveal-up > *:nth-child(1) { animation-delay: 0ms; }
+  .reveal-up > *:nth-child(2) { animation-delay: 40ms; }
+  .reveal-up > *:nth-child(3) { animation-delay: 80ms; }
+  .reveal-up > *:nth-child(4) { animation-delay: 120ms; }
+  .reveal-up > *:nth-child(5) { animation-delay: 160ms; }
+  .reveal-up > *:nth-child(6) { animation-delay: 200ms; }
+  .reveal-up > *:nth-child(7) { animation-delay: 240ms; }
+  .reveal-up > *:nth-child(8) { animation-delay: 280ms; }
+
+  @keyframes revealUp {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
   }
 
-  .grain {
-    position: relative;
+  /* Underline-on-hover link */
+  .link-underline {
+    text-decoration: underline;
+    text-decoration-color: transparent;
+    text-underline-offset: 3px;
+    transition: text-decoration-color var(--duration-base) var(--ease-out);
+  }
+  .link-underline:hover {
+    text-decoration-color: currentColor;
   }
 
-  .stagger-children > * {
-    animation: fadeIn 0.4s ease forwards;
-    opacity: 0;
+  /* Brand gradient (for the search button) */
+  .bg-airbnb-gradient {
+    background-image: linear-gradient(135deg, #ff385c 0%, #e61e4d 50%, #d70466 100%);
   }
-  .stagger-children > *:nth-child(1) { animation-delay: 0ms; }
-  .stagger-children > *:nth-child(2) { animation-delay: 60ms; }
-  .stagger-children > *:nth-child(3) { animation-delay: 120ms; }
-  .stagger-children > *:nth-child(4) { animation-delay: 180ms; }
-  .stagger-children > *:nth-child(5) { animation-delay: 240ms; }
-  .stagger-children > *:nth-child(6) { animation-delay: 300ms; }
 }
 
-/* ─── Radix overrides ────────────────────────────────────────────────── */
+/* ─── Radix overrides ──────────────────────────────────────────────── */
 [data-radix-popper-content-wrapper] {
   z-index: 50 !important;
 }

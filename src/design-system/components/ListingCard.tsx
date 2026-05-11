@@ -11,21 +11,34 @@ interface ListingCardProps {
   onSaveToggle?: (id: string, saved: boolean) => void;
   className?: string;
   priority?: boolean;
+  /** Back-compat — not visually used in the Airbnb style. */
+  index?: number;
 }
 
-export function ListingCard({ listing, saved = false, onSaveToggle, className }: ListingCardProps) {
+/**
+ * ListingCard — Airbnb-style.
+ * Rounded square photo + heart top-right, location + rating row, distance line,
+ * date range line, and a price line with bold price + "/ night".
+ */
+export function ListingCard({
+  listing,
+  saved = false,
+  onSaveToggle,
+  className,
+}: ListingCardProps) {
   return (
     <article className={cn("group relative flex flex-col", className)}>
-      {/* Image */}
+      {/* Photo */}
       <Link to={`/listing/${listing.id}`} className="block">
-        <div className="relative w-full aspect-[3/4] rounded-2xl overflow-hidden bg-stone-light">
+        <div className="relative w-full aspect-square rounded-2xl overflow-hidden bg-paper-warm">
           <img
             src={listing.images[0]}
             alt={listing.title}
-            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
+            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+            loading="lazy"
           />
           {listing.badge && (
-            <span className="absolute top-3 left-3 bg-paper text-ink text-xs font-semibold px-2.5 py-1 rounded-full shadow-sm">
+            <span className="absolute top-3 left-3 bg-white text-ink text-[12px] font-semibold px-2.5 py-1 rounded-md shadow-sm">
               {listing.badge}
             </span>
           )}
@@ -33,11 +46,12 @@ export function ListingCard({ listing, saved = false, onSaveToggle, className }:
       </Link>
 
       {/* Heart */}
-      <div className="absolute top-3 right-3">
+      <div className="absolute top-2.5 right-2.5">
         <HeartButton
           saved={saved}
           onToggle={(s) => onSaveToggle?.(listing.id, s)}
           size="md"
+          surface="overlay"
         />
       </div>
 
@@ -46,17 +60,19 @@ export function ListingCard({ listing, saved = false, onSaveToggle, className }:
         <div className="flex items-start justify-between gap-2">
           <Link
             to={`/listing/${listing.id}`}
-            className="font-medium text-ink text-sm leading-snug line-clamp-1 hover:underline decoration-stone-light"
+            className="text-[15px] font-semibold text-ink leading-snug line-clamp-1 hover:underline"
           >
-            {listing.title}
+            {listing.location}
           </Link>
-          <RatingStars rating={listing.rating} className="flex-shrink-0 mt-0.5" />
+          <RatingStars rating={listing.rating} className="flex-shrink-0 mt-0.5 text-[14px]" />
         </div>
-        <p className="text-stone text-sm line-clamp-1">{listing.location}</p>
-        <p className="text-stone text-sm">{listing.dateRange}</p>
-        <p className="text-ink text-sm mt-1">
-          <span className="font-semibold">{formatPrice(listing.pricePerNight)}</span>{" "}
-          <span className="text-stone">/ night</span>
+        <p className="text-[14px] text-ink-quiet line-clamp-1">
+          {listing.title}
+        </p>
+        <p className="text-[14px] text-ink-quiet">{listing.dateRange}</p>
+        <p className="text-[14px] text-ink mt-1">
+          <span className="font-semibold underline">{formatPrice(listing.pricePerNight)}</span>{" "}
+          <span className="text-ink-quiet">night</span>
         </p>
       </div>
     </article>

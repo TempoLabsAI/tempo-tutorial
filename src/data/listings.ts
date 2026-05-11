@@ -89,7 +89,7 @@ export const LISTINGS: Listing[] = [
     maxGuests: 2,
     images: [
       "https://images.unsplash.com/photo-1510798831971-661eb04b3739?w=800&q=80",
-      "https://images.unsplash.com/photo-1601918774516-b622ae5a5f16?w=800&q=80",
+      "https://images.unsplash.com/photo-1448375240586-882707db888b?w=800&q=80",
     ],
     dateRange: "May 17–22",
     badge: "Guest favourite",

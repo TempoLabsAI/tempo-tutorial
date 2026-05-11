@@ -1,18 +1,30 @@
-import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
-import { ArrowRight } from "lucide-react";
+import {
+  ArrowRight,
+  Waves,
+  TreePine,
+  Building2,
+  Mountain,
+  Tent,
+  Castle,
+} from "lucide-react";
 import { Container } from "@/design-system/layout/Container";
 import { SearchBar } from "@/design-system/components/SearchBar";
 import { ListingCard } from "@/design-system/components/ListingCard";
 import { Button } from "@/design-system/primitives/Button";
 import { LISTINGS } from "@/data/listings";
 
-const featured = LISTINGS.slice(0, 4);
+const categories = [
+  { label: "Beachfront", icon: Waves, q: "coastal" },
+  { label: "Cabins", icon: TreePine, q: "forest" },
+  { label: "Cities", icon: Building2, q: "city" },
+  { label: "Mountains", icon: Mountain, q: "mountain" },
+  { label: "Camping", icon: Tent, q: "camping" },
+  { label: "Castles", icon: Castle, q: "castle" },
+];
 
-const stagger = {
-  container: { transition: { staggerChildren: 0.08 } },
-  item: { initial: { opacity: 0, y: 16 }, animate: { opacity: 1, y: 0 }, transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] } },
-};
+const featured = LISTINGS.slice(0, 4);
+const more = LISTINGS.slice(4, 8);
 
 export function HomePage() {
   const navigate = useNavigate();
@@ -22,156 +34,154 @@ export function HomePage() {
   }
 
   return (
-    <div className="min-h-screen">
-      {/* ─── Hero ──────────────────────────────────────────────────────── */}
-      <section className="relative overflow-hidden">
-        {/* Background image */}
-        <div className="absolute inset-0 z-0">
-          <img
-            src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1600&q=80"
-            alt="Alpine landscape"
-            className="w-full h-full object-cover"
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-paper/90 via-paper/60 to-paper/10" />
-        </div>
-
-        <Container className="relative z-10 pt-24 pb-32">
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.6 }}
-            className="max-w-2xl"
-          >
-            {/* Display headline */}
-            <motion.h1
-              initial={{ opacity: 0, y: 24 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-              className="font-display font-light italic text-display-xl text-ink leading-[0.92] tracking-tight mb-8"
-            >
-              Where to
-              <br />
-              <em className="not-italic text-terracotta">next?</em>
-            </motion.h1>
-
-            <motion.p
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.12, ease: [0.16, 1, 0.3, 1] }}
-              className="text-lg text-ink/70 mb-10 max-w-md leading-relaxed"
-            >
-              Exceptional places, thoughtfully chosen. Stone cottages in Cinque Terre.
-              Treehouses over old-growth forest. Riads with rooftop plunge pools.
-            </motion.p>
-
-            {/* Search bar */}
-            <motion.div
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.22, ease: [0.16, 1, 0.3, 1] }}
-            >
-              <SearchBar onSearch={handleSearch} className="max-w-xl" />
-            </motion.div>
-          </motion.div>
-        </Container>
-      </section>
-
-      {/* ─── Divider ──────────────────────────────────────────────────── */}
-      <div className="h-px bg-stone-light mx-8 my-2" />
-
-      {/* ─── Featured listings ─────────────────────────────────────────── */}
-      <section className="py-16">
-        <Container>
-          <div className="flex items-end justify-between mb-10">
-            <div>
-              <motion.h2
-                initial={{ opacity: 0, y: 12 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5 }}
-                className="font-display font-light text-display-md text-ink"
-              >
-                Places worth the trip
-              </motion.h2>
-              <motion.p
-                initial={{ opacity: 0, y: 8 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: 0.08 }}
-                className="text-stone mt-2"
-              >
-                Guest favourites, rare finds, and once-in-a-decade views.
-              </motion.p>
-            </div>
-            <Button
-              variant="ghost"
-              onClick={() => navigate("/search")}
-              className="hidden sm:flex items-center gap-1"
-            >
-              All places <ArrowRight size={16} />
-            </Button>
+    <div className="min-h-screen bg-white">
+      {/* ─── Hero ────────────────────────────────────────────────────── */}
+      <section className="bg-paper-warm">
+        <Container className="pt-12 pb-16 sm:pt-20 sm:pb-24">
+          <div className="text-center mb-10">
+            <h1 className="text-display-lg font-semibold text-ink tracking-tight text-balance">
+              Find your next favorite place to stay.
+            </h1>
+            <p className="mt-3 text-[16px] text-ink-quiet max-w-xl mx-auto">
+              Eight handpicked properties around the world. Search by where, when, and who's coming.
+            </p>
           </div>
-
-          <motion.div
-            variants={stagger.container}
-            initial="initial"
-            whileInView="animate"
-            viewport={{ once: true, margin: "-80px" }}
-            className="grid grid-cols-2 lg:grid-cols-4 gap-6"
-          >
-            {featured.map((listing) => (
-              <motion.div key={listing.id} variants={stagger.item}>
-                <ListingCard listing={listing} />
-              </motion.div>
-            ))}
-          </motion.div>
+          <div className="max-w-4xl mx-auto">
+            <SearchBar onSearch={handleSearch} />
+          </div>
         </Container>
       </section>
 
-      {/* ─── Category strip ────────────────────────────────────────────── */}
-      <section className="py-12 bg-paper-dark/40">
+      {/* ─── Category rail ───────────────────────────────────────────── */}
+      <section className="border-b border-paper-deep">
         <Container>
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-            {[
-              { label: "Coastal escapes", emoji: "🏖️", q: "coastal" },
-              { label: "Forest hideaways", emoji: "🌲", q: "forest" },
-              { label: "City stays", emoji: "🏙️", q: "city" },
-              { label: "Mountain lodges", emoji: "⛰️", q: "mountain" },
-            ].map(({ label, emoji, q }) => (
+          <div className="flex items-center gap-8 overflow-x-auto scrollbar-none py-4">
+            {categories.map(({ label, icon: Icon, q }) => (
               <button
                 key={q}
                 onClick={() => navigate(`/search?q=${q}`)}
-                className="flex flex-col items-center gap-2 p-6 rounded-2xl bg-paper hover:bg-paper border border-stone-light hover:border-stone hover:shadow-card transition-all duration-200"
+                className="flex flex-col items-center gap-2 min-w-[80px] flex-shrink-0 pb-2 border-b-2 border-transparent hover:border-ink-quiet transition-colors group"
               >
-                <span className="text-3xl">{emoji}</span>
-                <span className="text-sm font-medium text-ink">{label}</span>
+                <Icon
+                  size={26}
+                  strokeWidth={1.5}
+                  className="text-ink-quiet group-hover:text-ink transition-colors"
+                />
+                <span className="text-[12px] font-medium text-ink-quiet group-hover:text-ink transition-colors whitespace-nowrap">
+                  {label}
+                </span>
               </button>
             ))}
           </div>
         </Container>
       </section>
 
-      {/* ─── CTA ───────────────────────────────────────────────────────── */}
-      <section className="py-24">
-        <Container size="md">
-          <div className="text-center">
-            <motion.h2
-              initial={{ opacity: 0, y: 12 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
-              className="font-display font-light italic text-display-lg text-ink mb-4"
+      {/* ─── Featured grid ───────────────────────────────────────────── */}
+      <section className="py-10 sm:py-12">
+        <Container>
+          <header className="mb-6 flex items-end justify-between">
+            <h2 className="text-[22px] sm:text-[24px] font-semibold text-ink">
+              Popular homes
+            </h2>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => navigate("/search")}
+              className="hidden sm:inline-flex items-center gap-1 underline"
             >
-              Your next trip is <br />
-              <em className="not-italic text-terracotta">already waiting</em>
-            </motion.h2>
-            <p className="text-stone mb-8">Browse 8 handpicked properties across 7 countries.</p>
-            <Button onClick={() => navigate("/search")} size="lg">
-              Start exploring <ArrowRight size={18} />
+              Show all <ArrowRight size={14} strokeWidth={2} />
             </Button>
+          </header>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-10 reveal-up">
+            {featured.map((listing) => (
+              <ListingCard key={listing.id} listing={listing} />
+            ))}
           </div>
         </Container>
       </section>
+
+      {/* ─── More ─────────────────────────────────────────────────────── */}
+      <section className="py-6 sm:py-12">
+        <Container>
+          <header className="mb-6 flex items-end justify-between">
+            <h2 className="text-[22px] sm:text-[24px] font-semibold text-ink">
+              Available next month
+            </h2>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => navigate("/search")}
+              className="hidden sm:inline-flex items-center gap-1 underline"
+            >
+              Show all <ArrowRight size={14} strokeWidth={2} />
+            </Button>
+          </header>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-10">
+            {more.map((listing) => (
+              <ListingCard key={listing.id} listing={listing} />
+            ))}
+          </div>
+        </Container>
+      </section>
+
+      {/* ─── Inspiration tiles ───────────────────────────────────────── */}
+      <section className="py-12 bg-paper-warm/60 border-t border-paper-deep">
+        <Container>
+          <h2 className="text-[22px] sm:text-[24px] font-semibold text-ink mb-6">
+            Inspiration for future getaways
+          </h2>
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-x-6 gap-y-3">
+            {[
+              ["Family travel", "Destinations for families"],
+              ["Outdoor escapes", "Lakes, forests, hills"],
+              ["Beach getaways", "Sun, sand, salt"],
+              ["Unique stays", "Treehouses, riads, more"],
+              ["City breaks", "Apartments in town"],
+              ["Mountain retreats", "Cabins and lodges"],
+            ].map(([title, sub]) => (
+              <a
+                key={title}
+                onClick={() => navigate("/search")}
+                className="block py-3 border-t border-paper-deep cursor-pointer hover:opacity-70 transition-opacity"
+              >
+                <p className="text-[14px] font-semibold text-ink">{title}</p>
+                <p className="text-[13px] text-ink-quiet mt-0.5">{sub}</p>
+              </a>
+            ))}
+          </div>
+        </Container>
+      </section>
+
+      {/* ─── Footer ──────────────────────────────────────────────────── */}
+      <footer className="bg-paper-warm border-t border-paper-deep">
+        <Container className="py-8">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-6">
+            {[
+              { h: "Support", links: ["Help Center", "Cancellation options", "Trust & Safety"] },
+              { h: "Hosting", links: ["Become a host", "Resources", "Community forum"] },
+              { h: "Havn", links: ["About", "Careers", "Press"] },
+              { h: "Travel", links: ["Gift cards", "Travel insurance", "Affiliates"] },
+            ].map((col) => (
+              <div key={col.h}>
+                <p className="text-[13px] font-semibold text-ink mb-3">{col.h}</p>
+                <ul className="space-y-2">
+                  {col.links.map((l) => (
+                    <li key={l} className="text-[13px] text-ink-quiet hover:text-ink transition-colors cursor-pointer">
+                      {l}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+          <div className="border-t border-paper-deep pt-4 flex flex-wrap items-center justify-between gap-3 text-[13px] text-ink-quiet">
+            <span>© 2026 Havn, Inc. · Privacy · Terms · Sitemap</span>
+            <span className="flex items-center gap-1">
+              English (US) · USD
+            </span>
+          </div>
+        </Container>
+      </footer>
     </div>
   );
 }
