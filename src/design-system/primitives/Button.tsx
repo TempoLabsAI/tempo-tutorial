@@ -53,16 +53,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       <button
         ref={ref}
         disabled={disabled || loading}
-        className={cn(
-          "inline-flex items-center justify-center",
-          "transition-[background-color,color,box-shadow,transform] duration-150 ease-out",
-          "active:scale-[0.98]",
-          "disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100",
-          "select-none whitespace-nowrap",
-          variantClasses[variant],
-          sizeClasses[size],
-          className,
-        )}
+        className={cn("inline-flex items-center justify-center", "transition-[background-color,color,box-shadow,transform] duration-150 ease-out", "active:scale-[0.98]", "disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100", "select-none whitespace-nowrap", variantClasses[variant], sizeClasses[size], className, "w-full")}
         {...props}
       >
         {loading ? (

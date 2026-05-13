@@ -4,10 +4,30 @@ import { Navbar } from "@/design-system/layout/Navbar";
 /**
  * Canvas chrome — shared scaffolding used by canvas storyboards.
  *
- * Wraps page renders in a router and navbar so they render at full fidelity.
- * No fake browser/phone bezels — frames are clean. Mobile is just a narrow
- * storyboard layout.
+ * Two themes:
+ *   • Light  — Foundations canvas (existing). Sheet/Swatch/Row defined inline there.
+ *   • Dark   — UI3-style canvases (this file). DarkSheet / DarkRow / DarkSwatch /
+ *              Eyebrow / MonoText, plus the dark TitleSpread cover.
+ *
+ * Type stack matches Tempo: SF Pro for UI, SF Mono / JetBrains Mono for code.
  */
+
+export const FONT_SANS =
+  '-apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", system-ui, sans-serif';
+export const FONT_MONO =
+  '"SF Mono", "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace';
+
+export const DARK = {
+  paper: "#0f0f0e",
+  paperRaised: "#171716",
+  paperSunken: "#0a0a0a",
+  hairline: "rgba(255,255,255,0.08)",
+  hairlineStrong: "rgba(255,255,255,0.14)",
+  ink: "#ffffff",
+  inkSoft: "rgba(255,255,255,0.72)",
+  inkQuiet: "rgba(255,255,255,0.5)",
+  inkFaint: "rgba(255,255,255,0.32)",
+};
 
 /* ── Frame — page render with router + navbar (and optional Route match) ── */
 export function Frame({
@@ -54,33 +74,9 @@ export function TitleSpread({
   meta?: { label: string; value: string }[];
 }) {
   return (
-    <div
-      style={{
-        background: "#0f0f0e",
-        color: "#ffffff",
-        height: "100%",
-        padding: 56,
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "space-between",
-        position: "relative",
-        overflow: "hidden",
-      }}
+    <div className="h-[339px]"
+      style={{ background: DARK.paper, color: DARK.ink, padding: 56, display: "flex", flexDirection: "column", justifyContent: "space-between", position: "relative", overflow: "hidden", fontFamily: FONT_SANS }}
     >
-      {/* radial accent */}
-      <div
-        aria-hidden
-        style={{
-          position: "absolute",
-          right: -120,
-          bottom: -120,
-          width: 420,
-          height: 420,
-          background:
-            "radial-gradient(closest-side, rgba(255,56,92,0.55), rgba(255,56,92,0))",
-          filter: "blur(20px)",
-        }}
-      />
       <div style={{ position: "relative", zIndex: 1 }}>
         <p
           style={{
@@ -98,10 +94,11 @@ export function TitleSpread({
           style={{
             fontSize: 64,
             fontWeight: 600,
-            letterSpacing: "-0.025em",
-            color: "#fff",
+            letterSpacing: "-0.03em",
+            color: DARK.ink,
             margin: "16px 0 24px",
             lineHeight: 0.98,
+            fontFamily: FONT_SANS,
           }}
         >
           {title}
@@ -119,45 +116,7 @@ export function TitleSpread({
         </p>
       </div>
       {meta && meta.length > 0 && (
-        <div
-          style={{
-            position: "relative",
-            zIndex: 1,
-            display: "grid",
-            gridTemplateColumns: `repeat(${Math.min(meta.length, 4)}, 1fr)`,
-            gap: 32,
-            paddingTop: 24,
-            borderTop: "1px solid rgba(255,255,255,0.12)",
-          }}
-        >
-          {meta.map((m) => (
-            <div key={m.label}>
-              <p
-                style={{
-                  fontSize: 10,
-                  fontWeight: 600,
-                  letterSpacing: "0.18em",
-                  textTransform: "uppercase",
-                  color: "rgba(255,255,255,0.5)",
-                  margin: 0,
-                }}
-              >
-                {m.label}
-              </p>
-              <p
-                style={{
-                  fontSize: 22,
-                  fontWeight: 600,
-                  color: "#fff",
-                  margin: "6px 0 0",
-                  letterSpacing: "-0.01em",
-                }}
-              >
-                {m.value}
-              </p>
-            </div>
-          ))}
-        </div>
+        <></>
       )}
     </div>
   );
@@ -193,7 +152,7 @@ export function Annotation({
           fontWeight: 700,
           letterSpacing: "0.18em",
           textTransform: "uppercase",
-          color: "#FF385C",
+          color: "#717171",
           margin: 0,
         }}
       >
@@ -225,7 +184,7 @@ export function Annotation({
         <p
           style={{
             fontSize: 24,
-            color: "#FF385C",
+            color: "#222",
             margin: "16px 0 0",
             lineHeight: 1,
           }}
@@ -233,6 +192,244 @@ export function Annotation({
           {arrow === "right" ? "→" : "↓"}
         </p>
       )}
+    </div>
+  );
+}
+
+/* ── Dark theme — UI3-style sheets ─────────────────────────────────── */
+
+export function Eyebrow({ children }: { children: React.ReactNode }) {
+  return (
+    <></>
+  );
+}
+
+export function MonoText({
+  children,
+  color = DARK.inkSoft,
+  size = 11,
+}: {
+  children: React.ReactNode;
+  color?: string;
+  size?: number;
+}) {
+  return (
+    <span className="h-[15px] text-center w-max flex flex-row" style={{ fontFamily: FONT_MONO, fontSize: size, color, letterSpacing: "0" }}>
+      {children}
+    </span>
+  );
+}
+
+/* HavnMark — small "havn" wordmark pinned to the top-right of a storyboard.
+   Parent must have position: relative for it to anchor correctly. */
+export function HavnMark() {
+  return (
+    <p
+      style={{
+        position: "absolute",
+        top: 32,
+        right: 40,
+        fontFamily: FONT_MONO,
+        fontSize: 11,
+        letterSpacing: "0.16em",
+        textTransform: "lowercase",
+        color: DARK.inkQuiet,
+        margin: 0,
+      }}
+    >
+      havn
+    </p>
+  );
+}
+
+/* CanvasCover — standard cover storyboard layout: eyebrow → image placeholder → grouped title + description.
+   Used as the 00 · Cover for every dark canvas. */
+export function CanvasCover({
+  workspace,
+  slug,
+  title,
+  description,
+}: {
+  workspace: string;
+  slug: string;
+  title: string;
+  description: string;
+}) {
+  return (
+    <div
+      className="w-[1280px] flex flex-col gap-[44px]"
+      style={{
+        background: DARK.paper,
+        color: DARK.ink,
+        fontFamily: FONT_SANS,
+        padding: 72,
+        position: "relative",
+      }}
+    >
+      <HavnMark />
+      <p
+        style={{
+          fontFamily: FONT_MONO,
+          fontSize: 11,
+          fontWeight: 500,
+          letterSpacing: "0.18em",
+          textTransform: "uppercase",
+          color: DARK.inkQuiet,
+          margin: 0,
+        }}
+      >
+        {workspace}
+      </p>
+      <div className="flex flex-col gap-[12px]">
+        <h1
+          className="max-w-[700px] text-[72px]"
+          style={{ fontWeight: 600, letterSpacing: "-0.03em", color: DARK.ink, margin: 0, lineHeight: 1 }}
+        >
+          {title}
+        </h1>
+        <p
+          className="max-w-[560px]"
+          style={{
+            fontSize: 16,
+            color: DARK.inkSoft,
+            lineHeight: 1.55,
+            margin: 0,
+          }}
+        >The composed pieces, ordered by which appears first when looking from the top to the bottom of the page. Cards, search and filter chips, the navbar — each one assembled from primitives and used across the app.</p>
+      </div>
+    </div>
+  );
+}
+
+export function DarkSheet({
+  index,
+  title,
+  caption,
+  children,
+}: {
+  index?: string;
+  title: string;
+  caption?: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <div className="w-[1086px]"
+      style={{ background: DARK.paper, color: DARK.ink, padding: 48, fontFamily: FONT_SANS }}
+    >
+      <div
+        style={{
+          display: "flex",
+          alignItems: "baseline",
+          gap: 16,
+          marginBottom: 8,
+        }}
+      >
+        {index && <Eyebrow>{index}</Eyebrow>}
+        <Eyebrow>{title}</Eyebrow>
+      </div>
+      <h2 className="text-4xl mb-[24px]"
+        style={{ fontWeight: 600, letterSpacing: "-0.02em", color: DARK.ink, margin: "12px 0 0" }}
+      >
+        {title}
+      </h2>
+      {caption && (
+        <></>
+      )}
+      {children}
+    </div>
+  );
+}
+
+export function DarkRow({
+  label,
+  children,
+}: {
+  label: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <div
+      style={{
+        display: "grid",
+        gridTemplateColumns: "140px 1fr",
+        gap: 24,
+        alignItems: "center",
+        padding: "20px 0",
+        borderBottom: `1px solid ${DARK.hairline}`,
+      }}
+    >
+      <Eyebrow>{label}</Eyebrow>
+      <div style={{ display: "flex", gap: 16, flexWrap: "wrap", alignItems: "center" }}>
+        {children}
+      </div>
+    </div>
+  );
+}
+
+export function DarkSwatch({
+  name,
+  value,
+  note,
+}: {
+  name: string;
+  value: string;
+  note?: string;
+}) {
+  return (
+    <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+      <div
+        style={{
+          background: value,
+          height: 100,
+          borderRadius: 10,
+          border: `1px solid ${DARK.hairline}`,
+        }}
+      />
+      <div>
+        <p
+          style={{
+            fontSize: 13,
+            fontWeight: 500,
+            color: DARK.ink,
+            margin: 0,
+            letterSpacing: "-0.005em",
+          }}
+        >
+          {name}
+        </p>
+        <p
+          style={{
+            fontFamily: FONT_MONO,
+            fontSize: 11,
+            color: DARK.inkQuiet,
+            margin: "3px 0 0",
+          }}
+        >
+          {value}
+        </p>
+        {note && (
+          <p style={{ fontSize: 12, color: DARK.inkFaint, margin: "4px 0 0", lineHeight: 1.4 }}>
+            {note}
+          </p>
+        )}
+      </div>
+    </div>
+  );
+}
+
+/* DarkPanel — a raised card surface inside a DarkSheet (like UI3's "specimen"). */
+export function DarkPanel({
+  children,
+  padding = 24,
+}: {
+  children: React.ReactNode;
+  padding?: number;
+}) {
+  return (
+    <div className="border-0"
+      style={{ border: `1px solid ${DARK.hairline}`, borderRadius: 12, padding }}
+    >
+      {children}
     </div>
   );
 }
