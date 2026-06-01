@@ -4,10 +4,10 @@ import { Navbar } from "@/design-system/layout/Navbar";
 /**
  * Canvas chrome — shared scaffolding used by canvas storyboards.
  *
- * Two themes:
- *   • Light  — Foundations canvas (existing). Sheet/Swatch/Row defined inline there.
- *   • Dark   — UI3-style canvases (this file). DarkSheet / DarkRow / DarkSwatch /
- *              Eyebrow / MonoText, plus the dark TitleSpread cover.
+ * `Frame` renders a real app page inside an in-memory router; the dark-theme
+ * helpers (`TitleSpread`, `CanvasCover`, `DarkSheet`, `Eyebrow`, `MonoText`,
+ * `HavnMark`) provide the showcase layout the design-system canvases are
+ * built from.
  *
  * Type stack matches Tempo: SF Pro for UI, SF Mono / JetBrains Mono for code.
  */
@@ -116,81 +116,28 @@ export function TitleSpread({
         </p>
       </div>
       {meta && meta.length > 0 && (
-        <></>
-      )}
-    </div>
-  );
-}
-
-/* ── Annotation — note that sits between frames ─────────────────────── */
-export function Annotation({
-  step,
-  title,
-  body,
-  arrow = "right",
-}: {
-  step: string;
-  title: string;
-  body: string;
-  arrow?: "right" | "down" | "none";
-}) {
-  return (
-    <div
-      style={{
-        background: "#fff",
-        border: "1px dashed #d0d0d0",
-        padding: 24,
-        height: "100%",
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-      }}
-    >
-      <p
-        style={{
-          fontSize: 10,
-          fontWeight: 700,
-          letterSpacing: "0.18em",
-          textTransform: "uppercase",
-          color: "#717171",
-          margin: 0,
-        }}
-      >
-        {step}
-      </p>
-      <p
-        style={{
-          fontSize: 16,
-          fontWeight: 600,
-          color: "#222",
-          margin: "8px 0 6px",
-          lineHeight: 1.3,
-          letterSpacing: "-0.01em",
-        }}
-      >
-        {title}
-      </p>
-      <p
-        style={{
-          fontSize: 12.5,
-          color: "#717171",
-          margin: 0,
-          lineHeight: 1.55,
-        }}
-      >
-        {body}
-      </p>
-      {arrow !== "none" && (
-        <p
-          style={{
-            fontSize: 24,
-            color: "#222",
-            margin: "16px 0 0",
-            lineHeight: 1,
-          }}
-        >
-          {arrow === "right" ? "→" : "↓"}
-        </p>
+        <div style={{ position: "relative", zIndex: 1, display: "flex", gap: 48, flexWrap: "wrap" }}>
+          {meta.map((m) => (
+            <div key={m.label}>
+              <p
+                style={{
+                  fontFamily: FONT_MONO,
+                  fontSize: 10,
+                  fontWeight: 500,
+                  letterSpacing: "0.16em",
+                  textTransform: "uppercase",
+                  color: "rgba(255,255,255,0.45)",
+                  margin: 0,
+                }}
+              >
+                {m.label}
+              </p>
+              <p style={{ fontSize: 14, color: DARK.ink, margin: "4px 0 0" }}>
+                {m.value}
+              </p>
+            </div>
+          ))}
+        </div>
       )}
     </div>
   );
@@ -198,9 +145,21 @@ export function Annotation({
 
 /* ── Dark theme — UI3-style sheets ─────────────────────────────────── */
 
+/* Eyebrow — small uppercase mono label that sits above a section title. */
 export function Eyebrow({ children }: { children: React.ReactNode }) {
   return (
-    <></>
+    <span
+      style={{
+        fontFamily: FONT_MONO,
+        fontSize: 11,
+        fontWeight: 500,
+        letterSpacing: "0.16em",
+        textTransform: "uppercase",
+        color: DARK.inkQuiet,
+      }}
+    >
+      {children}
+    </span>
   );
 }
 
@@ -242,16 +201,14 @@ export function HavnMark() {
   );
 }
 
-/* CanvasCover — standard cover storyboard layout: eyebrow → image placeholder → grouped title + description.
-   Used as the 00 · Cover for every dark canvas. */
+/* CanvasCover — standard cover storyboard layout: workspace eyebrow → grouped
+   title + description. Used as the 00 · Cover for every dark canvas. */
 export function CanvasCover({
   workspace,
-  slug,
   title,
   description,
 }: {
   workspace: string;
-  slug: string;
   title: string;
   description: string;
 }) {
@@ -295,7 +252,9 @@ export function CanvasCover({
             lineHeight: 1.55,
             margin: 0,
           }}
-        >The composed pieces, ordered by which appears first when looking from the top to the bottom of the page. Cards, search and filter chips, the navbar — each one assembled from primitives and used across the app.</p>
+        >
+          {description}
+        </p>
       </div>
     </div>
   );
@@ -316,119 +275,30 @@ export function DarkSheet({
     <div className="w-[1086px]"
       style={{ background: DARK.paper, color: DARK.ink, padding: 48, fontFamily: FONT_SANS }}
     >
-      <div
-        style={{
-          display: "flex",
-          alignItems: "baseline",
-          gap: 16,
-          marginBottom: 8,
-        }}
-      >
-        {index && <Eyebrow>{index}</Eyebrow>}
-        <Eyebrow>{title}</Eyebrow>
-      </div>
+      {index && (
+        <div style={{ marginBottom: 8 }}>
+          <Eyebrow>{index}</Eyebrow>
+        </div>
+      )}
       <h2 className="text-4xl mb-[24px]"
         style={{ fontWeight: 600, letterSpacing: "-0.02em", color: DARK.ink, margin: "12px 0 0" }}
       >
         {title}
       </h2>
       {caption && (
-        <></>
-      )}
-      {children}
-    </div>
-  );
-}
-
-export function DarkRow({
-  label,
-  children,
-}: {
-  label: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <div
-      style={{
-        display: "grid",
-        gridTemplateColumns: "140px 1fr",
-        gap: 24,
-        alignItems: "center",
-        padding: "20px 0",
-        borderBottom: `1px solid ${DARK.hairline}`,
-      }}
-    >
-      <Eyebrow>{label}</Eyebrow>
-      <div style={{ display: "flex", gap: 16, flexWrap: "wrap", alignItems: "center" }}>
-        {children}
-      </div>
-    </div>
-  );
-}
-
-export function DarkSwatch({
-  name,
-  value,
-  note,
-}: {
-  name: string;
-  value: string;
-  note?: string;
-}) {
-  return (
-    <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-      <div
-        style={{
-          background: value,
-          height: 100,
-          borderRadius: 10,
-          border: `1px solid ${DARK.hairline}`,
-        }}
-      />
-      <div>
         <p
           style={{
-            fontSize: 13,
-            fontWeight: 500,
-            color: DARK.ink,
-            margin: 0,
-            letterSpacing: "-0.005em",
-          }}
-        >
-          {name}
-        </p>
-        <p
-          style={{
-            fontFamily: FONT_MONO,
-            fontSize: 11,
+            fontFamily: FONT_SANS,
+            fontSize: 14,
             color: DARK.inkQuiet,
-            margin: "3px 0 0",
+            lineHeight: 1.55,
+            maxWidth: 600,
+            margin: "16px 0 0",
           }}
         >
-          {value}
+          {caption}
         </p>
-        {note && (
-          <p style={{ fontSize: 12, color: DARK.inkFaint, margin: "4px 0 0", lineHeight: 1.4 }}>
-            {note}
-          </p>
-        )}
-      </div>
-    </div>
-  );
-}
-
-/* DarkPanel — a raised card surface inside a DarkSheet (like UI3's "specimen"). */
-export function DarkPanel({
-  children,
-  padding = 24,
-}: {
-  children: React.ReactNode;
-  padding?: number;
-}) {
-  return (
-    <div className="border-0"
-      style={{ border: `1px solid ${DARK.hairline}`, borderRadius: 12, padding }}
-    >
+      )}
       {children}
     </div>
   );
