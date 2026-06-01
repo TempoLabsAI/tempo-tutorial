@@ -1,30 +1,47 @@
-# Havn — Tempo Tutorial Workspace
+# Havn — Tempo Tutorial Demo
 
-A fully built travel booking app (Airbnb-style, guest side) designed to show you what a mature Tempo workspace looks like.
-
-## Start here
-
-Open `demo-assets/prds/tutorial/01-welcome.md`.
-
-Or open the kanban board and pin the **[Start here] Welcome** ticket.
-
-## What's in this workspace
-
-| Surface | Count | Location |
-|---|---|---|
-| PRDs | 15 | `demo-assets/prds/` |
-| Issues | 8 | `demo-assets/issues/` |
-| Canvases | 7 | `designs/pages/` |
-| Pages | 7 | `src/pages/` |
-| Design system | 14 components | `src/design-system/` |
+A fully built, Airbnb-style travel-booking app (guest side). This is the demo
+workspace Tempo provisions for every new account so you can see what a mature
+Tempo project looks like — real pages, a real design system, and design-system
+canvases that render live from the same source code.
 
 ## Running the app
 
+Dependencies install from the single root `package.json` (npm):
+
 ```bash
-pnpm install
-pnpm dev
+npm install
+npm run dev
 # → http://localhost:5173
 ```
+
+Or use the convenience script: `./run.sh` (installs if needed, type-checks, then
+starts the dev server).
+
+> Inside Tempo you don't run anything by hand — the Tempo host dev server in
+> `tempo/` is started for you (see `tempo/tempo.config.json`).
+
+## Project structure
+
+```
+.
+├── index.html              # Main app entry (Vite)
+├── src/                     # The Havn app
+│   ├── pages/               # 7 route pages
+│   ├── design-system/       # primitives, components, layout
+│   ├── data/                # sample listings, trips, messages
+│   ├── styles/globals.css   # design tokens (source of truth)
+│   └── main.tsx
+├── tempo/                   # Tempo sidecar — the canvas/host workspace
+│   ├── designs/canvases/    # 13 design-system tour canvases
+│   ├── vite.config.ts       # Tempo host dev server config
+│   └── tempo.config.json    # install/start scripts Tempo runs
+├── tailwind.config.ts
+└── package.json             # single manifest: app deps + tempo devDeps
+```
+
+Both the app and the Tempo host install from this one root `package.json` /
+`node_modules` — there is no separate manifest inside `tempo/`.
 
 ## Routes
 
@@ -40,73 +57,50 @@ pnpm dev
 
 ## Design system
 
-All components are in `src/design-system/`. The canvases in `designs/pages/` import from the same files — so editing a component in code updates the canvas storyboards immediately.
+Everything lives in `src/design-system/`:
 
-### Tokens (`src/design-system/`)
+- **primitives/** — `Avatar`, `Badge`, `Button`, `Input`
+- **components/** — `BookingCard`, `FilterChip`, `HeartButton`, `ListingCard`, `RatingStars`, `SearchBar`
+- **layout/** — `Container`, `Navbar`
 
-| Token | Value | Usage |
-|---|---|---|
-| `--ink` | `#1a1815` | Primary text, dark backgrounds |
-| `--paper` | `#f7f3ee` | Background, light surfaces |
-| `--terracotta` | `#c75d3f` | Accent, primary buttons, hearts |
-| `--moss` | `#5c6f4a` | Success, positive refund amounts |
-| `--stone` | `#b8afa3` | Secondary text, muted UI |
+Design tokens are defined as CSS custom properties in
+`src/styles/globals.css` (the source of truth) and surfaced as Tailwind
+utilities in `tailwind.config.ts` — surfaces (`--paper*`), text (`--ink*`), and
+the brand accent (`--terracotta`, `#ff385c`).
 
-### Fonts
-
-- **Display:** Fraunces (variable serif, italic, warm) — headlines, hero text
-- **Body:** Geist (clean modernist sans) — all UI copy
-- **Mono:** Geist Mono — confirmation codes, inline code
-
-## PRD structure
-
-```
-demo-assets/prds/
-├── tutorial/       # 3 tutorial PRDs (start here)
-├── discover/       # Parent + 3 children (search, map, wishlists)
-├── book/           # Parent + 3 children (listing, booking, reviews)
-└── trips/          # Parent + 3 children (itinerary, messaging, cancellation)
-```
-
-## Issue states
-
-| # | Title | Status | Linked PRD | Linked Canvas |
-|---|---|---|---|---|
-| 1 | [Tutorial] Welcome | Pinned | Tutorial PRDs | Start here |
-| 2 | [Tutorial] Edit a component | Pinned | How everything links | Design system |
-| 3 | Add price range filter | In Progress | Search & filters | Search experience |
-| 4 | Booking confirmation modal | In Review | Booking widget | Listing detail |
-| 5 | Add map view | Todo | Map view | *(design pending)* |
-| 6 | Refresh messaging inbox | In Design | *(spec WIP)* | Messaging |
-| 7 | Wishlist heart animation | Done | Wishlists | Wishlists |
-| 8 | Bug: itinerary mobile overflow | Todo (Bug) | Trip itinerary + Cancellation | Trip itinerary |
+**Fonts:** Geist (UI + display) and Geist Mono (code), loaded from Google Fonts
+in `index.html`.
 
 ## Canvases
 
-Open any canvas in Tempo to see storyboards rendered live from the source code.
+The 13 canvases in `tempo/designs/canvases/` are a guided tour of the design
+system — open them in Tempo to see storyboards rendered live from the source
+code. Editing a component updates its storyboards immediately.
 
-| Canvas | What's in it |
+| # | Canvas |
 |---|---|
-| Start here | Tour of the workspace — sample storyboards from each area |
-| Design system | All primitives and components; great for the "edit a component" tutorial |
-| Search experience | List view, filter chip states, search bar variants |
-| Listing detail | Full listing, booking modal, mobile bottom bar |
-| Trip itinerary | Trips list, booking cards, itinerary, cancellation flow |
-| Messaging | Inbox (unread/read), thread view, mobile |
-| Wishlists | Grid, empty state, heart button states |
+| 00 | Cover & Index |
+| 01 | Template |
+| 02 | Typography |
+| 03 | Colors |
+| 04 | Elevation |
+| 05 | Grid |
+| 06 | Icons & Imagery |
+| 07 | Avatars & Identity |
+| 08 | Badges & Status |
+| 09 | Buttons |
+| 10 | Components |
+| 11 | Inputs & Forms |
+| 12 | Modals & Dialogues |
 
 ## Tech stack
 
 - **React 18** + **TypeScript** + **Vite**
 - **Tailwind CSS** with custom design tokens
 - **Radix UI** (Dialog, Popover, Tabs — accessible primitives)
-- **Motion** (Framer Motion v11) — animations, spring physics
+- **Framer Motion v11** — animations, spring physics
 - **Lucide** — icons
 - **React Router v6** — routing
 - **Recharts** — price histogram (filter chip)
 
-## Sample data
-
-- 8 listings across 7 countries (`src/data/listings.ts`)
-- 4 trips in mixed states (`src/data/trips.ts`)
-- 3 conversations with sample messages (`src/data/messages.ts`)
+Sample listings, trips, and conversations live in `src/data/`.

@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "install": "npm install && npm install --prefix ..",
-    "start": "npm run dev"
+    "install": "cd .. && npm install",
+    "start": "../node_modules/.bin/vite"
   }
 }
