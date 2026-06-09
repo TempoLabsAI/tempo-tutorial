@@ -29,7 +29,7 @@ export const Cover: TempoStoryboard = {
     />
   ),
   name: "00 · Cover",
-  layout: { x: 0, y: 0, width: 1280, height: 362, intrinsicSizing: "root-element" },
+  layout: { x: 0, y: 0, width: 1692, height: 200, intrinsicSizing: "root-element" },
 };
 
 /* ── UI3-style section helpers ───────────────────────────────────── */
@@ -351,7 +351,7 @@ export const Sizes: TempoStoryboard = {
     </div>
   ),
   name: "01 · Sizes",
-  layout: { x: 1330, y: 0, width: 1280, height: 2395, intrinsicSizing: "root-element" },
+  layout: { x: 1330, y: 0, width: 1162, height: 2765, intrinsicSizing: "root-element" },
 };
 
 /* ── 02 · In situ — compositions ────────────────────────────────── */
@@ -429,5 +429,5 @@ export const InSitu: TempoStoryboard = {
     </div>
   ),
   name: "02 · In situ",
-  layout: { x: 2660, y: 0, width: 992, height: 975, intrinsicSizing: "root-element" },
+  layout: { x: 2660, y: 0, width: 1159, height: 1453, intrinsicSizing: "root-element" },
 };
