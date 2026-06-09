@@ -327,7 +327,7 @@ export const Cover: TempoStoryboard = {
     </div>
   ),
   name: "00 · Cover",
-  layout: { x: -516, y: -677, width: 3629, height: 394 , intrinsicSizing: "root-element" },
+  layout: { x: -516, y: -677, width: 3509, height: 515 , intrinsicSizing: "root-element" },
 };
 
 /* ── Index — workspace map ────────────────────────────────────────── */
