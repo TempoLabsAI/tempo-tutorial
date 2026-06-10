@@ -877,7 +877,7 @@ export const Legend: TempoStoryboard = {
 export const Storyboard1: TempoStoryboard = {
   render: () => <Storyboard1Component />,
   name: "Storyboard1",
-  layout: { x: 1143, y: 1821, width: 3274, height: 1434, intrinsicSizing: "root-element" },
+  layout: { x: 2141, y: 2067, width: 3274, height: 1434, intrinsicSizing: "root-element" },
 };
 
 export const Storyboard2: TempoStoryboard = {
