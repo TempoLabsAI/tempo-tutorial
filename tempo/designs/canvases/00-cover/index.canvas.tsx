@@ -11,6 +11,7 @@ import {
   DARK,
 } from '@/design-system/canvas-chrome';
 import Storyboard1Component from "./Storyboard1";
+import Storyboard2Component from "./Storyboard2";
 
 const page: TempoPage = {
   name: "00 · Cover & Index",
@@ -877,4 +878,10 @@ export const Storyboard1: TempoStoryboard = {
   render: () => <Storyboard1Component />,
   name: "Storyboard1",
   layout: { x: 1143, y: 1821, width: 3274, height: 1434, intrinsicSizing: "root-element" },
+};
+
+export const Storyboard2: TempoStoryboard = {
+  render: () => <Storyboard2Component />,
+  name: "Storyboard2",
+  layout: { x: 1556, y: 3626, width: 1298, height: 938, intrinsicSizing: "root-element" },
 };
