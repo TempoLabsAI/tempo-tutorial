@@ -694,7 +694,7 @@ export const NavbarShowcase: TempoStoryboard = {
     </div>
   ),
   name: "01 · Navbar",
-  layout: { x: 1330, y: 0, width: 705, height: 1273, intrinsicSizing: "root-element" },
+  layout: { x: 1330, y: 0, width: 705, height: 1272, intrinsicSizing: "root-element" },
 };
 
 /* ── 05 · RatingStars ────────────────────────────────────────────── */

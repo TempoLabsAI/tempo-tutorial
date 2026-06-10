@@ -67,7 +67,7 @@ export const Cover: TempoStoryboard = {
     />
   ),
   name: "00 · Cover",
-  layout: { x: 0, y: -2, width: 1468, height: 202, intrinsicSizing: "root-element" },
+  layout: { x: 0, y: -2, width: 1692, height: 200, intrinsicSizing: "root-element" },
 };
 
 /* ── Icon cell helper ────────────────────────────────────────────── */

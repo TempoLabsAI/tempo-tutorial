@@ -10,6 +10,7 @@ import {
   FONT_MONO,
   DARK,
 } from '@/design-system/canvas-chrome';
+import Storyboard1Component from "./Storyboard1";
 
 const page: TempoPage = {
   name: "00 · Cover & Index",
@@ -871,3 +872,9 @@ export const Legend: TempoStoryboard = {
 };
 
 /* ── 03 · Anatomy ────────────────────────────────────────────────── */
+
+export const Storyboard1: TempoStoryboard = {
+  render: () => <Storyboard1Component />,
+  name: "Storyboard1",
+  layout: { x: 1143, y: 1821, width: 3274, height: 1434, intrinsicSizing: "root-element" },
+};

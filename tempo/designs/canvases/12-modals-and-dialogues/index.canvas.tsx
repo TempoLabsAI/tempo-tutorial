@@ -176,7 +176,7 @@ export const Cover: TempoStoryboard = {
     />
   ),
   name: "00 · Cover",
-  layout: { x: 0, y: -7, width: 1267, height: 207, intrinsicSizing: "root-element" },
+  layout: { x: 0, y: -7, width: 1692, height: 200, intrinsicSizing: "root-element" },
 };
 
 /* ── 01 · Anatomy ────────────────────────────────────────────────── */

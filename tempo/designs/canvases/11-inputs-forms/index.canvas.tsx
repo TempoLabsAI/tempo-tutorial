@@ -481,7 +481,7 @@ export const Affixes: TempoStoryboard = {
     </PageShell>
   ),
   name: "03 · Affixes",
-  layout: { x: 3990, y: 0, width: 1280, height: 1444, intrinsicSizing: "root-element" },
+  layout: { x: 3990, y: 0, width: 1280, height: 1443, intrinsicSizing: "root-element" },
 };
 
 /* ── 04 · Types ──────────────────────────────────────────────────── */
