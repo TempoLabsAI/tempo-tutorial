@@ -36,7 +36,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
               "text-[14px] text-ink placeholder:text-ink-quiet",
               "transition-[border-color,box-shadow] duration-150 ease-out",
               "hover:border-ink-quiet",
-              "focus:border-ink focus:outline-none focus:shadow-[0_0_0_2px_rgba(0,0,0,0.06)]",
+              "focus:border-ink focus:outline-hidden focus:shadow-[0_0_0_2px_rgba(0,0,0,0.06)]",
               "disabled:opacity-50 disabled:cursor-not-allowed",
               prefix && "pl-10",
               suffix && "pr-10",

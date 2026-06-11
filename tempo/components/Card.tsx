@@ -8,7 +8,7 @@ interface CardProps {
 
 export function Card({ label, title, children }: CardProps) {
   return (
-    <div className="bg-white/[0.04] border border-white/[0.08] rounded-xl p-6">
+    <div className="bg-white/4 border border-white/8 rounded-xl p-6">
       {label && (
         <div className="text-[11px] font-semibold tracking-wide uppercase text-white/40 mb-2.5">
           {label}

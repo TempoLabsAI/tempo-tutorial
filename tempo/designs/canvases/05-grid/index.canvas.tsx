@@ -21,7 +21,7 @@ const SPACING = [
 ];
 
 const RADII = [
-  { name: "sm", token: "rounded", px: 8, use: "Buttons. Tags. Anything pill-adjacent but still rectangular." },
+  { name: "sm", token: "rounded-sm", px: 8, use: "Buttons. Tags. Anything pill-adjacent but still rectangular." },
   { name: "md", token: "rounded-lg", px: 12, use: "Inputs. Inline panels. Cards on dense surfaces." },
   { name: "lg", token: "rounded-xl", px: 16, use: "ListingCards. BookingCards. The default for any standalone tile." },
   { name: "xl", token: "rounded-2xl", px: 24, use: "Photo frames inside cards. The hero photo on listing detail." },
@@ -405,7 +405,7 @@ export const Radius: TempoStoryboard = {
 
       <Section
         title="Nested radius"
-        description={"When a rounded element sits inside another rounded element, the inner radius is the outer radius minus the padding. This keeps the two curves concentric — they read as parallel arcs rather than mismatched corners. The formula: inner = outer − padding."}
+        description={"When a rounded-sm element sits inside another rounded-sm element, the inner radius is the outer radius minus the padding. This keeps the two curves concentric — they read as parallel arcs rather than mismatched corners. The formula: inner = outer − padding."}
       >
         <div style={{ background: "#fff", padding: 32, borderRadius: 12, display: "flex", flexDirection: "column", gap: 24 }}>
           {[
@@ -422,7 +422,7 @@ export const Radius: TempoStoryboard = {
               padding: 8,
               inner: 8,
               outerToken: "rounded-xl",
-              innerToken: "rounded",
+              innerToken: "rounded-sm",
               note: "A button inside a card footer. Card rounds at 16; with 8px padding the button rounds at 8 — Havn's smallest, the default for buttons.",
             },
             {
@@ -520,7 +520,7 @@ export const InSitu: TempoStoryboard = {
     >
       <Section
         title="A booking card"
-        description="One composition. Count the tokens: 16px card padding (lg), 12px gap between content rows (md), 8px gap inside the chip group (sm), rounded-xl on the card, rounded-full on each chip, rounded on the button."
+        description="One composition. Count the tokens: 16px card padding (lg), 12px gap between content rows (md), 8px gap inside the chip group (sm), rounded-xl on the card, rounded-full on each chip, rounded-sm on the button."
       >
         <div style={{ padding: 24, display: "flex", justifyContent: "center" }}>
           <div style={{ width: 440, background: "#fff", borderRadius: 16, overflow: "hidden", border: "1px solid #ebebeb" }}>

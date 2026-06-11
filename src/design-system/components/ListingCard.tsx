@@ -38,7 +38,7 @@ export function ListingCard({
             loading="lazy"
           />
           {listing.badge && (
-            <span className="absolute top-3 left-3 bg-white text-ink text-[12px] font-semibold px-2.5 py-1 rounded-md shadow-sm">
+            <span className="absolute top-3 left-3 bg-white text-ink text-[12px] font-semibold px-2.5 py-1 rounded-md shadow-xs">
               {listing.badge}
             </span>
           )}
@@ -64,7 +64,7 @@ export function ListingCard({
           >
             {listing.location}
           </Link>
-          <RatingStars rating={listing.rating} className="flex-shrink-0 mt-0.5 text-[14px]" />
+          <RatingStars rating={listing.rating} className="shrink-0 mt-0.5 text-[14px]" />
         </div>
         <p className="text-[14px] text-ink-quiet line-clamp-1">
           {listing.title}

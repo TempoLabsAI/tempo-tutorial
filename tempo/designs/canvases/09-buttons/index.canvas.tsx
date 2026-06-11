@@ -160,7 +160,7 @@ function ButtonRow({ label, children }: { label: string; children: React.ReactNo
 function ButtonRowVertical({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <div
-      className="[&_button]:!w-[200px]"
+      className="[&_button]:w-[200px]!"
       style={{
         display: "grid",
         gridTemplateColumns: "120px 1fr",
@@ -235,7 +235,7 @@ export const Cover: TempoStoryboard = {
       workspace="Workspace · 03"
       slug="buttons.svg"
       title="Buttons."
-      description="Six variants, three sizes, six states. Coral primary for the one important action, ink for confirmations, outline and secondary for everything else, destructive for danger, ghost for quiet."
+      description="Six variants, three sizes, six states. Coral primary for the one important action, ink for confirmations, outline-solid and secondary for everything else, destructive for danger, ghost for quiet."
     />
   ),
   name: "00 · Cover",
@@ -331,12 +331,12 @@ export const Variants: TempoStoryboard = {
           <MonoText size={11} color="#717171">bg-accent</MonoText>
         </ButtonRowVertical>
         <ButtonRowVertical label="Hover">
-          <Button variant="primary" className="!bg-accent-hover !shadow">Reserve</Button>
+          <Button variant="primary" className="bg-accent-hover! shadow-sm!">Reserve</Button>
           <MonoText size={11} color="#717171">bg-accent-hover</MonoText>
         </ButtonRowVertical>
         <ButtonRowVertical label="Focus">
           <Button variant="primary" className="ring-2 ring-offset-2 ring-offset-[#0f0f0e] ring-white/60">Reserve</Button>
-          <MonoText size={11} color="#717171">focus-visible:ring</MonoText>
+          <MonoText size={11} color="#717171">focus-visible:ring-3</MonoText>
         </ButtonRowVertical>
         <ButtonRowVertical label="Disabled">
           <Button variant="primary" disabled>Reserve</Button>
@@ -357,12 +357,12 @@ export const Variants: TempoStoryboard = {
           <MonoText size={11} color="#717171">bg-ink</MonoText>
         </ButtonRowVertical>
         <ButtonRowVertical label="Hover">
-          <Button variant="ink" className="!bg-ink-soft">Continue</Button>
+          <Button variant="ink" className="bg-ink-soft!">Continue</Button>
           <MonoText size={11} color="#717171">bg-ink-soft</MonoText>
         </ButtonRowVertical>
         <ButtonRowVertical label="Focus">
           <Button variant="ink" className="ring-2 ring-offset-2 ring-offset-[#0f0f0e] ring-white/60">Continue</Button>
-          <MonoText size={11} color="#717171">focus-visible:ring</MonoText>
+          <MonoText size={11} color="#717171">focus-visible:ring-3</MonoText>
         </ButtonRowVertical>
         <ButtonRowVertical label="Disabled">
           <Button variant="ink" disabled>Continue</Button>
@@ -383,12 +383,12 @@ export const Variants: TempoStoryboard = {
           <MonoText size={11} color="#717171">border-paper-deep</MonoText>
         </ButtonRowVertical>
         <ButtonRowVertical label="Hover">
-          <Button variant="outline" className="!border-ink !bg-paper-warm/50">Share</Button>
+          <Button variant="outline" className="border-ink! bg-paper-warm/50!">Share</Button>
           <MonoText size={11} color="#717171">border-ink · bg-paper-warm/50</MonoText>
         </ButtonRowVertical>
         <ButtonRowVertical label="Focus">
           <Button variant="outline" className="ring-2 ring-offset-2 ring-offset-[#0f0f0e] ring-white/60">Share</Button>
-          <MonoText size={11} color="#717171">focus-visible:ring</MonoText>
+          <MonoText size={11} color="#717171">focus-visible:ring-3</MonoText>
         </ButtonRowVertical>
         <ButtonRowVertical label="Disabled">
           <Button variant="outline" disabled>Share</Button>
@@ -398,19 +398,19 @@ export const Variants: TempoStoryboard = {
 
       <ButtonSection
         title="Secondary"
-        description="Soft paper fill. For pairs of equal-weight options or filter controls where outline reads as too wiry."
+        description="Soft paper fill. For pairs of equal-weight options or filter controls where outline-solid reads as too wiry."
       >
         <ButtonRowVertical label="Rest">
           <Button variant="secondary">Browse all</Button>
           <MonoText size={11} color="#717171">bg-paper-warm</MonoText>
         </ButtonRowVertical>
         <ButtonRowVertical label="Hover">
-          <Button variant="secondary" className="!bg-paper-dark">Browse all</Button>
+          <Button variant="secondary" className="bg-paper-dark!">Browse all</Button>
           <MonoText size={11} color="#717171">bg-paper-dark</MonoText>
         </ButtonRowVertical>
         <ButtonRowVertical label="Focus">
           <Button variant="secondary" className="ring-2 ring-offset-2 ring-offset-[#0f0f0e] ring-white/60">Browse all</Button>
-          <MonoText size={11} color="#717171">focus-visible:ring</MonoText>
+          <MonoText size={11} color="#717171">focus-visible:ring-3</MonoText>
         </ButtonRowVertical>
         <ButtonRowVertical label="Disabled">
           <Button variant="secondary" disabled>Browse all</Button>
@@ -427,12 +427,12 @@ export const Variants: TempoStoryboard = {
           <MonoText size={11} color="#717171">bg-ink</MonoText>
         </ButtonRowVertical>
         <ButtonRowVertical label="Hover">
-          <Button variant="destructive" className="!bg-ink-soft">Cancel trip</Button>
+          <Button variant="destructive" className="bg-ink-soft!">Cancel trip</Button>
           <MonoText size={11} color="#717171">bg-ink-soft</MonoText>
         </ButtonRowVertical>
         <ButtonRowVertical label="Focus">
           <Button variant="destructive" className="ring-2 ring-offset-2 ring-offset-[#0f0f0e] ring-white/60">Cancel trip</Button>
-          <MonoText size={11} color="#717171">focus-visible:ring</MonoText>
+          <MonoText size={11} color="#717171">focus-visible:ring-3</MonoText>
         </ButtonRowVertical>
         <ButtonRowVertical label="Disabled">
           <Button variant="destructive" disabled>Cancel trip</Button>
@@ -449,12 +449,12 @@ export const Variants: TempoStoryboard = {
           <MonoText size={11} color="#717171">transparent</MonoText>
         </ButtonRowVertical>
         <ButtonRowVertical label="Hover">
-          <Button variant="ghost" className="!bg-paper-warm">Skip</Button>
+          <Button variant="ghost" className="bg-paper-warm!">Skip</Button>
           <MonoText size={11} color="#717171">bg-paper-warm</MonoText>
         </ButtonRowVertical>
         <ButtonRowVertical label="Focus">
           <Button variant="ghost" className="ring-2 ring-offset-2 ring-offset-[#0f0f0e] ring-white/60">Skip</Button>
-          <MonoText size={11} color="#717171">focus-visible:ring</MonoText>
+          <MonoText size={11} color="#717171">focus-visible:ring-3</MonoText>
         </ButtonRowVertical>
         <ButtonRowVertical label="Disabled">
           <Button variant="ghost" disabled>Skip</Button>
@@ -620,9 +620,9 @@ export const Content: TempoStoryboard = {
           <Button variant="outline">Save listing</Button>
         </ButtonRow>
         <ButtonRow label="Don't">
-          <Button variant="primary" className="!opacity-60">Submit</Button>
-          <Button variant="ink" className="!opacity-60">OK</Button>
-          <Button variant="outline" className="!opacity-60">Click here</Button>
+          <Button variant="primary" className="opacity-60!">Submit</Button>
+          <Button variant="ink" className="opacity-60!">OK</Button>
+          <Button variant="outline" className="opacity-60!">Click here</Button>
         </ButtonRow>
       </ButtonSection>
 
@@ -635,7 +635,7 @@ export const Content: TempoStoryboard = {
           <Button variant="ink">Add guests</Button>
         </ButtonRow>
         <ButtonRow label="Don't">
-          <Button variant="primary" className="!opacity-60">Confirm your trip details now</Button>
+          <Button variant="primary" className="opacity-60!">Confirm your trip details now</Button>
         </ButtonRow>
       </ButtonSection>
 
@@ -648,8 +648,8 @@ export const Content: TempoStoryboard = {
           <Button variant="ink">Add to wishlist</Button>
         </ButtonRow>
         <ButtonRow label="Don't">
-          <Button variant="primary" className="!opacity-60">Reserve Stay</Button>
-          <Button variant="ink" className="!opacity-60">ADD TO WISHLIST</Button>
+          <Button variant="primary" className="opacity-60!">Reserve Stay</Button>
+          <Button variant="ink" className="opacity-60!">ADD TO WISHLIST</Button>
         </ButtonRow>
       </ButtonSection>
     </PageShell>
@@ -732,7 +732,7 @@ export const InSitu: TempoStoryboard = {
 
       <ButtonSection
         title="Destructive confirm"
-        description="A destructive primary inside a modal, always paired with a ghost or outline cancel. Cancel sits on the left, the destructive action on the right."
+        description="A destructive primary inside a modal, always paired with a ghost or outline-solid cancel. Cancel sits on the left, the destructive action on the right."
       >
         <div style={{ background: "#fff", borderRadius: 12, padding: 24, width: 380 }}>
           <p style={{ fontSize: 16, fontWeight: 600, color: "#222", margin: 0, fontFamily: FONT_SANS }}>Cancel this trip?</p>

@@ -140,7 +140,7 @@ export const Cover: TempoStoryboard = {
     <TitleSpread
       eyebrow="Workspace · 04"
       title={<>Elevation.</>}
-      caption="Three soft, multi-layered shadows. We never shadow page chrome — only floating surfaces: resting cards, hover-lifted cards, and modal sheets. Each level is a stacked pair (or single, for modal) of shadows: a tight one for definition, a longer one for atmosphere."
+      caption="Three soft, multi-layered shadows. We never shadow-sm page chrome — only floating surfaces: resting cards, hover-lifted cards, and modal sheets. Each level is a stacked pair (or single, for modal) of shadows: a tight one for definition, a longer one for atmosphere."
       meta={[
         { label: "Levels", value: "3" },
         { label: "Layers", value: "Up to 2" },
@@ -158,11 +158,11 @@ export const Basics: TempoStoryboard = {
   render: () => (
     <PageShell
       title="Basics"
-      intro="How the shadow system is built. The four CSS parameters every shadow draws from, and the one interactive moment the system uses — the card → hover lift. The Levels page that follows breaks each token into its layers, and the In situ page shows them in real product context."
+      intro="How the shadow-sm system is built. The four CSS parameters every shadow-sm draws from, and the one interactive moment the system uses — the card → hover lift. The Levels page that follows breaks each token into its layers, and the In situ page shows them in real product context."
     >
       <Section
         title="The four parameters"
-        description="What each value in the CSS string does. Y-offset places the shadow below the surface (we never use X-offset). Blur softens it. Opacity controls weight. There's no spread — Havn shadows always start at the box edge."
+        description="What each value in the CSS string does. Y-offset places the shadow-sm below the surface (we never use X-offset). Blur softens it. Opacity controls weight. There's no spread — Havn shadows always start at the box edge."
       >
         <div style={{ background: "#fff", padding: 24, borderRadius: 12, display: "flex", flexDirection: "column", gap: 16 }}>
           <div style={{ display: "grid", gridTemplateColumns: "120px 80px 1fr", gap: 16, alignItems: "center", padding: "10px 0", borderBottom: "1px solid #ebebeb" }}>
@@ -326,7 +326,7 @@ export const Levels: TempoStoryboard = {
     >
       <LevelRow
         name="card"
-        description="The default everyday surface. Two stacked layers — a tight contact shadow plus a longer, softer atmospheric halo. Reads as a tile sitting on the page."
+        description="The default everyday surface. Two stacked layers — a tight contact shadow-sm plus a longer, softer atmospheric halo. Reads as a tile sitting on the page."
         usedOn={[
           "ListingCard",
           "BookingCard",
@@ -355,7 +355,7 @@ export const Levels: TempoStoryboard = {
 
       <LevelRow
         name="modal"
-        description="The heaviest level. A single deep shadow — paired with a 50% black scrim behind so the page reads as fully receded. Used only for things that demand full attention."
+        description="The heaviest level. A single deep shadow-sm — paired with a 50% black scrim behind so the page reads as fully receded. Used only for things that demand full attention."
         usedOn={[
           "Modals",
           "Dialogs",
@@ -382,7 +382,7 @@ export const InSitu: TempoStoryboard = {
     >
       <Section
         title="card · on a ListingCard"
-        description="The default resting state for any tile in the home feed or search results. The shadow holds the tile down against the page warmly — readers should barely notice it, only feel that the tile reads as a 'thing'."
+        description="The default resting state for any tile in the home feed or search results. The shadow-sm holds the tile down against the page warmly — readers should barely notice it, only feel that the tile reads as a 'thing'."
       >
         <div style={{ background: "#f7f7f7", padding: 32, borderRadius: 12, display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 24 }}>
           {[1, 2, 3].map((i) => (
@@ -399,7 +399,7 @@ export const InSitu: TempoStoryboard = {
 
       <Section
         title="card-hover · the lifted tile"
-        description="The same row, with the middle tile hovered. The lift is small (1px) but the shadow change is enough to signal interactivity — and to flag which tile the click will go to in a dense grid."
+        description="The same row, with the middle tile hovered. The lift is small (1px) but the shadow-sm change is enough to signal interactivity — and to flag which tile the click will go to in a dense grid."
       >
         <div style={{ background: "#f7f7f7", padding: 32, borderRadius: 12, display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 24, alignItems: "center" }}>
           <div style={{ background: "#fff", borderRadius: 16, overflow: "hidden", boxShadow: SHADOW_CARD }}>

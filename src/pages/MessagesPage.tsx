@@ -34,7 +34,7 @@ export function MessagesPage() {
           {/* Inbox sidebar */}
           <div
             className={cn(
-              "w-full sm:w-80 flex-shrink-0 sm:border-r border-paper-deep flex flex-col",
+              "w-full sm:w-80 shrink-0 sm:border-r border-paper-deep flex flex-col",
               activeId && "hidden sm:flex",
             )}
           >
@@ -68,7 +68,7 @@ export function MessagesPage() {
                       src={conv.hostAvatar}
                       alt={conv.hostName}
                       size="md"
-                      className="flex-shrink-0 mt-0.5"
+                      className="shrink-0 mt-0.5"
                     />
                     <div className="min-w-0 flex-1">
                       <div className="flex items-center justify-between gap-2 mb-0.5">
@@ -81,7 +81,7 @@ export function MessagesPage() {
                           {conv.hostName}
                         </p>
                         {unread > 0 && (
-                          <span className="w-2 h-2 rounded-full bg-accent flex-shrink-0" />
+                          <span className="w-2 h-2 rounded-full bg-accent shrink-0" />
                         )}
                       </div>
                       <p className="text-[12px] text-ink-quiet line-clamp-1">
@@ -159,7 +159,7 @@ export function MessagesPage() {
                           src={active.hostAvatar}
                           alt={active.hostName}
                           size="xs"
-                          className="flex-shrink-0 mt-1"
+                          className="shrink-0 mt-1"
                         />
                       )}
                       <div
@@ -200,12 +200,12 @@ export function MessagesPage() {
                     }}
                     placeholder="Type a message…"
                     rows={1}
-                    className="flex-1 resize-none bg-paper-warm rounded-3xl px-4 py-3 text-[14px] text-ink placeholder:text-ink-quiet focus:outline-none focus:ring-2 focus:ring-ink/10 min-h-[44px] max-h-32"
+                    className="flex-1 resize-none bg-paper-warm rounded-3xl px-4 py-3 text-[14px] text-ink placeholder:text-ink-quiet focus:outline-hidden focus:ring-2 focus:ring-ink/10 min-h-[44px] max-h-32"
                   />
                   <button
                     onClick={send}
                     disabled={!newMsg.trim()}
-                    className="w-11 h-11 rounded-full bg-accent text-white flex items-center justify-center transition-opacity disabled:opacity-40 hover:bg-accent-hover flex-shrink-0"
+                    className="w-11 h-11 rounded-full bg-accent text-white flex items-center justify-center transition-opacity disabled:opacity-40 hover:bg-accent-hover shrink-0"
                     aria-label="Send"
                   >
                     <Send size={16} strokeWidth={2} />

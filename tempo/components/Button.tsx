@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 
 interface ButtonProps {
   children: ReactNode;
-  variant?: "primary" | "outline";
+  variant?: "primary" | "outline-solid";
 }
 
 export function Button({ children, variant = "primary" }: ButtonProps) {

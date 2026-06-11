@@ -37,7 +37,7 @@ export function BookingCard({ trip, className }: BookingCardProps) {
         )}
       >
         {/* Image */}
-        <div className="relative w-24 h-24 flex-shrink-0 rounded-xl overflow-hidden bg-paper-warm">
+        <div className="relative w-24 h-24 shrink-0 rounded-xl overflow-hidden bg-paper-warm">
           <img
             src={trip.listing.images[0]}
             alt={trip.listing.title}

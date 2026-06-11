@@ -24,7 +24,7 @@ const features = [
 
 export default function App() {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#111] via-[#0E0E0E] to-[#141418] text-gray-100 relative overflow-hidden border border-white/5 rounded-xl">
+    <div className="min-h-screen bg-linear-to-b from-[#111] via-[#0E0E0E] to-[#141418] text-gray-100 relative overflow-hidden border border-white/5 rounded-xl">
       {/* Bottom glow */}
       <div className="fixed -bottom-30 left-1/2 -translate-x-1/2 w-[700px] h-[350px] rounded-full bg-[radial-gradient(ellipse_at_center,rgba(255,255,255,0.06)_0%,transparent_70%)] pointer-events-none" />
 

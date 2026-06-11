@@ -89,7 +89,7 @@ export function TripDetailPage() {
               <MessageSquare
                 size={18}
                 strokeWidth={1.75}
-                className="text-accent flex-shrink-0"
+                className="text-accent shrink-0"
               />
               <p className="text-[14px] text-ink">
                 <strong>{trip.listing.host.name}</strong> sent{" "}
@@ -109,7 +109,7 @@ export function TripDetailPage() {
             alt={trip.listing.title}
             className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/55 to-transparent" />
+          <div className="absolute inset-0 bg-linear-to-t from-black/55 to-transparent" />
           <div className="absolute bottom-5 left-5 right-5">
             <h1 className="text-[24px] font-semibold text-white tracking-tight text-balance">
               {trip.listing.title}
@@ -162,7 +162,7 @@ export function TripDetailPage() {
             href="#"
             className="mt-4 pt-4 border-t border-paper-deep flex items-center gap-2 text-[14px]"
           >
-            <MapPin size={14} className="text-accent flex-shrink-0" />
+            <MapPin size={14} className="text-accent shrink-0" />
             <span className="text-ink hover:underline">
               {trip.listing.location} — open in Maps
             </span>
@@ -180,7 +180,7 @@ export function TripDetailPage() {
             <ol className="space-y-3">
               {trip.checkInInstructions.map((step, i) => (
                 <li key={i} className="flex gap-3 text-[14px]">
-                  <span className="w-6 h-6 rounded-full bg-paper-warm text-ink-quiet text-[12px] font-semibold flex items-center justify-center flex-shrink-0">
+                  <span className="w-6 h-6 rounded-full bg-paper-warm text-ink-quiet text-[12px] font-semibold flex items-center justify-center shrink-0">
                     {i + 1}
                   </span>
                   <span className="text-ink leading-relaxed">{step}</span>
@@ -239,7 +239,7 @@ export function TripDetailPage() {
       {/* Cancellation flow */}
       {showCancel && (
         <div
-          className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
+          className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-4 bg-black/50 backdrop-blur-xs"
           onClick={() => {
             if (cancelStep === 1 || cancelStep === 2) setShowCancel(false);
           }}

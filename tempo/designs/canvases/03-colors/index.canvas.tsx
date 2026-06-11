@@ -723,7 +723,7 @@ export const Borders: TempoStoryboard = {
         <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: 16 }}>
           <BorderSwatch name="Hairline" value="#ebebeb" note="The default border. Cards, inputs, table rows." />
           <BorderSwatch name="Paper deep" value="#dddddd" note="Decorative dividers. Slightly heavier than hairline." />
-          <BorderSwatch name="Ink quiet" value="#717171" note="Hover state on inputs and outline buttons." />
+          <BorderSwatch name="Ink quiet" value="#717171" note="Hover state on inputs and outline-solid buttons." />
           <BorderSwatch name="Ink" value="#222222" weight={2} ring note="Focus state. 2px border plus a 6%-black ring." />
           <BorderSwatch name="Accent" value="#FF385C" weight={2} ring note="Error border. 2px coral plus a 10%-coral ring." />
         </div>
@@ -731,7 +731,7 @@ export const Borders: TempoStoryboard = {
 
       <Section
         title="Default → hover → focus"
-        description="The same input rendered in three states. Hairline at rest, Ink quiet on hover, Ink + ring on focus. The border is the entire state signal — nothing else changes."
+        description="The same input rendered in three states. Hairline at rest, Ink quiet on hover, Ink + ring-3 on focus. The border is the entire state signal — nothing else changes."
       >
         <div style={{ background: "#fff", padding: 32, borderRadius: 12, display: "flex", flexDirection: "column", gap: 14 }}>
           <div style={{ display: "flex", alignItems: "center", gap: 16 }}>

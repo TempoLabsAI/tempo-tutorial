@@ -160,7 +160,7 @@ export function ListingDetailPage() {
                   <Icon
                     size={22}
                     strokeWidth={1.5}
-                    className="text-ink-quiet flex-shrink-0 mt-0.5"
+                    className="text-ink-quiet shrink-0 mt-0.5"
                   />
                   <div>
                     <p className="text-[15px] font-semibold text-ink">{title}</p>
@@ -255,7 +255,7 @@ export function ListingDetailPage() {
                       i === 0 ? "border-r border-paper-deep" : ""
                     }`}
                   >
-                    <p className="text-[10px] font-bold text-ink tracking-[0.05em]">
+                    <p className="text-[10px] font-bold text-ink tracking-wider">
                       {d.label}
                     </p>
                     <p className="text-[14px] text-ink mt-0.5">{d.val}</p>
@@ -263,7 +263,7 @@ export function ListingDetailPage() {
                 ))}
               </div>
               <button className="w-full p-3 text-left border-x border-b border-paper-deep rounded-b-lg hover:bg-paper-warm transition-colors mb-4">
-                <p className="text-[10px] font-bold text-ink tracking-[0.05em]">
+                <p className="text-[10px] font-bold text-ink tracking-wider">
                   GUESTS
                 </p>
                 <p className="text-[14px] text-ink mt-0.5">2 guests</p>
@@ -323,7 +323,7 @@ export function ListingDetailPage() {
       {/* Booking modal */}
       {showBooking && (
         <div
-          className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
+          className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-4 bg-black/50 backdrop-blur-xs"
           onClick={() => setShowBooking(false)}
         >
           <motion.div

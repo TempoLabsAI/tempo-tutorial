@@ -75,7 +75,7 @@ export function SearchBar({
           value={destination}
           onChange={(e) => setDestination(e.target.value)}
           placeholder="Search destinations"
-          className="bg-transparent text-[14px] text-ink placeholder:text-ink-quiet focus:outline-none w-full mt-0.5 leading-tight"
+          className="bg-transparent text-[14px] text-ink placeholder:text-ink-quiet focus:outline-hidden w-full mt-0.5 leading-tight"
         />
       </label>
 

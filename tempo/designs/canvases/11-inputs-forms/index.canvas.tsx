@@ -340,19 +340,19 @@ export const States: TempoStoryboard = {
         description="Border darkens to ink-quiet as the cursor enters. Background stays white — the change is subtle on purpose."
       >
         <InputRowWithCaption label="Hover" caption="hover:border-ink-quiet">
-          <Input label="Destination" placeholder="Search destinations" className="!border-ink-quiet" />
+          <Input label="Destination" placeholder="Search destinations" className="border-ink-quiet!" />
         </InputRowWithCaption>
       </InputSection>
 
       <InputSection
         title="Focus"
-        description="Border goes ink, a 2px ring of 6% black halo lifts the field off the surface. The single strongest signal in the system that this is where input goes."
+        description="Border goes ink, a 2px ring-3 of 6% black halo lifts the field off the surface. The single strongest signal in the system that this is where input goes."
       >
-        <InputRowWithCaption label="Focus" caption="focus:border-ink + ring">
+        <InputRowWithCaption label="Focus" caption="focus:border-ink + ring-3">
           <Input
             label="Destination"
             defaultValue="Lis"
-            className="!border-ink !shadow-[0_0_0_2px_rgba(0,0,0,0.06)]"
+            className="border-ink! shadow-[0_0_0_2px_rgba(0,0,0,0.06)]!"
           />
         </InputRowWithCaption>
       </InputSection>
@@ -387,7 +387,7 @@ export const States: TempoStoryboard = {
             label="Email"
             defaultValue="not-an-email"
             error="Please enter a valid email"
-            className="!shadow-[0_0_0_2px_rgba(255,56,92,0.10)]"
+            className="shadow-[0_0_0_2px_rgba(255,56,92,0.10)]!"
           />
         </InputRowWithCaption>
       </InputSection>

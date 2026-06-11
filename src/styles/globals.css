@@ -1,59 +1,257 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
+
+/* Explicit sources: the tempo/ canvas devserver compiles this same file with
+   its own Vite root, so automatic source detection would miss the app. */
+@source '../../index.html';
+@source '../../src';
+@source '../../tempo/*.{ts,tsx,html}';
+@source '../../tempo/components';
+@source '../../tempo/designs';
+
+@theme {
+  --color-bone: var(--bone);
+  --color-paper: var(--paper);
+  --color-paper-warm: var(--paper-warm);
+  --color-paper-dark: var(--paper-dark);
+  --color-paper-deep: var(--paper-deep);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-ink-quiet: var(--ink-quiet);
+  --color-rule: var(--rule);
+  --color-terracotta: var(--terracotta);
+  --color-terracotta-light: var(--terracotta-light);
+  --color-terracotta-dark: var(--terracotta-dark);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-press: var(--accent-press);
+  --color-accent-soft: var(--accent-soft);
+  --color-moss: var(--moss);
+  --color-moss-light: var(--moss-light);
+  --color-moss-dark: var(--moss-dark);
+  --color-oxblood: var(--oxblood);
+  --color-patina: var(--patina);
+  --color-gold: var(--gold);
+  --color-stone: var(--stone);
+  --color-stone-light: var(--stone-light);
+  --color-stone-soft: var(--stone-soft);
+
+  --font-sans:
+    Geist, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue,
+    Helvetica, Arial, sans-serif;
+  --font-display:
+    Geist, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue,
+    Helvetica, Arial, sans-serif;
+  --font-mono: Geist Mono, ui-monospace, monospace;
+  --font-serif: Geist, -apple-system, BlinkMacSystemFont, sans-serif;
+
+  --text-display-xl: clamp(2.5rem, 5vw, 3.75rem);
+  --text-display-xl--line-height: 1.05;
+  --text-display-xl--letter-spacing: -0.02em;
+  --text-display-lg: clamp(2rem, 4vw, 3rem);
+  --text-display-lg--line-height: 1.1;
+  --text-display-lg--letter-spacing: -0.018em;
+  --text-display-md: clamp(1.625rem, 3vw, 2.25rem);
+  --text-display-md--line-height: 1.15;
+  --text-display-md--letter-spacing: -0.015em;
+  --text-display-sm: clamp(1.25rem, 2vw, 1.5rem);
+  --text-display-sm--line-height: 1.2;
+  --text-display-sm--letter-spacing: -0.01em;
+
+  --radius-plate: 12px;
+  --radius-4xl: 32px;
+  --radius-5xl: 40px;
+
+  --shadow-plate: var(--shadow-card);
+  --shadow-lift: var(--shadow-card-hover);
+  --shadow-press: var(--shadow-modal);
+  --shadow-card: var(--shadow-card);
+  --shadow-card-hover: var(--shadow-card-hover);
+  --shadow-modal: var(--shadow-modal);
+  --shadow-pill: var(--shadow-pill);
+
+  --animate-fade-in: fadeIn 0.4s var(--ease-out) forwards;
+  --animate-rise: revealUp 0.45s var(--ease-out) forwards;
+  --animate-pulse-soft: pulseSoft 2s ease-in-out infinite;
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(6px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  @keyframes revealUp {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  @keyframes pulseSoft {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.6;
+    }
+  }
+}
+
+/*
+  The default border color has changed to `currentcolor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentcolor);
+  }
+}
+
+@utility text-balance {
+  /* Subtle text wrap helpers */
+  text-wrap: balance;
+}
+@utility text-pretty {
+  text-wrap: pretty;
+}
+@utility scrollbar-none {
+  /* Hide scrollbars (chip rails / category rail) */
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+@utility reveal-up {
+  /* Soft reveal — subtle, no bounce */
+  & > * {
+    animation: revealUp 0.45s var(--ease-out) both;
+  }
+  & > *:nth-child(1) {
+    animation-delay: 0ms;
+  }
+  & > *:nth-child(2) {
+    animation-delay: 40ms;
+  }
+  & > *:nth-child(3) {
+    animation-delay: 80ms;
+  }
+  & > *:nth-child(4) {
+    animation-delay: 120ms;
+  }
+  & > *:nth-child(5) {
+    animation-delay: 160ms;
+  }
+  & > *:nth-child(6) {
+    animation-delay: 200ms;
+  }
+  & > *:nth-child(7) {
+    animation-delay: 240ms;
+  }
+  & > *:nth-child(8) {
+    animation-delay: 280ms;
+  }
+}
+/* Keyframes for the reveal-up utility. Also declared in @theme for the
+   animate-rise utility, but theme keyframes only emit when their
+   --animate-* token is used — reveal-up needs them unconditionally. */
+@keyframes revealUp {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@utility link-underline {
+  /* Underline-on-hover link */
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-underline-offset: 3px;
+  transition: text-decoration-color var(--duration-base) var(--ease-out);
+  &:hover {
+    text-decoration-color: currentColor;
+  }
+}
+@utility bg-airbnb-gradient {
+  /* Brand gradient (for the search button) */
+  background-image: linear-gradient(
+    135deg,
+    #ff385c 0%,
+    #e61e4d 50%,
+    #d70466 100%
+  );
+}
 
 /* ─────────────────────────────────────────────────────────────────────
-   Havn — Airbnb-style design system
-   White paper, near-black ink, coral red accent, single sans family.
-   ───────────────────────────────────────────────────────────────────── */
+ Havn — Airbnb-style design system
+ White paper, near-black ink, coral red accent, single sans family.
+ ───────────────────────────────────────────────────────────────────── */
 
 :root {
   /* ── Surface ──────────────────────────────────────────────────────── */
-  --bg:             #ffffff;
-  --paper:          #ffffff;
-  --paper-warm:     #f7f7f7;
-  --paper-dark:     #ebebeb;
-  --paper-deep:     #dddddd;
-  --bone:           #f7f7f7;
+  --bg: #ffffff;
+  --paper: #ffffff;
+  --paper-warm: #f7f7f7;
+  --paper-dark: #ebebeb;
+  --paper-deep: #dddddd;
+  --bone: #f7f7f7;
 
   /* ── Ink ──────────────────────────────────────────────────────────── */
-  --ink:            #222222;
-  --ink-soft:       #484848;
-  --ink-quiet:      #717171;
-  --fg:             var(--ink);
+  --ink: #222222;
+  --ink-soft: #484848;
+  --ink-quiet: #717171;
+  --fg: var(--ink);
 
   /* ── Lines ────────────────────────────────────────────────────────── */
-  --border:         #dddddd;
-  --border-soft:    #ebebeb;
-  --rule:           #dddddd;
-  --rule-strong:    #222222;
+  --border: #dddddd;
+  --border-soft: #ebebeb;
+  --rule: #dddddd;
+  --rule-strong: #222222;
 
   /* ── Brand accent — Airbnb pink ───────────────────────────────────── */
-  --accent:         #ff385c;
-  --accent-hover:   #e31c5f;
-  --accent-press:   #c0145a;
-  --accent-soft:    #fff0f3;
+  --accent: #ff385c;
+  --accent-hover: #e31c5f;
+  --accent-press: #c0145a;
+  --accent-soft: #fff0f3;
 
   /* legacy token names mapped to new palette so any leftover refs work */
-  --terracotta:       #ff385c;
+  --terracotta: #ff385c;
   --terracotta-light: #ff5a78;
-  --terracotta-dark:  #e31c5f;
-  --moss:           #008a05;
-  --moss-light:     #2ea437;
-  --moss-dark:      #006704;
-  --oxblood:        #c13515;
-  --patina:         #2c5282;
-  --gold:           #b08a3e;
-  --stone:          #717171;
-  --stone-light:    #ebebeb;
-  --stone-soft:     #f7f7f7;
+  --terracotta-dark: #e31c5f;
+  --moss: #008a05;
+  --moss-light: #2ea437;
+  --moss-dark: #006704;
+  --oxblood: #c13515;
+  --patina: #2c5282;
+  --gold: #b08a3e;
+  --stone: #717171;
+  --stone-light: #ebebeb;
+  --stone-soft: #f7f7f7;
 
   /* ── Motion ───────────────────────────────────────────────────────── */
-  --ease-out:       cubic-bezier(0.2, 0.8, 0.2, 1);
-  --ease-in-out:    cubic-bezier(0.65, 0, 0.35, 1);
-  --duration-fast:  150ms;
-  --duration-base:  220ms;
-  --duration-slow:  360ms;
+  --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --duration-fast: 150ms;
+  --duration-base: 220ms;
+  --duration-slow: 360ms;
 
   /* ── Radius ───────────────────────────────────────────────────────── */
   --r-xs: 4px;
@@ -65,13 +263,15 @@
   --r-pill: 999px;
 
   /* ── Shadows ──────────────────────────────────────────────────────── */
-  --shadow-card:        0 2px 4px rgba(0, 0, 0, 0.06), 0 6px 16px rgba(0, 0, 0, 0.08);
-  --shadow-card-hover:  0 6px 12px rgba(0, 0, 0, 0.08), 0 12px 28px rgba(0, 0, 0, 0.12);
-  --shadow-pill:        0 1px 2px rgba(0, 0, 0, 0.08), 0 6px 20px rgba(0, 0, 0, 0.10);
-  --shadow-modal:       0 24px 80px rgba(0, 0, 0, 0.25);
-  --shadow-plate:       var(--shadow-card);
-  --shadow-lift:        var(--shadow-card-hover);
-  --shadow-press:       var(--shadow-modal);
+  --shadow-card:
+    0 2px 4px rgba(0, 0, 0, 0.06), 0 6px 16px rgba(0, 0, 0, 0.08);
+  --shadow-card-hover:
+    0 6px 12px rgba(0, 0, 0, 0.08), 0 12px 28px rgba(0, 0, 0, 0.12);
+  --shadow-pill: 0 1px 2px rgba(0, 0, 0, 0.08), 0 6px 20px rgba(0, 0, 0, 0.1);
+  --shadow-modal: 0 24px 80px rgba(0, 0, 0, 0.25);
+  --shadow-plate: var(--shadow-card);
+  --shadow-lift: var(--shadow-card-hover);
+  --shadow-press: var(--shadow-modal);
 }
 
 /* ─── Base ─────────────────────────────────────────────────────────── */
@@ -93,14 +293,37 @@ html {
 body {
   background-color: var(--paper);
   color: var(--ink);
-  font-family: "Geist", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family:
+    'Geist',
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    Roboto,
+    'Helvetica Neue',
+    Helvetica,
+    Arial,
+    sans-serif;
   line-height: 1.4;
   min-height: 100dvh;
 }
 
 /* ─── Headings — also sans, just bolder/tighter ────────────────────── */
-h1, h2, h3, h4, h5, h6 {
-  font-family: "Geist", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Helvetica, Arial, sans-serif;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family:
+    'Geist',
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    Roboto,
+    'Helvetica Neue',
+    Helvetica,
+    Arial,
+    sans-serif;
   font-weight: 600;
   letter-spacing: -0.015em;
   color: var(--ink);
@@ -145,51 +368,6 @@ img {
 ::selection {
   background: var(--ink);
   color: var(--paper);
-}
-
-/* ─── Utilities ────────────────────────────────────────────────────── */
-@layer utilities {
-  /* Subtle text wrap helpers */
-  .text-balance { text-wrap: balance; }
-  .text-pretty  { text-wrap: pretty; }
-
-  /* Hide scrollbars (chip rails / category rail) */
-  .scrollbar-none { scrollbar-width: none; }
-  .scrollbar-none::-webkit-scrollbar { display: none; }
-
-  /* Soft reveal — subtle, no bounce */
-  .reveal-up > * {
-    animation: revealUp 0.45s var(--ease-out) both;
-  }
-  .reveal-up > *:nth-child(1) { animation-delay: 0ms; }
-  .reveal-up > *:nth-child(2) { animation-delay: 40ms; }
-  .reveal-up > *:nth-child(3) { animation-delay: 80ms; }
-  .reveal-up > *:nth-child(4) { animation-delay: 120ms; }
-  .reveal-up > *:nth-child(5) { animation-delay: 160ms; }
-  .reveal-up > *:nth-child(6) { animation-delay: 200ms; }
-  .reveal-up > *:nth-child(7) { animation-delay: 240ms; }
-  .reveal-up > *:nth-child(8) { animation-delay: 280ms; }
-
-  @keyframes revealUp {
-    from { opacity: 0; transform: translateY(8px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-
-  /* Underline-on-hover link */
-  .link-underline {
-    text-decoration: underline;
-    text-decoration-color: transparent;
-    text-underline-offset: 3px;
-    transition: text-decoration-color var(--duration-base) var(--ease-out);
-  }
-  .link-underline:hover {
-    text-decoration-color: currentColor;
-  }
-
-  /* Brand gradient (for the search button) */
-  .bg-airbnb-gradient {
-    background-image: linear-gradient(135deg, #ff385c 0%, #e61e4d 50%, #d70466 100%);
-  }
 }
 
 /* ─── Radix overrides ──────────────────────────────────────────────── */

@@ -6,7 +6,7 @@ export type ButtonVariant =
   | "secondary"
   | "ghost"
   | "destructive"
-  | "outline"
+  | "outline-solid"
   | "ink";
 export type ButtonSize = "sm" | "md" | "lg";
 
@@ -25,7 +25,7 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
  */
 const variantClasses: Record<ButtonVariant, string> = {
   primary:
-    "bg-accent hover:bg-accent-hover active:bg-accent-press text-white shadow-sm hover:shadow",
+    "bg-accent hover:bg-accent-hover active:bg-accent-press text-white shadow-xs hover:shadow-sm",
   ink:
     "bg-ink hover:bg-ink-soft active:bg-black text-white",
   secondary:

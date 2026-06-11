@@ -1,13 +1,11 @@
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import tailwindcss from "tailwindcss";
-import autoprefixer from "autoprefixer";
+import tailwindcss from "@tailwindcss/postcss";
 import react from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
 import tsconfigPaths from "vite-tsconfig-paths";
 
 const tempoRoot = path.dirname(fileURLToPath(import.meta.url));
-const projectRoot = path.resolve(tempoRoot, "..");
 
 export default defineConfig(async () => {
   const { tempoVitePlugin } = await import("tempo-sdk");
@@ -16,12 +14,9 @@ export default defineConfig(async () => {
     root: tempoRoot,
     css: {
       postcss: {
-        plugins: [
-          tailwindcss({
-            config: path.resolve(projectRoot, "tailwind.config.ts"),
-          }),
-          autoprefixer(),
-        ],
+        // Tailwind v4 is CSS-first: theme + sources live in
+        // ../src/styles/globals.css (imported by ./globals.css).
+        plugins: [tailwindcss()],
       },
     },
     resolve: {

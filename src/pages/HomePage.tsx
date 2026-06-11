@@ -60,7 +60,7 @@ export function HomePage() {
               <button
                 key={q}
                 onClick={() => navigate(`/search?q=${q}`)}
-                className="flex flex-col items-center gap-2 min-w-[80px] flex-shrink-0 pb-2 border-b-2 border-transparent hover:border-ink-quiet transition-colors group"
+                className="flex flex-col items-center gap-2 min-w-[80px] shrink-0 pb-2 border-b-2 border-transparent hover:border-ink-quiet transition-colors group"
               >
                 <Icon
                   size={26}

@@ -488,7 +488,7 @@ export const SearchBarShowcase: TempoStoryboard = {
           title="SearchBar"
           caption="Compact for the navbar, expanded on the hero. Click any segment to open a modal — destination search, date picker, or guest counter."
         >
-          <ComponentSection title="Compact" description="Single pill for the inner-page navbar. Rest, filled with a destination, and on hover (soft shadow lift).">
+          <ComponentSection title="Compact" description="Single pill for the inner-page navbar. Rest, filled with a destination, and on hover (soft shadow-sm lift).">
             <div style={{ background: "#fff", padding: 32, borderRadius: 12, display: "flex", flexDirection: "column", gap: 28, maxWidth: 520 }}>
               <SearchBar compact />
               <SearchBar compact defaultDestination="Lisbon" />
@@ -598,10 +598,10 @@ export const FilterChipShowcase: TempoStoryboard = {
 
         <ComponentSection title="Hover" description="Border darkens to ink as the cursor hovers. Background stays white.">
           <div style={{ background: "#fff", padding: 16, borderRadius: 12, display: "flex", gap: 10, flexWrap: "wrap" }}>
-            <FilterChip label="Price" className="!border-ink" />
-            <FilterChip label="Type of place" className="!border-ink" />
-            <FilterChip label="Beds" className="!border-ink" />
-            <FilterChip label="Amenities" className="!border-ink" />
+            <FilterChip label="Price" className="border-ink!" />
+            <FilterChip label="Type of place" className="border-ink!" />
+            <FilterChip label="Beds" className="border-ink!" />
+            <FilterChip label="Amenities" className="border-ink!" />
           </div>
         </ComponentSection>
 
@@ -756,7 +756,7 @@ export const HeartButtonShowcase: TempoStoryboard = {
         title="HeartButton"
         caption="The save-to-wishlist toggle. Two surface treatments — overlay on top of imagery, inline on paper — and a confirmed coral fill when active."
       >
-        <ComponentSection title="Overlay · rest" description="Sits on a listing photo. Translucent black fill, white stroke, a soft drop shadow so the heart reads on any image.">
+        <ComponentSection title="Overlay · rest" description="Sits on a listing photo. Translucent black fill, white stroke, a soft drop shadow-sm so the heart reads on any image.">
           <div style={{ display: "flex", gap: 16 }}>
             <div style={{ background: "#222222", padding: 20, borderRadius: 12 }}>
               <HeartButton saved={false} size="sm" surface="overlay" />

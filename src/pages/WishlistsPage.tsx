@@ -171,7 +171,7 @@ export function WishlistsPage() {
 
       {showCreate && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-xs"
           onClick={() => setShowCreate(false)}
         >
           <div
@@ -190,7 +190,7 @@ export function WishlistsPage() {
                 if (e.key === "Enter") createWishlist();
               }}
               placeholder="Name"
-              className="w-full h-12 bg-white border border-paper-deep focus:border-ink rounded-lg px-4 text-[15px] text-ink placeholder:text-ink-quiet focus:outline-none transition-colors mb-4"
+              className="w-full h-12 bg-white border border-paper-deep focus:border-ink rounded-lg px-4 text-[15px] text-ink placeholder:text-ink-quiet focus:outline-hidden transition-colors mb-4"
             />
             <Button
               className="w-full mb-2"

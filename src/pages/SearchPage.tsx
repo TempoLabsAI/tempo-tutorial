@@ -60,14 +60,14 @@ export function SearchPage() {
                 />
               ))}
             </div>
-            <Button variant="outline" size="sm" className="gap-2 flex-shrink-0">
+            <Button variant="outline" size="sm" className="gap-2 shrink-0">
               <SlidersHorizontal size={14} strokeWidth={2} />
               Filters
             </Button>
             {hasActiveFilters && (
               <button
                 onClick={clearAllFilters}
-                className="hidden sm:inline-flex items-center gap-1 text-[14px] font-medium text-ink-quiet hover:text-ink underline transition-colors flex-shrink-0"
+                className="hidden sm:inline-flex items-center gap-1 text-[14px] font-medium text-ink-quiet hover:text-ink underline transition-colors shrink-0"
               >
                 <X size={14} strokeWidth={2} /> Clear all
               </button>
