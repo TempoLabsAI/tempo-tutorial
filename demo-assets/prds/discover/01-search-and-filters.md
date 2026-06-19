@@ -1,5 +1,6 @@
 # Search & filters
 
+**Icon:** 🎛️
 **Parent:** [Discover & Search](./00-parent-discover-and-search.md)
 **Status:** In Review
 **Linked canvases:** [Search experience](../../../designs/pages/search-experience/index.page.tsx)

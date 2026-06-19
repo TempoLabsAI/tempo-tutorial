@@ -1,5 +1,6 @@
 # Messaging with host
 
+**Icon:** 💬
 **Parent:** [Your trips](./00-parent-your-trips.md)
 **Status:** Draft
 **Linked canvases:** [Messaging](../../../designs/pages/messaging/index.page.tsx)

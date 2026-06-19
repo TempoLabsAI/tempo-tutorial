@@ -1,5 +1,6 @@
 # Listing detail page
 
+**Icon:** 🏡
 **Parent:** [Book a stay](./00-parent-book-a-stay.md)
 **Status:** Approved
 **Linked canvases:** [Listing detail](../../../designs/pages/listing-detail/index.page.tsx)

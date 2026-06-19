@@ -1,5 +1,6 @@
 # Map view for search results
 
+**Icon:** 🗺️
 **Parent:** [Discover & Search](./00-parent-discover-and-search.md)
 **Status:** Approved
 **Linked canvases:** *Design pending — see linked issue*

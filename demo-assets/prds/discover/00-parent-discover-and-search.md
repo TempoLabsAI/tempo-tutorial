@@ -1,18 +1,14 @@
 # Discover & Search
 
+**Icon:** 🔍
 **Status:** Active
-**Children:**
-- [01 — Search & filters](./01-search-and-filters.md)
-- [02 — Map view for search results](./02-map-view.md)
-- [03 — Wishlists & favorites](./03-wishlists.md)
-
-**Linked canvases:** [Search experience](../../../designs/pages/search-experience/index.page.tsx) · [Wishlists](../../../designs/pages/wishlists/index.page.tsx)
 
 ## Why this area matters
 
 Search is where 80% of guest sessions begin. Every other surface (listing detail, booking, trips) is downstream of a successful search. If guests can't quickly narrow from "millions of places" to "the five I'm choosing between," nothing else we ship matters.
 
 Two failure modes drive most lost sessions:
+
 1. **Filter overwhelm.** Too many filters, presented flatly, and guests bounce before they refine.
 2. **No spatial context.** Travelers think geographically ("near the beach", "walkable to old town") but search results are list-only.
 
@@ -21,12 +17,14 @@ Wishlists are the search-adjacent feature that converts browsing into commitment
 ## Scope
 
 **In:**
+
 - Free-text destination search with date and guest count
 - Faceted filters (price, beds, amenities, property type)
 - Map-based result viewing
 - Saving listings to named wishlists for later
 
 **Out (for now):**
+
 - Search personalization based on past trips
 - Collaborative wishlists (sharing with co-travelers)
 - AI-driven destination recommendations

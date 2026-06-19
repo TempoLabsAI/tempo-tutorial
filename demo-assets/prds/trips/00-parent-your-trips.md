@@ -1,12 +1,7 @@
 # Your trips
 
+**Icon:** 🧳
 **Status:** Active
-**Children:**
-- [01 — Trip itinerary](./01-trip-itinerary.md)
-- [02 — Messaging with host](./02-messaging.md)
-- [03 — Cancellation flow](./03-cancellation-flow.md)
-
-**Linked canvases:** [Trip itinerary](../../../designs/pages/trip-itinerary/index.page.tsx) · [Messaging](../../../designs/pages/messaging/index.page.tsx)
 
 ## Why this area matters
 
@@ -19,11 +14,13 @@ Beyond logistics, the post-stay experience matters too. A guest who had a great 
 ## Scope
 
 **In:**
+
 - Trip itinerary: a clear, chronological view of what's coming (check-in instructions, dates, host contact, address)
-- Messaging: a lightweight inbox for guest ↔ host direct messages
+- Messaging: a lightweight inbox for guest  host direct messages
 - Cancellation: a clear, low-panic path through cancellation with refund clarity upfront
 
 **Out (for now):**
+
 - Co-traveler trip sharing
 - In-trip issue reporting / safety features
 - Travel insurance or rebooking recommendations post-cancellation

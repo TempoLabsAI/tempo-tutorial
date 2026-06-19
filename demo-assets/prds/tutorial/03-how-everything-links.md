@@ -2,6 +2,7 @@
 
 > **This is a tutorial PRD.** It explains the connective tissue of a Tempo workspace and shows the link graph using real examples from this tutorial.
 
+**Icon:** 🔗
 **Status:** Tutorial
 **Linked canvases:** [Start here canvas](../../../designs/pages/start-here/index.page.tsx) · [Search experience](../../../designs/pages/search-experience/index.page.tsx) · [Listing detail](../../../designs/pages/listing-detail/index.page.tsx) · [Trip itinerary](../../../designs/pages/trip-itinerary/index.page.tsx)
 **Linked issues:** [#2 Edit a component on the canvas](../../issues/02-edit-a-component.md)
@@ -41,25 +42,17 @@ A real product team's board has tickets in different states. Some have full spec
 
 The mature case. PRD + canvas + issue all exist and reference each other.
 
-**Example:** [Search & filters PRD](../discover/01-search-and-filters.md) ↔ [Search experience canvas](../../../designs/pages/search-experience/index.page.tsx) ↔ [Issue #3 Add price range filter](../../issues/03-price-filter.md).
-
 ### 2. Spec'd but not yet designed
 
 A real workflow: PM writes the spec, designer hasn't started yet. The ticket exists to track that gap.
-
-**Example:** [Map view PRD](../discover/02-map-view.md) ↔ [Issue #5 Add map view to search results](../../issues/05-map-view.md). **No canvas yet** — that's what the ticket is for.
 
 ### 3. Designed but spec is WIP
 
 A real workflow: designer is exploring directions, PM hasn't formalized the spec. The canvas exists, the PRD is a stub.
 
-**Example:** [Issue #6 Refresh messaging inbox](../../issues/06-inbox-refresh.md) → [Messaging canvas](../../../designs/pages/messaging/index.page.tsx). The [Messaging PRD](../trips/02-messaging.md) exists but is short.
-
 ### 4. Spec parked, no active work
 
 A spec that's been written but no ticket has been opened to do the work. Useful — keeps intent captured even when prioritization hasn't gotten there yet.
-
-**Example:** [Reviews on listing PRD](../book/03-reviews-on-listing.md). It lives on the [Listing detail canvas](../../../designs/pages/listing-detail/index.page.tsx) (the reviews section is part of the listing) but has no dedicated issue.
 
 ## How to navigate the graph
 
@@ -68,13 +61,5 @@ A spec that's been written but no ticket has been opened to do the work. Useful 
 - **Visual:** Open a canvas → use the storyboards as an index into PRDs and issues.
 
 There's no "right" entry point. New users tend to start with the canvas (visual). Engineers tend to start with the issue (work-shaped). PMs tend to start with the parent PRD (strategic). Pick your lane.
-
-## Try it yourself
-
-1. Open [Issue #3 Add price range filter](../../issues/03-price-filter.md).
-2. Click through to its linked PRD ([Search & filters](../discover/01-search-and-filters.md)).
-3. From the PRD, click through to the linked canvas ([Search experience](../../../designs/pages/search-experience/index.page.tsx)).
-4. On the canvas, find the *Filters drawer (open)* storyboard.
-5. Open the file in `src/design-system/components/FilterChip.tsx` — the same component the storyboard renders.
 
 You just round-tripped through all four surfaces. Every workspace works this way.

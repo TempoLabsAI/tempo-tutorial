@@ -1,5 +1,6 @@
 # Trip itinerary
 
+**Icon:** 🗓️
 **Parent:** [Your trips](./00-parent-your-trips.md)
 **Status:** Approved
 **Linked canvases:** [Trip itinerary](../../../designs/pages/trip-itinerary/index.page.tsx)

@@ -1,5 +1,6 @@
 # Cancellation flow
 
+**Icon:** 🚫
 **Parent:** [Your trips](./00-parent-your-trips.md)
 **Status:** In Review
 **Linked canvases:** [Trip itinerary](../../../designs/pages/trip-itinerary/index.page.tsx)

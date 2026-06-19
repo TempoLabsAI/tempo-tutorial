@@ -1,5 +1,6 @@
 # Reviews on listing
 
+**Icon:** ⭐
 **Parent:** [Book a stay](./00-parent-book-a-stay.md)
 **Status:** Draft
 **Linked canvases:** [Listing detail](../../../designs/pages/listing-detail/index.page.tsx)

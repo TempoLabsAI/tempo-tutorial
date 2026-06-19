@@ -1,5 +1,6 @@
 # Wishlists & favorites
 
+**Icon:** ❤️
 **Parent:** [Discover & Search](./00-parent-discover-and-search.md)
 **Status:** Shipped
 **Linked canvases:** [Wishlists](../../../designs/pages/wishlists/index.page.tsx)

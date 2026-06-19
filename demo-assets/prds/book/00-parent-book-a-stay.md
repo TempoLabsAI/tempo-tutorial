@@ -1,12 +1,7 @@
 # Book a stay
 
+**Icon:** 🏠
 **Status:** Active
-**Children:**
-- [01 — Listing detail page](./01-listing-detail.md)
-- [02 — Booking widget & checkout](./02-booking-widget.md)
-- [03 — Reviews on listing](./03-reviews-on-listing.md)
-
-**Linked canvases:** [Listing detail](../../../designs/pages/listing-detail/index.page.tsx)
 
 ## Why this area matters
 
@@ -21,6 +16,7 @@ The bar is high. Guests arrive with strong intent and high anxiety: they're abou
 ## Scope
 
 **In:**
+
 - Photo gallery with a clear primary image and grid view
 - Above-the-fold information density without clutter
 - Sticky booking widget with date pickers, guest counter, price breakdown
@@ -29,6 +25,7 @@ The bar is high. Guests arrive with strong intent and high anxiety: they're abou
 - Map preview of the listing's neighborhood
 
 **Out (for now):**
+
 - Live availability calendar inside the gallery — defer
 - Augmented reality tour — out of scope
 - Multi-listing comparison — separate feature
