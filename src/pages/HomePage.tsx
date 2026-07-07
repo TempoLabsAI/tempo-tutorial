@@ -14,15 +14,6 @@ import { ListingCard } from "@/design-system/components/ListingCard";
 import { Button } from "@/design-system/primitives/Button";
 import { LISTINGS } from "@/data/listings";
 
-const categories = [
-  { label: "Beachfront", icon: Waves, q: "coastal" },
-  { label: "Cabins", icon: TreePine, q: "forest" },
-  { label: "Cities", icon: Building2, q: "city" },
-  { label: "Mountains", icon: Mountain, q: "mountain" },
-  { label: "Camping", icon: Tent, q: "camping" },
-  { label: "Castles", icon: Castle, q: "castle" },
-];
-
 const featured = LISTINGS.slice(0, 4);
 const more = LISTINGS.slice(4, 8);
 
@@ -56,22 +47,84 @@ export function HomePage() {
       <section className="border-b border-paper-deep">
         <Container>
           <div className="flex items-center gap-8 overflow-x-auto scrollbar-none py-4">
-            {categories.map(({ label, icon: Icon, q }) => (
-              <button
-                key={q}
-                onClick={() => navigate(`/search?q=${q}`)}
-                className="flex flex-col items-center gap-2 min-w-[80px] shrink-0 pb-2 border-b-2 border-transparent hover:border-ink-quiet transition-colors group"
-              >
-                <Icon
-                  size={26}
-                  strokeWidth={1.5}
-                  className="text-ink-quiet group-hover:text-ink transition-colors"
-                />
-                <span className="text-[12px] font-medium text-ink-quiet group-hover:text-ink transition-colors whitespace-nowrap">
-                  {label}
-                </span>
-              </button>
-            ))}
+            <button
+              onClick={() => navigate("/search?q=coastal")}
+              className="flex flex-col items-center gap-2 min-w-[80px] shrink-0 pb-2 border-b-2 border-transparent hover:border-ink-quiet transition-colors group"
+            >
+              <Waves
+                size={26}
+                strokeWidth={1.5}
+                className="text-ink-quiet group-hover:text-ink transition-colors"
+              />
+              <span className="text-[12px] font-medium text-ink-quiet group-hover:text-ink transition-colors whitespace-nowrap">
+                Beachfront
+              </span>
+            </button>
+            <button
+              onClick={() => navigate("/search?q=forest")}
+              className="flex flex-col items-center gap-2 min-w-[80px] shrink-0 pb-2 border-b-2 border-transparent hover:border-ink-quiet transition-colors group"
+            >
+              <TreePine
+                size={26}
+                strokeWidth={1.5}
+                className="text-ink-quiet group-hover:text-ink transition-colors"
+              />
+              <span className="text-[12px] font-medium text-ink-quiet group-hover:text-ink transition-colors whitespace-nowrap">
+                Cabins
+              </span>
+            </button>
+            <button
+              onClick={() => navigate("/search?q=city")}
+              className="flex flex-col items-center gap-2 min-w-[80px] shrink-0 pb-2 border-b-2 border-transparent hover:border-ink-quiet transition-colors group"
+            >
+              <Building2
+                size={26}
+                strokeWidth={1.5}
+                className="text-ink-quiet group-hover:text-ink transition-colors"
+              />
+              <span className="text-[12px] font-medium text-ink-quiet group-hover:text-ink transition-colors whitespace-nowrap">
+                Cities
+              </span>
+            </button>
+            <button
+              onClick={() => navigate("/search?q=mountain")}
+              className="flex flex-col items-center gap-2 min-w-[80px] shrink-0 pb-2 border-b-2 border-transparent hover:border-ink-quiet transition-colors group"
+            >
+              <Mountain
+                size={26}
+                strokeWidth={1.5}
+                className="text-ink-quiet group-hover:text-ink transition-colors"
+              />
+              <span className="text-[12px] font-medium text-ink-quiet group-hover:text-ink transition-colors whitespace-nowrap">
+                Mountains
+              </span>
+            </button>
+            <button
+              onClick={() => navigate("/search?q=camping")}
+              className="flex flex-col items-center gap-2 min-w-[80px] shrink-0 pb-2 border-b-2 border-transparent hover:border-ink-quiet transition-colors group"
+            >
+              <Tent
+                size={26}
+                strokeWidth={1.5}
+                className="text-ink-quiet group-hover:text-ink transition-colors"
+              />
+              <span className="text-[12px] font-medium text-ink-quiet group-hover:text-ink transition-colors whitespace-nowrap">
+                Camping
+              </span>
+            </button>
+            <button
+              onClick={() => navigate("/search?q=castle")}
+              className="flex flex-col items-center gap-2 min-w-[80px] shrink-0 pb-2 border-b-2 border-transparent hover:border-ink-quiet transition-colors group"
+            >
+              <Castle
+                size={26}
+                strokeWidth={1.5}
+                className="text-ink-quiet group-hover:text-ink transition-colors"
+              />
+              <span className="text-[12px] font-medium text-ink-quiet group-hover:text-ink transition-colors whitespace-nowrap">
+                Castles
+              </span>
+            </button>
           </div>
         </Container>
       </section>
@@ -131,23 +184,48 @@ export function HomePage() {
             Inspiration for future getaways
           </h2>
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-x-6 gap-y-3">
-            {[
-              ["Family travel", "Destinations for families"],
-              ["Outdoor escapes", "Lakes, forests, hills"],
-              ["Beach getaways", "Sun, sand, salt"],
-              ["Unique stays", "Treehouses, riads, more"],
-              ["City breaks", "Apartments in town"],
-              ["Mountain retreats", "Cabins and lodges"],
-            ].map(([title, sub]) => (
-              <a
-                key={title}
-                onClick={() => navigate("/search")}
-                className="block py-3 border-t border-paper-deep cursor-pointer hover:opacity-70 transition-opacity"
-              >
-                <p className="text-[14px] font-semibold text-ink">{title}</p>
-                <p className="text-[13px] text-ink-quiet mt-0.5">{sub}</p>
-              </a>
-            ))}
+            <a
+              onClick={() => navigate("/search")}
+              className="block py-3 border-t border-paper-deep cursor-pointer hover:opacity-70 transition-opacity"
+            >
+              <p className="text-[14px] font-semibold text-ink">Family travel</p>
+              <p className="text-[13px] text-ink-quiet mt-0.5">Destinations for families</p>
+            </a>
+            <a
+              onClick={() => navigate("/search")}
+              className="block py-3 border-t border-paper-deep cursor-pointer hover:opacity-70 transition-opacity"
+            >
+              <p className="text-[14px] font-semibold text-ink">Outdoor escapes</p>
+              <p className="text-[13px] text-ink-quiet mt-0.5">Lakes, forests, hills</p>
+            </a>
+            <a
+              onClick={() => navigate("/search")}
+              className="block py-3 border-t border-paper-deep cursor-pointer hover:opacity-70 transition-opacity"
+            >
+              <p className="text-[14px] font-semibold text-ink">Beach getaways</p>
+              <p className="text-[13px] text-ink-quiet mt-0.5">Sun, sand, salt</p>
+            </a>
+            <a
+              onClick={() => navigate("/search")}
+              className="block py-3 border-t border-paper-deep cursor-pointer hover:opacity-70 transition-opacity"
+            >
+              <p className="text-[14px] font-semibold text-ink">Unique stays</p>
+              <p className="text-[13px] text-ink-quiet mt-0.5">Treehouses, riads, more</p>
+            </a>
+            <a
+              onClick={() => navigate("/search")}
+              className="block py-3 border-t border-paper-deep cursor-pointer hover:opacity-70 transition-opacity"
+            >
+              <p className="text-[14px] font-semibold text-ink">City breaks</p>
+              <p className="text-[13px] text-ink-quiet mt-0.5">Apartments in town</p>
+            </a>
+            <a
+              onClick={() => navigate("/search")}
+              className="block py-3 border-t border-paper-deep cursor-pointer hover:opacity-70 transition-opacity"
+            >
+              <p className="text-[14px] font-semibold text-ink">Mountain retreats</p>
+              <p className="text-[13px] text-ink-quiet mt-0.5">Cabins and lodges</p>
+            </a>
           </div>
         </Container>
       </section>
@@ -156,23 +234,62 @@ export function HomePage() {
       <footer className="bg-paper-warm border-t border-paper-deep">
         <Container className="py-8">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-6">
-            {[
-              { h: "Support", links: ["Help Center", "Cancellation options", "Trust & Safety"] },
-              { h: "Hosting", links: ["Become a host", "Resources", "Community forum"] },
-              { h: "Havn", links: ["About", "Careers", "Press"] },
-              { h: "Travel", links: ["Gift cards", "Travel insurance", "Affiliates"] },
-            ].map((col) => (
-              <div key={col.h}>
-                <p className="text-[13px] font-semibold text-ink mb-3">{col.h}</p>
-                <ul className="space-y-2">
-                  {col.links.map((l) => (
-                    <li key={l} className="text-[13px] text-ink-quiet hover:text-ink transition-colors cursor-pointer">
-                      {l}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
+            <div>
+              <p className="text-[13px] font-semibold text-ink mb-3">Support</p>
+              <ul className="space-y-2">
+                <li className="text-[13px] text-ink-quiet hover:text-ink transition-colors cursor-pointer">
+                  Help Center
+                </li>
+                <li className="text-[13px] text-ink-quiet hover:text-ink transition-colors cursor-pointer">
+                  Cancellation options
+                </li>
+                <li className="text-[13px] text-ink-quiet hover:text-ink transition-colors cursor-pointer">
+                  Trust &amp; Safety
+                </li>
+              </ul>
+            </div>
+            <div>
+              <p className="text-[13px] font-semibold text-ink mb-3">Hosting</p>
+              <ul className="space-y-2">
+                <li className="text-[13px] text-ink-quiet hover:text-ink transition-colors cursor-pointer">
+                  Become a host
+                </li>
+                <li className="text-[13px] text-ink-quiet hover:text-ink transition-colors cursor-pointer">
+                  Resources
+                </li>
+                <li className="text-[13px] text-ink-quiet hover:text-ink transition-colors cursor-pointer">
+                  Community forum
+                </li>
+              </ul>
+            </div>
+            <div>
+              <p className="text-[13px] font-semibold text-ink mb-3">Havn</p>
+              <ul className="space-y-2">
+                <li className="text-[13px] text-ink-quiet hover:text-ink transition-colors cursor-pointer">
+                  About
+                </li>
+                <li className="text-[13px] text-ink-quiet hover:text-ink transition-colors cursor-pointer">
+                  Careers
+                </li>
+                <li className="text-[13px] text-ink-quiet hover:text-ink transition-colors cursor-pointer">
+                  Press
+                </li>
+              </ul>
+            </div>
+            <div>
+              <p className="text-[13px] font-semibold text-ink mb-3">Travel</p>
+              <ul className="space-y-2">
+                <li className="text-[13px] text-ink-quiet hover:text-ink transition-colors cursor-pointer">
+                  Gift cards
+                </li>
+                <li className="text-[13px] text-ink-quiet hover:text-ink transition-colors cursor-pointer">
+                  Travel insurance
+                </li>
+                <li className="text-[13px] text-ink-quiet hover:text-ink transition-colors cursor-pointer">
+                  Affiliates
+                </li>
+              </ul>
+            </div>
           </div>
           <div className="border-t border-paper-deep pt-4 flex flex-wrap items-center justify-between gap-3 text-[13px] text-ink-quiet">
             <span>© 2026 Havn, Inc. · Privacy · Terms · Sitemap</span>

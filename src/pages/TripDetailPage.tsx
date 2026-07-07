@@ -290,20 +290,21 @@ export function TripDetailPage() {
                   Why are you cancelling?
                 </h3>
                 <div className="space-y-2 mb-5">
-                  {[
-                    "Plans changed",
-                    "Dates wrong",
-                    "Found a better option",
-                    "Emergency",
-                    "Other",
-                  ].map((r) => (
-                    <button
-                      key={r}
-                      className="w-full text-left p-3.5 rounded-xl border border-paper-deep hover:border-ink text-[14px] text-ink transition-colors"
-                    >
-                      {r}
-                    </button>
-                  ))}
+                  <button className="w-full text-left p-3.5 rounded-xl border border-paper-deep hover:border-ink text-[14px] text-ink transition-colors">
+                    Plans changed
+                  </button>
+                  <button className="w-full text-left p-3.5 rounded-xl border border-paper-deep hover:border-ink text-[14px] text-ink transition-colors">
+                    Dates wrong
+                  </button>
+                  <button className="w-full text-left p-3.5 rounded-xl border border-paper-deep hover:border-ink text-[14px] text-ink transition-colors">
+                    Found a better option
+                  </button>
+                  <button className="w-full text-left p-3.5 rounded-xl border border-paper-deep hover:border-ink text-[14px] text-ink transition-colors">
+                    Emergency
+                  </button>
+                  <button className="w-full text-left p-3.5 rounded-xl border border-paper-deep hover:border-ink text-[14px] text-ink transition-colors">
+                    Other
+                  </button>
                 </div>
                 <Button className="w-full mb-2" onClick={() => setCancelStep(3)}>
                   Continue

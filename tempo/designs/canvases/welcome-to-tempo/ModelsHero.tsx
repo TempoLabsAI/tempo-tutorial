@@ -1,5 +1,4 @@
 import { Check, ChevronDown, ArrowUpRight } from "lucide-react";
-import { FreeTierIcon } from "./_ui";
 import chatBg from "./assets/chat-bg.png";
 
 /**
@@ -76,57 +75,6 @@ function OpenAIIcon({ className = "" }: { className?: string }) {
   );
 }
 
-type Provider = "claude" | "opencode" | "openai";
-
-interface Row {
-  name: string;
-  provider: Provider;
-  current?: boolean;
-  free?: boolean;
-  /** Different provider than the active one — shows the cross-provider arrow. */
-  cross?: boolean;
-}
-
-interface Group {
-  label: string;
-  rows: Row[];
-}
-
-/** Mirrors the production picker's grouping (provider sections, free flagged). */
-const GROUPS: Group[] = [
-  {
-    label: "Claude",
-    rows: [
-      { name: "Opus 4.8", provider: "claude", current: true },
-      { name: "Sonnet 4.6", provider: "claude" },
-      { name: "Haiku 4.5", provider: "claude" },
-    ],
-  },
-  {
-    label: "Codex",
-    rows: [
-      { name: "GPT-5.4", provider: "openai", cross: true },
-      { name: "GPT-5.4-mini", provider: "openai", cross: true },
-    ],
-  },
-  {
-    label: "OpenCode",
-    rows: [
-      { name: "Kimi K2", provider: "opencode", cross: true },
-      { name: "Qwen3 Coder", provider: "opencode", cross: true },
-      { name: "Grok Code", provider: "opencode", cross: true },
-    ],
-  },
-];
-
-function ProviderMark({ provider }: { provider: Provider }) {
-  if (provider === "claude")
-    return <ClaudeIcon className="text-text-tertiary shrink-0" />;
-  if (provider === "opencode")
-    return <OpencodeIcon className="text-text-tertiary shrink-0" />;
-  return <OpenAIIcon className="text-text-tertiary shrink-0" />;
-}
-
 /**
  * Faithful reproduction of the model picker's `DropdownMenuContent` —
  * same panel chrome (`rounded-lg border bg-surface-container-high px-1.5
@@ -136,32 +84,61 @@ function ProviderMark({ provider }: { provider: Provider }) {
 function ModelPickerPanel() {
   return (
     <div className="min-w-[232px] rounded-lg border border-border-primary bg-surface-container-high px-1.5 py-1.5 shadow-dropdown">
-      {GROUPS.map((group, gi) => (
-        <div key={group.label}>
-          {gi > 0 ? <div className="my-1 -mx-1.5 h-px bg-menu-divider" /> : null}
-          <div className="px-2 py-1 [font-size:var(--text-label)] [line-height:var(--leading-label)] font-medium text-text-tertiary">
-            {group.label}
-          </div>
-          {group.rows.map((row) => (
-            <div
-              key={row.name}
-              className={`flex cursor-pointer items-center gap-2 rounded-sm px-2.5 py-2 [font-size:var(--text-body)] [line-height:var(--leading-body)] text-text-secondary transition-colors hover:bg-surface-container-highest ${
-                row.current ? "bg-surface-container-highest" : ""
-              }`}
-            >
-              <ProviderMark provider={row.provider} />
-              <span className="flex-1">{row.name}</span>
-              {row.free ? <FreeTierIcon className="shrink-0" /> : null}
-              {row.current ? (
-                <Check className="size-3.5 shrink-0 text-text-tertiary" />
-              ) : null}
-              {row.cross ? (
-                <ArrowUpRight className="size-3.5 shrink-0 text-text-tertiary" />
-              ) : null}
-            </div>
-          ))}
+      <div>
+        <div className="px-2 py-1 [font-size:var(--text-label)] [line-height:var(--leading-label)] font-medium text-text-tertiary">
+          Claude
         </div>
-      ))}
+        <div className="flex cursor-pointer items-center gap-2 rounded-sm px-2.5 py-2 [font-size:var(--text-body)] [line-height:var(--leading-body)] text-text-secondary transition-colors hover:bg-surface-container-highest bg-surface-container-highest">
+          <ClaudeIcon className="text-text-tertiary shrink-0" />
+          <span className="flex-1">Opus 4.8</span>
+          <Check className="size-3.5 shrink-0 text-text-tertiary" />
+        </div>
+        <div className="flex cursor-pointer items-center gap-2 rounded-sm px-2.5 py-2 [font-size:var(--text-body)] [line-height:var(--leading-body)] text-text-secondary transition-colors hover:bg-surface-container-highest ">
+          <ClaudeIcon className="text-text-tertiary shrink-0" />
+          <span className="flex-1">Sonnet 4.6</span>
+        </div>
+        <div className="flex cursor-pointer items-center gap-2 rounded-sm px-2.5 py-2 [font-size:var(--text-body)] [line-height:var(--leading-body)] text-text-secondary transition-colors hover:bg-surface-container-highest ">
+          <ClaudeIcon className="text-text-tertiary shrink-0" />
+          <span className="flex-1">Haiku 4.5</span>
+        </div>
+      </div>
+      <div>
+        <div className="my-1 -mx-1.5 h-px bg-menu-divider" />
+        <div className="px-2 py-1 [font-size:var(--text-label)] [line-height:var(--leading-label)] font-medium text-text-tertiary">
+          Codex
+        </div>
+        <div className="flex cursor-pointer items-center gap-2 rounded-sm px-2.5 py-2 [font-size:var(--text-body)] [line-height:var(--leading-body)] text-text-secondary transition-colors hover:bg-surface-container-highest ">
+          <OpenAIIcon className="text-text-tertiary shrink-0" />
+          <span className="flex-1">GPT-5.4</span>
+          <ArrowUpRight className="size-3.5 shrink-0 text-text-tertiary" />
+        </div>
+        <div className="flex cursor-pointer items-center gap-2 rounded-sm px-2.5 py-2 [font-size:var(--text-body)] [line-height:var(--leading-body)] text-text-secondary transition-colors hover:bg-surface-container-highest ">
+          <OpenAIIcon className="text-text-tertiary shrink-0" />
+          <span className="flex-1">GPT-5.4-mini</span>
+          <ArrowUpRight className="size-3.5 shrink-0 text-text-tertiary" />
+        </div>
+      </div>
+      <div>
+        <div className="my-1 -mx-1.5 h-px bg-menu-divider" />
+        <div className="px-2 py-1 [font-size:var(--text-label)] [line-height:var(--leading-label)] font-medium text-text-tertiary">
+          OpenCode
+        </div>
+        <div className="flex cursor-pointer items-center gap-2 rounded-sm px-2.5 py-2 [font-size:var(--text-body)] [line-height:var(--leading-body)] text-text-secondary transition-colors hover:bg-surface-container-highest ">
+          <OpencodeIcon className="text-text-tertiary shrink-0" />
+          <span className="flex-1">Kimi K2</span>
+          <ArrowUpRight className="size-3.5 shrink-0 text-text-tertiary" />
+        </div>
+        <div className="flex cursor-pointer items-center gap-2 rounded-sm px-2.5 py-2 [font-size:var(--text-body)] [line-height:var(--leading-body)] text-text-secondary transition-colors hover:bg-surface-container-highest ">
+          <OpencodeIcon className="text-text-tertiary shrink-0" />
+          <span className="flex-1">Qwen3 Coder</span>
+          <ArrowUpRight className="size-3.5 shrink-0 text-text-tertiary" />
+        </div>
+        <div className="flex cursor-pointer items-center gap-2 rounded-sm px-2.5 py-2 [font-size:var(--text-body)] [line-height:var(--leading-body)] text-text-secondary transition-colors hover:bg-surface-container-highest ">
+          <OpencodeIcon className="text-text-tertiary shrink-0" />
+          <span className="flex-1">Grok Code</span>
+          <ArrowUpRight className="size-3.5 shrink-0 text-text-tertiary" />
+        </div>
+      </div>
     </div>
   );
 }

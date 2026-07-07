@@ -3,13 +3,6 @@ import { Globe, Menu, User } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { SearchBar } from "@/design-system/components/SearchBar";
 
-const tabs = [
-  { to: "/search", label: "Stays" },
-  { to: "/wishlists", label: "Wishlists" },
-  { to: "/trips", label: "Trips" },
-  { to: "/messages", label: "Messages" },
-];
-
 /**
  * Navbar — Airbnb-style.
  *  Row 1:  [Logo]                         [Search center on home]                         [Globe] [Profile menu]
@@ -77,27 +70,74 @@ export function Navbar() {
 
         {/* Row 2: section tabs */}
         <nav className="flex items-center gap-1 -mt-1">
-          {tabs.map((s) => {
-            const active = location.pathname.startsWith(s.to);
-            return (
-              <Link
-                key={s.to}
-                to={s.to}
-                className={cn(
-                  "relative inline-flex items-center px-4 h-10 text-[14px] font-medium transition-colors",
-                  active ? "text-ink" : "text-ink-quiet hover:text-ink",
-                )}
-              >
-                {s.label}
-                {active && (
-                  <span
-                    aria-hidden
-                    className="absolute -bottom-px left-3 right-3 h-0.5 bg-ink rounded-full"
-                  />
-                )}
-              </Link>
-            );
-          })}
+          <Link
+            to="/search"
+            className={cn(
+              "relative inline-flex items-center px-4 h-10 text-[14px] font-medium transition-colors",
+              location.pathname.startsWith("/search")
+                ? "text-ink"
+                : "text-ink-quiet hover:text-ink",
+            )}
+          >
+            Stays
+            {location.pathname.startsWith("/search") && (
+              <span
+                aria-hidden
+                className="absolute -bottom-px left-3 right-3 h-0.5 bg-ink rounded-full"
+              />
+            )}
+          </Link>
+          <Link
+            to="/wishlists"
+            className={cn(
+              "relative inline-flex items-center px-4 h-10 text-[14px] font-medium transition-colors",
+              location.pathname.startsWith("/wishlists")
+                ? "text-ink"
+                : "text-ink-quiet hover:text-ink",
+            )}
+          >
+            Wishlists
+            {location.pathname.startsWith("/wishlists") && (
+              <span
+                aria-hidden
+                className="absolute -bottom-px left-3 right-3 h-0.5 bg-ink rounded-full"
+              />
+            )}
+          </Link>
+          <Link
+            to="/trips"
+            className={cn(
+              "relative inline-flex items-center px-4 h-10 text-[14px] font-medium transition-colors",
+              location.pathname.startsWith("/trips")
+                ? "text-ink"
+                : "text-ink-quiet hover:text-ink",
+            )}
+          >
+            Trips
+            {location.pathname.startsWith("/trips") && (
+              <span
+                aria-hidden
+                className="absolute -bottom-px left-3 right-3 h-0.5 bg-ink rounded-full"
+              />
+            )}
+          </Link>
+          <Link
+            to="/messages"
+            className={cn(
+              "relative inline-flex items-center px-4 h-10 text-[14px] font-medium transition-colors",
+              location.pathname.startsWith("/messages")
+                ? "text-ink"
+                : "text-ink-quiet hover:text-ink",
+            )}
+          >
+            Messages
+            {location.pathname.startsWith("/messages") && (
+              <span
+                aria-hidden
+                className="absolute -bottom-px left-3 right-3 h-0.5 bg-ink rounded-full"
+              />
+            )}
+          </Link>
         </nav>
       </div>
     </header>
