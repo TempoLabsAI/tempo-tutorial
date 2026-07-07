@@ -242,22 +242,6 @@ const LOGICAL_BOARD_WIDTH = COLUMN_WIDTH * 3 + COLUMN_GAP * 2 + BOARD_PAD * 2; /
 const VISIBLE_BOARD_WIDTH = 492;
 const BOARD_SCALE = VISIBLE_BOARD_WIDTH / LOGICAL_BOARD_WIDTH; // ~0.799
 
-/** Stage definition for one column: id + label + accent color + its issues. */
-interface StageCol {
-  id: string;
-  label: string;
-  color: string;
-  issues: KanbanIssueData[];
-}
-
-/** Status banner spanning one or more stage columns (the coarse *status* tier). */
-interface StatusSpan {
-  status: KanbanIssueData["status"];
-  label: string;
-  color: string;
-  stageCount: number;
-}
-
 /**
  * Compact stage header — the real `StageIcon` + label + count `Badge`, the same
  * atoms the production `KanbanColumnHeader` composes (that component is locked to
@@ -292,34 +276,6 @@ function StageColumn({ issues }: { issues: KanbanIssueData[] }) {
     </div>
   );
 }
-
-// Three stage columns under two statuses: "In Progress" spans the first two
-// stages, "Done" spans the third. Cards under one status share that status.
-const STAGE_COLUMNS: StageCol[] = [
-  {
-    id: "in-progress",
-    label: "In Progress",
-    color: "var(--mustard-500)",
-    issues: IN_PROGRESS.slice(0, 3),
-  },
-  {
-    id: "in-review",
-    label: "In Review",
-    color: "var(--lavender-500)",
-    issues: IN_REVIEW.slice(0, 3).map((i) => ({ ...i, status: "in-progress" as const })),
-  },
-  {
-    id: "done",
-    label: "Done",
-    color: "var(--kiwi-500)",
-    issues: DONE,
-  },
-];
-
-const STATUS_SPANS: StatusSpan[] = [
-  { status: "in-progress", label: "In Progress", color: "var(--mustard-500)", stageCount: 2 },
-  { status: "done", label: "Done", color: "var(--kiwi-500)", stageCount: 1 },
-];
 
 // ---------------------------------------------------------------------------
 // 1 · The board
@@ -356,42 +312,53 @@ export function IssuesBoardHero() {
               {/* Status tier — real `KanbanStatusGroupLabel` banners, each
                   spanning its stage columns. */}
               <div className="flex gap-2">
-                {STATUS_SPANS.map((s) => (
-                  <KanbanStatusGroupLabel
-                    key={s.status}
-                    statusLabel={s.label}
-                    statusId={s.status}
-                    stageCount={s.stageCount}
-                    columnWidth={COLUMN_WIDTH}
-                    innerGap={COLUMN_GAP}
-                    icon={
-                      <StatusIcon
-                        variant={s.status}
-                        className="size-3.5"
-                        style={{ color: s.color }}
-                      />
-                    }
-                  />
-                ))}
+                <KanbanStatusGroupLabel
+                  statusLabel="In Progress"
+                  statusId="in-progress"
+                  stageCount={2}
+                  columnWidth={COLUMN_WIDTH}
+                  innerGap={COLUMN_GAP}
+                  icon={
+                    <StatusIcon
+                      variant="in-progress"
+                      className="size-3.5"
+                      style={{ color: "var(--mustard-500)" }}
+                    />
+                  }
+                />
+                <KanbanStatusGroupLabel
+                  statusLabel="Done"
+                  statusId="done"
+                  stageCount={1}
+                  columnWidth={COLUMN_WIDTH}
+                  innerGap={COLUMN_GAP}
+                  icon={
+                    <StatusIcon
+                      variant="done"
+                      className="size-3.5"
+                      style={{ color: "var(--kiwi-500)" }}
+                    />
+                  }
+                />
               </div>
 
               {/* Stage tier — per-column stage headers. */}
               <div className="flex gap-2">
-                {STAGE_COLUMNS.map((c) => (
-                  <StageHeader
-                    key={c.id}
-                    label={c.label}
-                    color={c.color}
-                    count={c.issues.length}
-                  />
-                ))}
+                <StageHeader label="In Progress" color="var(--mustard-500)" count={3} />
+                <StageHeader label="In Review" color="var(--lavender-500)" count={3} />
+                <StageHeader label="Done" color="var(--kiwi-500)" count={2} />
               </div>
 
               {/* Cards. */}
               <div className="flex gap-2">
-                {STAGE_COLUMNS.map((c) => (
-                  <StageColumn key={c.id} issues={c.issues} />
-                ))}
+                <StageColumn issues={IN_PROGRESS.slice(0, 3)} />
+                <StageColumn
+                  issues={IN_REVIEW.slice(0, 3).map((i) => ({
+                    ...i,
+                    status: "in-progress" as const,
+                  }))}
+                />
+                <StageColumn issues={DONE} />
               </div>
             </div>
           </div>
@@ -413,9 +380,6 @@ function PropertyRow({ label, children }: { label: string; children: React.React
     </div>
   );
 }
-
-const initialsOf = (name: string) =>
-  name.split(" ").map((n) => n[0]).join("");
 
 /** The landing-page arrow cursor (exact `tempo-landing` mouse.svg path) — the
  *  same pointer used across the other strips. */
@@ -442,30 +406,33 @@ function AssigneeMenu() {
           Assign to
         </div>
         <div className="pb-1.5">
-          {ASSIGNEES.map((a, i) => (
-            <div
-              key={a.id}
-              className={`flex items-center gap-2.5 px-3 py-1.5 ${
-                i === 1 ? "bg-surface-container-highest" : ""
-              }`}
+          <div className="flex items-center gap-2.5 px-3 py-1.5 ">
+            <Avatar size="2xs" initials="MC" color="#6366F1" />
+            <span className="text-[12.5px] text-text-primary">Maya Chen</span>
+            <svg
+              viewBox="0 0 16 16"
+              className="ml-auto size-3.5 text-text-tertiary"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
             >
-              <Avatar size="2xs" initials={initialsOf(a.name)} color={a.color} />
-              <span className="text-[12.5px] text-text-primary">{a.name}</span>
-              {i === 0 && (
-                <svg
-                  viewBox="0 0 16 16"
-                  className="ml-auto size-3.5 text-text-tertiary"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path d="M3 8.5L6.5 12L13 4" />
-                </svg>
-              )}
-            </div>
-          ))}
+              <path d="M3 8.5L6.5 12L13 4" />
+            </svg>
+          </div>
+          <div className="flex items-center gap-2.5 px-3 py-1.5 bg-surface-container-highest">
+            <Avatar size="2xs" initials="LP" color="#10B981" />
+            <span className="text-[12.5px] text-text-primary">Leo Park</span>
+          </div>
+          <div className="flex items-center gap-2.5 px-3 py-1.5 ">
+            <Avatar size="2xs" initials="AS" color="#A78BFA" />
+            <span className="text-[12.5px] text-text-primary">Ava Singh</span>
+          </div>
+          <div className="flex items-center gap-2.5 px-3 py-1.5 ">
+            <Avatar size="2xs" initials="SD" color="#F472B6" />
+            <span className="text-[12.5px] text-text-primary">Sam Diaz</span>
+          </div>
         </div>
       </div>
       {/* cursor hovering the row being picked */}

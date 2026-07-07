@@ -7,8 +7,6 @@ import { ListingCard } from "@/design-system/components/ListingCard";
 import { Button } from "@/design-system/primitives/Button";
 import { LISTINGS } from "@/data/listings";
 
-const FILTERS = ["Price", "Type of place", "Beds", "Amenities", "Instant book", "More filters"];
-
 export function SearchPage() {
   const [searchParams] = useSearchParams();
   const [activeFilters, setActiveFilters] = useState<Record<string, boolean>>({});
@@ -51,14 +49,36 @@ export function SearchPage() {
         <Container className="py-3">
           <div className="flex items-center gap-3">
             <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none flex-1">
-              {FILTERS.map((f) => (
-                <FilterChip
-                  key={f}
-                  label={f}
-                  active={activeFilters[f]}
-                  onClick={() => toggleFilter(f)}
-                />
-              ))}
+              <FilterChip
+                label="Price"
+                active={activeFilters["Price"]}
+                onClick={() => toggleFilter("Price")}
+              />
+              <FilterChip
+                label="Type of place"
+                active={activeFilters["Type of place"]}
+                onClick={() => toggleFilter("Type of place")}
+              />
+              <FilterChip
+                label="Beds"
+                active={activeFilters["Beds"]}
+                onClick={() => toggleFilter("Beds")}
+              />
+              <FilterChip
+                label="Amenities"
+                active={activeFilters["Amenities"]}
+                onClick={() => toggleFilter("Amenities")}
+              />
+              <FilterChip
+                label="Instant book"
+                active={activeFilters["Instant book"]}
+                onClick={() => toggleFilter("Instant book")}
+              />
+              <FilterChip
+                label="More filters"
+                active={activeFilters["More filters"]}
+                onClick={() => toggleFilter("More filters")}
+              />
             </div>
             <Button variant="outline" size="sm" className="gap-2 shrink-0">
               <SlidersHorizontal size={14} strokeWidth={2} />

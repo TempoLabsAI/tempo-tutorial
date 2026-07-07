@@ -139,35 +139,47 @@ export function ListingDetailPage() {
 
             {/* Highlights */}
             <section className="py-6 border-b border-paper-deep space-y-4">
-              {[
-                {
-                  icon: Key,
-                  title: "Self check-in",
-                  body: "Check yourself in with the smartlock.",
-                },
-                {
-                  icon: Sparkles,
-                  title: "Great cleanliness",
-                  body: "Recent guests said this place is sparkling clean.",
-                },
-                {
-                  icon: Users,
-                  title: `${listing.host.responseRate}% response rate`,
-                  body: `${listing.host.name} usually responds within an hour.`,
-                },
-              ].map(({ icon: Icon, title, body }) => (
-                <div key={title} className="flex gap-4">
-                  <Icon
-                    size={22}
-                    strokeWidth={1.5}
-                    className="text-ink-quiet shrink-0 mt-0.5"
-                  />
-                  <div>
-                    <p className="text-[15px] font-semibold text-ink">{title}</p>
-                    <p className="text-[14px] text-ink-quiet mt-0.5">{body}</p>
-                  </div>
+              <div className="flex gap-4">
+                <Key
+                  size={22}
+                  strokeWidth={1.5}
+                  className="text-ink-quiet shrink-0 mt-0.5"
+                />
+                <div>
+                  <p className="text-[15px] font-semibold text-ink">Self check-in</p>
+                  <p className="text-[14px] text-ink-quiet mt-0.5">
+                    Check yourself in with the smartlock.
+                  </p>
                 </div>
-              ))}
+              </div>
+              <div className="flex gap-4">
+                <Sparkles
+                  size={22}
+                  strokeWidth={1.5}
+                  className="text-ink-quiet shrink-0 mt-0.5"
+                />
+                <div>
+                  <p className="text-[15px] font-semibold text-ink">Great cleanliness</p>
+                  <p className="text-[14px] text-ink-quiet mt-0.5">
+                    Recent guests said this place is sparkling clean.
+                  </p>
+                </div>
+              </div>
+              <div className="flex gap-4">
+                <Users
+                  size={22}
+                  strokeWidth={1.5}
+                  className="text-ink-quiet shrink-0 mt-0.5"
+                />
+                <div>
+                  <p className="text-[15px] font-semibold text-ink">
+                    {listing.host.responseRate}% response rate
+                  </p>
+                  <p className="text-[14px] text-ink-quiet mt-0.5">
+                    {listing.host.name} usually responds within an hour.
+                  </p>
+                </div>
+              </div>
             </section>
 
             {/* Description */}
@@ -203,29 +215,32 @@ export function ListingDetailPage() {
                 <RatingStars rating={listing.rating} count={listing.reviewCount} size="md" />
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                {[
-                  {
-                    name: "Sarah M.",
-                    date: "March 2026",
-                    text: "Absolutely stunning. The views were exactly as advertised, and Lucia was incredibly responsive. One of our best trips.",
-                  },
-                  {
-                    name: "Tom & Rie",
-                    date: "February 2026",
-                    text: "Perfect base for exploring the area. The cottage is charming and comfortable — we'd go back every year if we could.",
-                  },
-                ].map((r) => (
-                  <div key={r.name}>
-                    <div className="flex items-center gap-3 mb-2">
-                      <Avatar alt={r.name} size="md" />
-                      <div>
-                        <p className="text-[14px] font-semibold text-ink">{r.name}</p>
-                        <p className="text-[13px] text-ink-quiet">{r.date}</p>
-                      </div>
+                <div>
+                  <div className="flex items-center gap-3 mb-2">
+                    <Avatar alt="Sarah M." size="md" />
+                    <div>
+                      <p className="text-[14px] font-semibold text-ink">Sarah M.</p>
+                      <p className="text-[13px] text-ink-quiet">March 2026</p>
                     </div>
-                    <p className="text-[14px] text-ink leading-relaxed">{r.text}</p>
                   </div>
-                ))}
+                  <p className="text-[14px] text-ink leading-relaxed">
+                    Absolutely stunning. The views were exactly as advertised, and Lucia
+                    was incredibly responsive. One of our best trips.
+                  </p>
+                </div>
+                <div>
+                  <div className="flex items-center gap-3 mb-2">
+                    <Avatar alt="Tom & Rie" size="md" />
+                    <div>
+                      <p className="text-[14px] font-semibold text-ink">Tom &amp; Rie</p>
+                      <p className="text-[13px] text-ink-quiet">February 2026</p>
+                    </div>
+                  </div>
+                  <p className="text-[14px] text-ink leading-relaxed">
+                    Perfect base for exploring the area. The cottage is charming and
+                    comfortable — we'd go back every year if we could.
+                  </p>
+                </div>
               </div>
               <Button variant="outline" size="md" className="mt-6">
                 Show all {listing.reviewCount} reviews
@@ -245,22 +260,22 @@ export function ListingDetailPage() {
 
               {/* Date + guest pickers */}
               <div className="grid grid-cols-2 border border-paper-deep rounded-t-lg overflow-hidden">
-                {[
-                  { label: "CHECK-IN", val: listing.dateRange.split("–")[0].trim() },
-                  { label: "CHECKOUT", val: listing.dateRange.split("–")[1]?.trim() ?? "—" },
-                ].map((d, i) => (
-                  <button
-                    key={d.label}
-                    className={`p-3 text-left hover:bg-paper-warm transition-colors ${
-                      i === 0 ? "border-r border-paper-deep" : ""
-                    }`}
-                  >
-                    <p className="text-[10px] font-bold text-ink tracking-wider">
-                      {d.label}
-                    </p>
-                    <p className="text-[14px] text-ink mt-0.5">{d.val}</p>
-                  </button>
-                ))}
+                <button className="p-3 text-left hover:bg-paper-warm transition-colors border-r border-paper-deep">
+                  <p className="text-[10px] font-bold text-ink tracking-wider">
+                    CHECK-IN
+                  </p>
+                  <p className="text-[14px] text-ink mt-0.5">
+                    {listing.dateRange.split("–")[0].trim()}
+                  </p>
+                </button>
+                <button className="p-3 text-left hover:bg-paper-warm transition-colors">
+                  <p className="text-[10px] font-bold text-ink tracking-wider">
+                    CHECKOUT
+                  </p>
+                  <p className="text-[14px] text-ink mt-0.5">
+                    {listing.dateRange.split("–")[1]?.trim() ?? "—"}
+                  </p>
+                </button>
               </div>
               <button className="w-full p-3 text-left border-x border-b border-paper-deep rounded-b-lg hover:bg-paper-warm transition-colors mb-4">
                 <p className="text-[10px] font-bold text-ink tracking-wider">
@@ -282,20 +297,26 @@ export function ListingDetailPage() {
               </p>
 
               <div className="space-y-3 text-[14px]">
-                {[
-                  {
-                    label: `${formatPrice(listing.pricePerNight)} × ${nights} nights`,
-                    value: listing.pricePerNight * nights,
-                  },
-                  { label: "Cleaning fee", value: cleaning },
-                  { label: "Service fee", value: service },
-                  { label: "Taxes", value: taxes },
-                ].map((row) => (
-                  <div key={row.label} className="flex justify-between text-ink">
-                    <span className="underline">{row.label}</span>
-                    <span className="tabular-nums">{formatPrice(row.value)}</span>
-                  </div>
-                ))}
+                <div className="flex justify-between text-ink">
+                  <span className="underline">
+                    {formatPrice(listing.pricePerNight)} × {nights} nights
+                  </span>
+                  <span className="tabular-nums">
+                    {formatPrice(listing.pricePerNight * nights)}
+                  </span>
+                </div>
+                <div className="flex justify-between text-ink">
+                  <span className="underline">Cleaning fee</span>
+                  <span className="tabular-nums">{formatPrice(cleaning)}</span>
+                </div>
+                <div className="flex justify-between text-ink">
+                  <span className="underline">Service fee</span>
+                  <span className="tabular-nums">{formatPrice(service)}</span>
+                </div>
+                <div className="flex justify-between text-ink">
+                  <span className="underline">Taxes</span>
+                  <span className="tabular-nums">{formatPrice(taxes)}</span>
+                </div>
                 <div className="border-t border-paper-deep pt-3 flex justify-between font-semibold text-ink">
                   <span>Total before taxes</span>
                   <span className="tabular-nums">{formatPrice(total)}</span>

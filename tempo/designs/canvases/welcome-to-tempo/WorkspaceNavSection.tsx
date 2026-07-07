@@ -53,27 +53,6 @@ const NAV_ITEMS: NavItem[] = [
   },
 ];
 
-type Label = {
-  /** Vertical center of the card, measured from the body container's top.
-   *  Centered on the icon block's center (142px) at an 80px pitch — wider than
-   *  the 44px icon pitch so the cards keep a comfortable gap — AND, because the
-   *  card block shares the icons' center, every connector trace mirrors
-   *  top-to-bottom (vertical offsets ±54 / ±18) instead of fanning unevenly. */
-  top: number;
-  text: string;
-  /** One-line description of what the tab is for. */
-  description: string;
-  /** Accent token name → drives the `button-accent-*` tonal classes. */
-  accent: string;
-};
-
-const LABELS: Label[] = [
-  { top: 22, text: "Chat", description: "Build with an AI agent on your real codebase", accent: "blueberry" },
-  { top: 102, text: "Docs", description: "Write PRDs, specs, and project notes", accent: "kiwi" },
-  { top: 182, text: "Canvas", description: "Design UI with live production components", accent: "lavender" },
-  { top: 262, text: "Issues", description: "Track work, status, and ownership", accent: "mustard" },
-];
-
 /** Vertical center of each nav icon, measured from the top of the body row —
  *  the trace for each card stems from here so it connects to the icon's center.
  *  Rail wrapper pt 6px + top avatar block 46px + nav pad 4px + half of the first
@@ -219,23 +198,59 @@ export function WorkspaceNavSection() {
             is the backdrop's inner content edge — so the gap to the right of the
             cards equals the rail's left inset (the backdrop's `p-7` = 28px). */}
         <div className="relative flex-1" style={{ height: RAIL_HEIGHT }}>
-          <NavConnectors iconTops={ICON_TOPS} cardTops={LABELS.map((l) => l.top)} />
-          {LABELS.map((l) => (
-            <div
-              key={l.text}
-              className={`button-accent-${l.accent} absolute -translate-y-1/2`}
-              style={{ top: l.top, left: LINE_W, right: 0 }}
-            >
-              <div className="flex flex-col gap-1 rounded-xl border border-border-secondary bg-surface-container-high px-4 py-3 shadow-sm size-[max-content]">
-                <div className="text-body font-semibold leading-tight text-[var(--color-accent)]">
-                  {l.text}
-                </div>
-                <div className="whitespace-nowrap text-caption leading-snug text-text-secondary">
-                  {l.description}
-                </div>
+          <NavConnectors iconTops={ICON_TOPS} cardTops={[22, 102, 182, 262]} />
+          <div
+            className="button-accent-blueberry absolute -translate-y-1/2"
+            style={{ top: 22, left: LINE_W, right: 0 }}
+          >
+            <div className="flex flex-col gap-1 rounded-xl border border-border-secondary bg-surface-container-high px-4 py-3 shadow-sm size-[max-content]">
+              <div className="text-body font-semibold leading-tight text-[var(--color-accent)]">
+                Chat
+              </div>
+              <div className="whitespace-nowrap text-caption leading-snug text-text-secondary">
+                Build with an AI agent on your real codebase
               </div>
             </div>
-          ))}
+          </div>
+          <div
+            className="button-accent-kiwi absolute -translate-y-1/2"
+            style={{ top: 102, left: LINE_W, right: 0 }}
+          >
+            <div className="flex flex-col gap-1 rounded-xl border border-border-secondary bg-surface-container-high px-4 py-3 shadow-sm size-[max-content]">
+              <div className="text-body font-semibold leading-tight text-[var(--color-accent)]">
+                Docs
+              </div>
+              <div className="whitespace-nowrap text-caption leading-snug text-text-secondary">
+                Write PRDs, specs, and project notes
+              </div>
+            </div>
+          </div>
+          <div
+            className="button-accent-lavender absolute -translate-y-1/2"
+            style={{ top: 182, left: LINE_W, right: 0 }}
+          >
+            <div className="flex flex-col gap-1 rounded-xl border border-border-secondary bg-surface-container-high px-4 py-3 shadow-sm size-[max-content]">
+              <div className="text-body font-semibold leading-tight text-[var(--color-accent)]">
+                Canvas
+              </div>
+              <div className="whitespace-nowrap text-caption leading-snug text-text-secondary">
+                Design UI with live production components
+              </div>
+            </div>
+          </div>
+          <div
+            className="button-accent-mustard absolute -translate-y-1/2"
+            style={{ top: 262, left: LINE_W, right: 0 }}
+          >
+            <div className="flex flex-col gap-1 rounded-xl border border-border-secondary bg-surface-container-high px-4 py-3 shadow-sm size-[max-content]">
+              <div className="text-body font-semibold leading-tight text-[var(--color-accent)]">
+                Issues
+              </div>
+              <div className="whitespace-nowrap text-caption leading-snug text-text-secondary">
+                Track work, status, and ownership
+              </div>
+            </div>
+          </div>
         </div>
         </div>
       </div>
