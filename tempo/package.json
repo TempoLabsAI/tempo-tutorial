@@ -35,21 +35,5 @@
     "vite": "^7.0.0",
     "vite-tsconfig-paths": "^6.0.0"
   },
-  "packageManager": "pnpm@10.32.1",
-  "pnpm": {
-    "supportedArchitectures": {
-      "os": [
-        "darwin",
-        "win32",
-        "linux"
-      ],
-      "cpu": [
-        "x64",
-        "arm64"
-      ],
-      "libc": [
-        "glibc"
-      ]
-    }
-  }
+  "packageManager": "pnpm@10.32.1"
 }
