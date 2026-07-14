@@ -1,5 +1,4 @@
 # Dependencies
-node_modules
 .pnpm-store
 # Build output
 dist
@@ -25,5 +24,11 @@ pnpm-debug.log*
 # TS build artifacts
 *.tsbuildinfo
 tempo/.tempo/
-tempo/node_modules/
 tempo/dist/
+
+# node_modules trees are COMMITTED (prebaked FTUE deps) — re-include content
+# that the generic patterns above (dist, logs, *.log, …) would otherwise match.
+!node_modules/**
+# …except runtime caches vite writes on boot:
+node_modules/.vite/
+node_modules/.cache/
