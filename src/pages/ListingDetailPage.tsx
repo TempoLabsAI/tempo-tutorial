@@ -17,7 +17,10 @@ import { Button } from "@/design-system/primitives/Button";
 import { Avatar } from "@/design-system/primitives/Avatar";
 import { HeartButton } from "@/design-system/components/HeartButton";
 import { RatingStars } from "@/design-system/components/RatingStars";
-import { formatPrice } from "@/lib/utils";
+import { BookingWidget, getPriceBreakdown } from "@/design-system/components/BookingWidget";
+import type { DateRange } from "@/design-system/components/DateRangeCalendar";
+import { formatPrice, formatDateShort } from "@/lib/utils";
+import { nightsBetween } from "@/lib/dates";
 import { getListingById } from "@/data/listings";
 
 const amenityIcons: Record<string, React.ReactNode> = {
@@ -32,6 +35,9 @@ export function ListingDetailPage() {
   const listing = getListingById(id ?? "");
   const [showBooking, setShowBooking] = useState(false);
   const [booked, setBooked] = useState(false);
+  const [checkIn, setCheckIn] = useState<Date | null>(null);
+  const [checkOut, setCheckOut] = useState<Date | null>(null);
+  const [guests, setGuests] = useState(1);
 
   if (!listing) {
     return (
@@ -44,11 +50,19 @@ export function ListingDetailPage() {
     );
   }
 
-  const nights = 5;
-  const cleaning = 85;
-  const service = Math.round(listing.pricePerNight * nights * 0.12);
-  const taxes = Math.round(listing.pricePerNight * nights * 0.08);
-  const total = listing.pricePerNight * nights + cleaning + service + taxes;
+  const nights = nightsBetween(checkIn, checkOut);
+  const hasDates = nights > 0;
+  const price = getPriceBreakdown(listing.pricePerNight, nights);
+  const total = price.total;
+  const dateSummary =
+    hasDates && checkIn && checkOut
+      ? `${formatDateShort(checkIn)} – ${formatDateShort(checkOut)}`
+      : null;
+
+  const handleDatesChange = (r: DateRange) => {
+    setCheckIn(r.checkIn);
+    setCheckOut(r.checkOut);
+  };
 
   return (
     <div className="pb-32 lg:pb-12 bg-white min-h-screen">
@@ -113,6 +127,20 @@ export function ListingDetailPage() {
         <div className="lg:grid lg:grid-cols-[1fr_400px] lg:gap-16">
           {/* Left column */}
           <div>
+            {/* Mobile booking widget */}
+            <div className="lg:hidden mb-8">
+              <BookingWidget
+                listing={listing}
+                checkIn={checkIn}
+                checkOut={checkOut}
+                guests={guests}
+                onDatesChange={handleDatesChange}
+                onGuestsChange={setGuests}
+                onReserve={() => setShowBooking(true)}
+                calendarMonths={1}
+              />
+            </div>
+
             {/* Header / host */}
             <section className="pb-6 border-b border-paper-deep">
               <div className="flex items-center justify-between gap-4">
@@ -235,72 +263,16 @@ export function ListingDetailPage() {
 
           {/* Right column — Booking widget */}
           <aside className="hidden lg:block">
-            <div className="sticky top-[180px] rounded-2xl border border-paper-deep p-6 shadow-card bg-white">
-              <div className="flex items-baseline gap-1.5 mb-5">
-                <span className="text-[22px] font-semibold text-ink">
-                  {formatPrice(listing.pricePerNight)}
-                </span>
-                <span className="text-[15px] text-ink">night</span>
-              </div>
-
-              {/* Date + guest pickers */}
-              <div className="grid grid-cols-2 border border-paper-deep rounded-t-lg overflow-hidden">
-                {[
-                  { label: "CHECK-IN", val: listing.dateRange.split("–")[0].trim() },
-                  { label: "CHECKOUT", val: listing.dateRange.split("–")[1]?.trim() ?? "—" },
-                ].map((d, i) => (
-                  <button
-                    key={d.label}
-                    className={`p-3 text-left hover:bg-paper-warm transition-colors ${
-                      i === 0 ? "border-r border-paper-deep" : ""
-                    }`}
-                  >
-                    <p className="text-[10px] font-bold text-ink tracking-wider">
-                      {d.label}
-                    </p>
-                    <p className="text-[14px] text-ink mt-0.5">{d.val}</p>
-                  </button>
-                ))}
-              </div>
-              <button className="w-full p-3 text-left border-x border-b border-paper-deep rounded-b-lg hover:bg-paper-warm transition-colors mb-4">
-                <p className="text-[10px] font-bold text-ink tracking-wider">
-                  GUESTS
-                </p>
-                <p className="text-[14px] text-ink mt-0.5">2 guests</p>
-              </button>
-
-              <Button
-                size="lg"
-                className="w-full mb-3"
-                onClick={() => setShowBooking(true)}
-              >
-                Reserve
-              </Button>
-
-              <p className="text-center text-[14px] text-ink-quiet mb-5">
-                You won't be charged yet
-              </p>
-
-              <div className="space-y-3 text-[14px]">
-                {[
-                  {
-                    label: `${formatPrice(listing.pricePerNight)} × ${nights} nights`,
-                    value: listing.pricePerNight * nights,
-                  },
-                  { label: "Cleaning fee", value: cleaning },
-                  { label: "Service fee", value: service },
-                  { label: "Taxes", value: taxes },
-                ].map((row) => (
-                  <div key={row.label} className="flex justify-between text-ink">
-                    <span className="underline">{row.label}</span>
-                    <span className="tabular-nums">{formatPrice(row.value)}</span>
-                  </div>
-                ))}
-                <div className="border-t border-paper-deep pt-3 flex justify-between font-semibold text-ink">
-                  <span>Total before taxes</span>
-                  <span className="tabular-nums">{formatPrice(total)}</span>
-                </div>
-              </div>
+            <div className="sticky top-[180px]">
+              <BookingWidget
+                listing={listing}
+                checkIn={checkIn}
+                checkOut={checkOut}
+                guests={guests}
+                onDatesChange={handleDatesChange}
+                onGuestsChange={setGuests}
+                onReserve={() => setShowBooking(true)}
+              />
             </div>
           </aside>
         </div>
@@ -313,9 +285,14 @@ export function ListingDetailPage() {
             <span className="font-semibold">{formatPrice(listing.pricePerNight)}</span>{" "}
             <span className="text-ink-quiet">night</span>
           </p>
-          <p className="text-[12px] underline text-ink-quiet">{listing.dateRange}</p>
+          <p className="text-[12px] text-ink-quiet">{dateSummary ?? "Add dates"}</p>
         </div>
-        <Button size="lg" onClick={() => setShowBooking(true)}>
+        <Button
+          size="lg"
+          className="w-auto"
+          disabled={!hasDates}
+          onClick={() => setShowBooking(true)}
+        >
           Reserve
         </Button>
       </div>
@@ -365,11 +342,11 @@ export function ListingDetailPage() {
                 <div className="space-y-3 text-[14px] mb-6">
                   <div className="flex justify-between text-ink">
                     <span>Dates</span>
-                    <span>{listing.dateRange}</span>
+                    <span>{dateSummary ?? "—"}</span>
                   </div>
                   <div className="flex justify-between text-ink">
                     <span>Guests</span>
-                    <span>2</span>
+                    <span>{guests}</span>
                   </div>
                   <div className="border-t border-paper-deep pt-3 flex justify-between font-semibold text-ink">
                     <span>Total</span>
