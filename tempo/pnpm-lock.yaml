@@ -71,7 +71,7 @@ importers:
         version: 4.3.2
       tempo-sdk:
         specifier: latest
-        version: 0.0.18(@babel/core@7.29.7)(@emnapi/core@1.11.2)(@emnapi/runtime@1.11.2)(react@18.3.1)(rollup@4.62.2)(vite@7.3.6(jiti@2.7.0)(lightningcss@1.32.0))
+        version: 0.0.25(@babel/core@7.29.7)(@emnapi/core@1.11.2)(@emnapi/runtime@1.11.2)(react@18.3.1)(rollup@4.62.2)(vite@7.3.6(jiti@2.7.0)(lightningcss@1.32.0))
       typescript:
         specifier: ^5.9.0
         version: 5.9.3
@@ -371,11 +371,12 @@ packages:
   '@jridgewell/trace-mapping@0.3.31':
     resolution: {integrity: sha512-zzNR+SdQSDJzc8joaeP8QQoCQr8NuYx2dIIytl1QeBEZHJ9uW6hebsrYgbz8hJwUQao3TWCMtmfV8Nu1twOLAw==}
 
-  '@napi-rs/wasm-runtime@1.1.6':
-    resolution: {integrity: sha512-ZLv/JdUfkvOy9eCnnBaGfiO+XimbjebAeO+MRQqD/B+FR1tnRN0tpKSJHRbE8sFfS6aqsXZ67TQjfwfsxULVbg==}
+  '@napi-rs/wasm-runtime@1.2.3':
+    resolution: {integrity: sha512-UMduMbqO5s5zF2NkNacMT/yK5Y5QiKvWr2+50bzIIxFDwVJ2h49b+oyjaCGPhJxd2/gC2x39EHv/gHVuu36x2Q==}
+    engines: {node: ^20.19.0 || ^22.13.0 || >=23.5.0}
     peerDependencies:
-      '@emnapi/core': ^1.7.1
-      '@emnapi/runtime': ^1.7.1
+      '@emnapi/core': ^1.7.1 || ^2.0.0-alpha.4
+      '@emnapi/runtime': ^1.7.1 || ^2.0.0-alpha.4
 
   '@oxc-parser/binding-android-arm-eabi@0.110.0':
     resolution: {integrity: sha512-g6+kHTI/BRDJszaZkSgyu0pGuMIVYJ7/v0I4C9BkTeGn1LxF9GWI6jE22dBEELXMWbG7FTyNlD9RCuWlStAx6w==}
@@ -1573,8 +1574,8 @@ packages:
     resolution: {integrity: sha512-uxc/zpqFg6x7C8vOE7lh6Lbda8eEL9zmVm/PLeTPBRhh1xCgdWaQ+J1CUieGpIfm2HdtsUpRv+HshiasBMcc6A==}
     engines: {node: '>=6'}
 
-  tempo-sdk@0.0.18:
-    resolution: {integrity: sha512-qCUFKb6o+Dy5NniMca2MWeNM973MAg187bRcv/u4b8IUKqAdY4oG7wxzEQDoS57ZpgareDrwSDwu5A+X57Fztw==}
+  tempo-sdk@0.0.25:
+    resolution: {integrity: sha512-wKYBjKI091vQ8H6hl8pGG1Xr3QmhpDaUTk6J8DOojkOItLRRhhyw0zqZFMnvzbpUWA/3zFgotWDC0qJ72mtz/w==}
     peerDependencies:
       '@babel/core': ^7.0.0
       next: ^13 || ^14 || ^15 || ^16
@@ -1939,7 +1940,7 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.5
 
-  '@napi-rs/wasm-runtime@1.1.6(@emnapi/core@1.11.2)(@emnapi/runtime@1.11.2)':
+  '@napi-rs/wasm-runtime@1.2.3(@emnapi/core@1.11.2)(@emnapi/runtime@1.11.2)':
     dependencies:
       '@emnapi/core': 1.11.2
       '@emnapi/runtime': 1.11.2
@@ -1996,7 +1997,7 @@ snapshots:
 
   '@oxc-parser/binding-wasm32-wasi@0.110.0(@emnapi/core@1.11.2)(@emnapi/runtime@1.11.2)':
     dependencies:
-      '@napi-rs/wasm-runtime': 1.1.6(@emnapi/core@1.11.2)(@emnapi/runtime@1.11.2)
+      '@napi-rs/wasm-runtime': 1.2.3(@emnapi/core@1.11.2)(@emnapi/runtime@1.11.2)
     transitivePeerDependencies:
       - '@emnapi/core'
       - '@emnapi/runtime'
@@ -2971,7 +2972,7 @@ snapshots:
 
   tapable@2.3.3: {}
 
-  tempo-sdk@0.0.18(@babel/core@7.29.7)(@emnapi/core@1.11.2)(@emnapi/runtime@1.11.2)(react@18.3.1)(rollup@4.62.2)(vite@7.3.6(jiti@2.7.0)(lightningcss@1.32.0)):
+  tempo-sdk@0.0.25(@babel/core@7.29.7)(@emnapi/core@1.11.2)(@emnapi/runtime@1.11.2)(react@18.3.1)(rollup@4.62.2)(vite@7.3.6(jiti@2.7.0)(lightningcss@1.32.0)):
     dependencies:
       '@rollup/pluginutils': 5.4.0(rollup@4.62.2)
       oxc-parser: 0.110.0(@emnapi/core@1.11.2)(@emnapi/runtime@1.11.2)
