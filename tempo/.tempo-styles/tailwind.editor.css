@@ -1,0 +1,6 @@
+/* @tempo-owned: Tailwind editor context; not a runtime stylesheet */
+@import "tailwindcss";
+@reference "../../src/styles/globals.css";
+@reference "../globals.css";
+@source "../../src";
+@source "../designs";

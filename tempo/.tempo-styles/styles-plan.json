@@ -1,0 +1,21 @@
+{
+  "version": 1,
+  "major": 4,
+  "appRoot": "./..",
+  "roots": [
+    {
+      "file": "../src/styles/globals.css",
+      "engine": true,
+      "tailwind": true,
+      "config": false
+    }
+  ],
+  "owner": "../src/styles/globals.css",
+  "globals": "./globals.css",
+  "config": null,
+  "sources": [
+    "../src",
+    "./designs"
+  ],
+  "legacyRoots": []
+}

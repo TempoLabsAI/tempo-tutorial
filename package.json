@@ -33,7 +33,7 @@
     "@vitejs/plugin-react": "^4.3.4",
     "postcss": "^8.4.49",
     "tailwindcss": "^4.3.0",
-    "tempo-sdk": "latest",
+    "tempo-sdk": "sdk-v2-latest",
     "typescript": "^5.7.2",
     "vite": "^6.0.7"
   },

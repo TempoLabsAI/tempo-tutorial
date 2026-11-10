@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "install": "npm install && npm install --prefix ..",
+    "install": "cd .. && pnpm install --frozen-lockfile && cd tempo && pnpm install --frozen-lockfile",
     "start": "npm run dev"
   },
   "apps": [

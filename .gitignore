@@ -27,3 +27,6 @@ pnpm-debug.log*
 tempo/.tempo/
 tempo/node_modules/
 tempo/dist/
+
+# Local project-analysis cache; canvas configuration lives in tempo/.
+/tempo.config.json
