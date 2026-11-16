@@ -15,12 +15,16 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
+        # Node 20 carries npm 10 and Node 24 carries npm 11 (Tempo ships npm
+        # 11). The two write lockfiles differently, and the committed ones
+        # must satisfy both, or an install leaves the user's project changed.
+        node: [20, 24]
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: ${{ matrix.node }}
       - name: Project declares npm only
         run: node .github/scripts/check-npm-only.mjs
       - name: Install the app with npm

@@ -56,7 +56,12 @@ Keep it on npm:
 
 The `npm only` check in `.github/workflows/npm-only.yml` fails a change that
 breaks any of these, and installs the project with npm alone on Linux, macOS
-and Windows.
+and Windows, with npm 10 and npm 11.
+
+When dependencies change, regenerate both lockfiles with npm 10
+(`npx npm@10 install` in the project root and in `tempo/`, after deleting
+`node_modules` and the lockfile). npm 11 accepts a lockfile npm 10 wrote
+unchanged; the reverse is not true.
 
 ## Routes
 
