@@ -1,0 +1,40 @@
+name: npm only
+
+# Tempo opens this project for every new user and ships npm, not pnpm, yarn or
+# bun. This check keeps the project installable with npm alone on the three
+# platforms Tempo runs on. See "This project uses npm, on purpose" in README.md.
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  npm-only:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Project declares npm only
+        run: node .github/scripts/check-npm-only.mjs
+      - name: Install the app with npm
+        run: npm ci
+      - name: Install the canvas host with npm
+        run: npm ci
+        working-directory: tempo
+      - name: Lockfiles are complete (an install changes nothing)
+        shell: bash
+        run: |
+          npm install
+          (cd tempo && npm install)
+          git diff --exit-code -- package-lock.json tempo/package-lock.json
+      - name: App type-checks and builds
+        run: |
+          npm run typecheck
+          npm run build
