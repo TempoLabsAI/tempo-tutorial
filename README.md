@@ -63,6 +63,55 @@ When dependencies change, regenerate both lockfiles with npm 10
 `node_modules` and the lockfile). npm 11 accepts a lockfile npm 10 wrote
 unchanged; the reverse is not true.
 
+### Keeping tempo-sdk current
+
+Both `package.json` and `tempo/package.json` ask for `"tempo-sdk": "latest"`,
+and both lockfiles pin the exact version npm's `latest` tag points at. Tempo
+checks this when it opens the project. If the spec says anything other than
+`latest`, or the locked version is older than npm's `latest`, Tempo rewrites
+the files and runs extra installs on the user's first open, leaving their
+fresh clone with changes they did not make.
+
+So whenever a new tempo-sdk is published, move both lockfiles to it. Keep
+`"tempo-sdk": "latest"` in both `package.json` files exactly as it is. Write
+the lockfiles with npm 10, in a fresh clone (no `node_modules` folders; a
+lockfile written over an existing `node_modules` can lose other platforms'
+packages):
+
+```bash
+npm view tempo-sdk dist-tags.latest
+npx --yes npm@10 update tempo-sdk --package-lock-only --ignore-scripts --prefer-online
+(cd tempo && npx --yes npm@10 update tempo-sdk --package-lock-only --ignore-scripts --prefer-online)
+```
+
+npm prints "up to date" even when it changed the lockfile. Check the result
+instead: both commands below must print the version from the first line.
+
+```bash
+node -p "require('./package-lock.json').packages['node_modules/tempo-sdk'].version"
+node -p "require('./tempo/package-lock.json').packages['node_modules/tempo-sdk'].version"
+```
+
+`git diff` should show only the `version`, `resolved` and `integrity` of
+`node_modules/tempo-sdk` in each lockfile (plus that package's own
+dependencies, if the new release changed them).
+
+Then confirm an install changes nothing, once with npm 10 and once with npm
+11, from a clean checkout of your change. This is what the `npm only` check
+runs:
+
+```bash
+node .github/scripts/check-npm-only.mjs
+npm ci && (cd tempo && npm ci)
+npm install && (cd tempo && npm install)
+git diff --exit-code -- package-lock.json tempo/package-lock.json
+npx vite build
+```
+
+Use `npx --yes npm@10 ...` and `npx --yes npm@11 ...` for the install lines
+if your default npm is something else. Avoid npm 11.6.1 and 11.6.2 (bundled
+with Node 24.10 to 24.13): they rewrite these lockfiles on install.
+
 ## Routes
 
 | Route | Page |
