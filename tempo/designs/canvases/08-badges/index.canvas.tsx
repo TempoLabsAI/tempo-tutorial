@@ -1,4 +1,3 @@
-import type { TempoPage, TempoStoryboard } from 'tempo-sdk';
 import { MemoryRouter } from 'react-router-dom';
 import { Badge } from '@/design-system/primitives/Badge';
 import { ListingCard } from '@/design-system/components/ListingCard';
@@ -13,26 +12,9 @@ import {
   FONT_MONO,
   DARK,
 } from '@/design-system/canvas-chrome';
-
-const page: TempoPage = {
-  name: "08 · Badges & Status",
-};
-
-export default page;
+import { Canvas, Storyboard } from "tempo-sdk/canvas";
 
 /* ── 00 · Cover ──────────────────────────────────────────────────── */
-export const Cover: TempoStoryboard = {
-  render: () => (
-    <CanvasCover
-      workspace="Workspace · 05"
-      slug="badges.svg"
-      title="Badges & status."
-      description="Small pills that carry meaning. Guest favourite, Superhost, check-in today — each one earns its place on a card or a row."
-    />
-  ),
-  name: "00 · Cover",
-  layout: { x: 0, y: 0, width: 1353, height: 200, intrinsicSizing: "root-element" },
-};
 
 /* ── UI3-style section helpers ───────────────────────────────────── */
 
@@ -96,8 +78,7 @@ function BadgeRow({ label, children }: { label: string; children: React.ReactNod
 }
 
 /* ── 01 · Badges — page with all variant sections stacked ────────── */
-export const Badges: TempoStoryboard = {
-  render: () => (
+const Badges = () => (
     <div
       className="w-[1012px] h-[3091px] pt-[100px]"
       style={{ background: DARK.paper, color: DARK.ink, padding: "100px 72px 56px", fontFamily: FONT_SANS, position: "relative" }}
@@ -218,14 +199,10 @@ export const Badges: TempoStoryboard = {
         </BadgeRow>
       </BadgeSection>
     </div>
-  ),
-  name: "01 · Badges",
-  layout: { x: 1773, y: 0, width: 1012, height: 3091, intrinsicSizing: "root-element" },
-};
+  );
 
 /* ── 02 · In situ ────────────────────────────────────────────────── */
-export const InSitu: TempoStoryboard = {
-  render: () => (
+const InSitu = () => (
     <MemoryRouter initialEntries={["/"]}>
       <div
         className="w-[1155px]"
@@ -269,7 +246,30 @@ export const InSitu: TempoStoryboard = {
         </BadgeSection>
       </div>
     </MemoryRouter>
-  ),
-  name: "02 · In situ",
-  layout: { x: 3828, y: 0, width: 1155, height: 1372, intrinsicSizing: "root-element" },
-};
+  );
+
+export default function BadgesStatusCanvas() {
+  return (
+    <Canvas name={"08 · Badges & Status"}>
+      <Storyboard
+        id="Cover"
+        name="00 · Cover"
+        component={CanvasCover}
+        props={{ workspace: "Workspace · 05", slug: "badges.svg", title: "Badges & status.", description: "Small pills that carry meaning. Guest favourite, Superhost, check-in today — each one earns its place on a card or a row." }}
+        layout={{ x: 0, y: 0, width: 1353, height: 200, intrinsicSizing: "root-element" }}
+      />
+      <Storyboard
+        id="Badges"
+        name="01 · Badges"
+        component={Badges}
+        layout={{ x: 1773, y: 0, width: 1012, height: 3091, intrinsicSizing: "root-element" }}
+      />
+      <Storyboard
+        id="InSitu"
+        name="02 · In situ"
+        component={InSitu}
+        layout={{ x: 3828, y: 0, width: 1155, height: 1372, intrinsicSizing: "root-element" }}
+      />
+    </Canvas>
+  );
+}

@@ -81,6 +81,32 @@ export function ShareWithYourTeam() {
       <div className="relative flex flex-col gap-12">
         {/* Comment */}
         <div className="flex h-[330px] flex-row items-center gap-10">
+          <svg
+            className="pointer-events-none absolute left-0 top-0"
+            width="902"
+            height="1086"
+            viewBox="0 0 902 1086"
+            fill="none"
+          >
+            <path
+              d="M 560 250 C 690 250, 734 286, 734 378"
+              stroke="rgba(255,255,255,0.4)"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeDasharray="6 8"
+            />
+            <circle cx="560" cy="250" r="4" fill="rgba(255,255,255,0.7)" />
+            <circle cx="734" cy="378" r="4" fill="rgba(255,255,255,0.7)" />
+            <path
+              d="M 342 628 C 212 628, 168 664, 168 756"
+              stroke="rgba(255,255,255,0.4)"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeDasharray="6 8"
+            />
+            <circle cx="342" cy="628" r="4" fill="rgba(255,255,255,0.7)" />
+            <circle cx="168" cy="756" r="4" fill="rgba(255,255,255,0.7)" />
+          </svg>
           <div className="otv-bg-sky relative h-[330px] w-[560px] shrink-0 overflow-hidden rounded-2xl shadow-[0_14px_36px_rgba(0,0,0,0.3)]">
             {/* User content being reviewed: a simple card layout */}
             <div className="absolute left-[32px] top-[40px] flex w-[232px] flex-col rounded-lg bg-[#F7F5F0] p-4 shadow-[0_14px_36px_rgba(0,0,0,0.18)]">
@@ -132,48 +158,13 @@ export function ShareWithYourTeam() {
         </div>
 
         {/* Commit & deploy */}
-        <div className="flex h-[330px] flex-row-reverse items-center gap-10">
-          <div
-            className="relative h-[330px] w-[560px] shrink-0 overflow-hidden rounded-2xl bg-cover bg-center shadow-[0_14px_36px_rgba(0,0,0,0.3)]"
-            style={{ backgroundImage: `url(${gitBg})` }}
-          >
-            <div className="absolute left-[60px] top-[40px] flex h-[330px] w-[440px] flex-col overflow-hidden rounded-t-lg border-x border-t border-border-primary bg-surface-container-low shadow-[0_18px_44px_rgba(0,0,0,0.35)]">
-              <ChangesPanel
-                label="Changes"
-                viewMode={viewMode}
-                onViewModeChange={setViewMode}
-                files={FILES}
-                currentBranch="playground"
-                defaultBranch="main"
-                branches={["main", "playground"]}
-                onBranchChange={noop}
-                hasRemote
-                hasStagedFiles
-                commitMessage={message}
-                onCommitMessageChange={setMessage}
-                onCommit={noop}
-                onCommitAndPush={noop}
-              />
-            </div>
-          </div>
-          <div className="flex max-w-[280px] flex-col gap-2 text-right">
-            <span className="text-[24px] font-semibold leading-[30px] tracking-[-0.01em]">
-              Commit &amp; deploy
-            </span>
-            <span className="text-[16px] leading-[24px] text-text-secondary">
-              Connect your Git and ship in a click.
-            </span>
-          </div>
-        </div>
-
-        {/* Share */}
         <div className="flex h-[330px] flex-row items-center gap-10">
           <div
             className="relative h-[330px] w-[560px] shrink-0 overflow-hidden rounded-2xl bg-cover bg-center shadow-[0_14px_36px_rgba(0,0,0,0.3)]"
             style={{ backgroundImage: `url(${shareBg})` }}
           >
             <div className="absolute left-[72px] top-[34px] flex w-[416px] flex-col gap-2">
-              <div className="flex items-center justify-between gap-2 rounded-lg border border-border-primary bg-surface-container py-1.5 pl-3 pr-1.5 shadow-[0_12px_30px_rgba(0,0,0,0.3)]">
+              <div className="flex items-center justify-between gap-y-2 gap-x-[288px] rounded-lg border border-border-primary bg-surface-container py-1.5 pl-3 pr-1.5 shadow-[0_12px_30px_rgba(0,0,0,0.3)]">
                 <InlineResourceChip type="canvas" label="playground" />
                 {/* ShareCanvasButton's trigger, verbatim classes + icon. The real
                     component wraps the live SharePopover (Convex-backed), so
@@ -209,33 +200,42 @@ export function ShareWithYourTeam() {
           </div>
         </div>
 
+        {/* Share */}
+        <div className="flex h-[330px] flex-row-reverse items-center gap-10">
+          <div
+            className="relative h-[330px] w-[560px] shrink-0 overflow-hidden rounded-2xl bg-cover bg-center shadow-[0_14px_36px_rgba(0,0,0,0.3)]"
+            style={{ backgroundImage: `url(${gitBg})` }}
+          >
+            <div className="absolute left-[60px] top-[40px] flex h-[330px] w-[440px] flex-col overflow-hidden rounded-t-lg border-x border-t border-border-primary bg-surface-container-low shadow-[0_18px_44px_rgba(0,0,0,0.35)]">
+              <ChangesPanel
+                label="Changes"
+                viewMode={viewMode}
+                onViewModeChange={setViewMode}
+                files={FILES}
+                currentBranch="playground"
+                defaultBranch="main"
+                branches={["main", "playground"]}
+                onBranchChange={noop}
+                hasRemote
+                hasStagedFiles
+                commitMessage={message}
+                onCommitMessageChange={setMessage}
+                onCommit={noop}
+                onCommitAndPush={noop}
+              />
+            </div>
+          </div>
+          <div className="flex max-w-[280px] flex-col gap-2 text-right">
+            <span className="text-[24px] font-semibold leading-[30px] tracking-[-0.01em]">
+              Commit &amp; deploy
+            </span>
+            <span className="text-[16px] leading-[24px] text-text-secondary">
+              Connect your Git and ship in a click.
+            </span>
+          </div>
+        </div>
+
         {/* Connectors, drawn over the gaps in exact content-box pixels */}
-        <svg
-          className="pointer-events-none absolute left-0 top-0"
-          width="902"
-          height="1086"
-          viewBox="0 0 902 1086"
-          fill="none"
-        >
-          <path
-            d="M 560 250 C 690 250, 734 286, 734 378"
-            stroke="rgba(255,255,255,0.4)"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeDasharray="6 8"
-          />
-          <circle cx="560" cy="250" r="4" fill="rgba(255,255,255,0.7)" />
-          <circle cx="734" cy="378" r="4" fill="rgba(255,255,255,0.7)" />
-          <path
-            d="M 342 628 C 212 628, 168 664, 168 756"
-            stroke="rgba(255,255,255,0.4)"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeDasharray="6 8"
-          />
-          <circle cx="342" cy="628" r="4" fill="rgba(255,255,255,0.7)" />
-          <circle cx="168" cy="756" r="4" fill="rgba(255,255,255,0.7)" />
-        </svg>
       </div>
       <ShareCursors />
     </div>
