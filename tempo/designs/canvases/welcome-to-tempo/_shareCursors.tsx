@@ -2,6 +2,11 @@
 // "Share" frame so it reads as a multiplayer canvas. No presence-cursor
 // component exists in the design system, so this is a small local one.
 
+// Each cursor is enlarged and sits across the edge of a frame, as if that
+// teammate is working on it. `scale` is its own property, so it composes
+// with the drift animation's transform.
+const BIG = { scale: "1.45", transformOrigin: "0 0" } as const;
+
 function TeammateCursor({ name, color }: { name: string; color: string }) {
   return (
     <div className="flex flex-col items-start">
@@ -38,24 +43,30 @@ export function ShareCursors() {
         @keyframes otv-cursor-b { 0%,100% { transform: translate(0,0) } 40% { transform: translate(-12px,12px) } 75% { transform: translate(10px,4px) } }
         @keyframes otv-cursor-c { 0%,100% { transform: translate(0,0) } 35% { transform: translate(10px,10px) } 70% { transform: translate(-14px,-6px) } }
       `}</style>
-      {/* Maya: empty space above the Comment caption (row 1, right) */}
+      {/* Maya: top right corner of the Comment frame */}
       <div
-        className="pointer-events-none absolute left-[860px] top-[262px] z-10"
-        style={{ animation: "otv-cursor-a 7s ease-in-out infinite" }}
+        className="pointer-events-none absolute left-[588px] top-[232px] z-10"
+        style={{ animation: "otv-cursor-a 7s ease-in-out infinite", ...BIG }}
       >
         <TeammateCursor name="Maya" color="var(--salmon-700)" />
       </div>
-      {/* Devon: empty space above the Commit caption (row 2, left) */}
+      {/* Devon: left edge of the Commit frame */}
       <div
-        className="pointer-events-none absolute left-[110px] top-[632px] z-10"
-        style={{ animation: "otv-cursor-b 9s ease-in-out -2s infinite" }}
+        className="pointer-events-none absolute left-[352px] top-[614px] z-10"
+        style={{
+          animation: "otv-cursor-b 9s ease-in-out -2s infinite",
+          ...BIG,
+        }}
       >
         <TeammateCursor name="Devon" color="var(--kiwi-700)" />
       </div>
-      {/* Priya: below the Share caption (row 3, right) */}
+      {/* Priya: bottom right corner of the Share frame */}
       <div
-        className="pointer-events-none absolute left-[720px] top-[1190px] z-10"
-        style={{ animation: "otv-cursor-c 8s ease-in-out -4s infinite" }}
+        className="pointer-events-none absolute left-[584px] top-[1236px] z-10"
+        style={{
+          animation: "otv-cursor-c 8s ease-in-out -4s infinite",
+          ...BIG,
+        }}
       >
         <TeammateCursor name="Priya" color="var(--blueberry-700)" />
       </div>

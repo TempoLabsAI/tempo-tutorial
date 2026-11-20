@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { Button } from "./_ui/primitives";
 import { TutorialTokens } from "./_ui/tutorial-tokens";
 
@@ -11,47 +11,52 @@ import { TutorialTokens } from "./_ui/tutorial-tokens";
 export type Theme = "dark" | "light";
 
 /**
- * Keyframes plus the placeholder gradient backdrops (.otv-bg-*). The
- * backdrops stand in for the image backgrounds that will replace them, so
- * each one is a plain class on its panel.
+ * Keyframes plus the plate every demo sits on (.otv-bg-*): flat near-black,
+ * a hairline edge, a faint wash of light from the top left and a bracket in
+ * each corner. The five names are kept so each panel still carries one
+ * plain class. Also the outline practice tile and the layout legend's
+ * lit/dim states.
  *
- * Also carries the lesson's design-system tokens (`TutorialTokens`), so it
- * must stay a direct child of each lesson root.
+ * Includes the design-system tokens (`TutorialTokens`) scoped to the lesson
+ * root marked with data-tutorial-token-scope.
  */
 export function TutorialStyles() {
   return (
     <>
       <TutorialTokens />
       <style>{`
-      .otv-bg-lilac {
-        background:
-          radial-gradient(at 18% 22%, #D9C8FF 0, transparent 48%),
-          radial-gradient(at 85% 8%, #9DD9FF 0, transparent 44%),
-          radial-gradient(at 78% 96%, #FFB9CF 0, transparent 50%),
-          #7467D0;
-      }
-      .otv-bg-sky {
-        background:
-          radial-gradient(at 28% 30%, #FFFFFF 0, transparent 42%),
-          radial-gradient(at 72% 82%, #F8DDB8 0, transparent 50%),
-          linear-gradient(180deg, #7DB0E6 0%, #CFE2F5 100%);
-      }
-      .otv-bg-dusk {
-        background:
-          radial-gradient(at 80% 90%, #F6A98B 0, transparent 50%),
-          linear-gradient(160deg, #26355F 0%, #6E5A97 55%, #E79A8A 100%);
-      }
-      .otv-bg-mint {
-        background:
-          radial-gradient(at 20% 80%, #E6F7DE 0, transparent 50%),
-          radial-gradient(at 82% 18%, #B2E0C2 0, transparent 50%),
-          #6EA488;
-      }
+      .otv-bg-lilac,
+      .otv-bg-sky,
+      .otv-bg-dusk,
+      .otv-bg-mint,
       .otv-bg-gold {
         background:
-          radial-gradient(at 25% 20%, #FFF1C2 0, transparent 45%),
-          linear-gradient(160deg, #F7CD72 0%, #EE9F5C 50%, #C76680 100%);
+          linear-gradient(rgba(244, 244, 250, 0.5), rgba(244, 244, 250, 0.5)) left top / 12px 1px no-repeat,
+          linear-gradient(rgba(244, 244, 250, 0.5), rgba(244, 244, 250, 0.5)) left top / 1px 12px no-repeat,
+          linear-gradient(rgba(244, 244, 250, 0.5), rgba(244, 244, 250, 0.5)) right top / 12px 1px no-repeat,
+          linear-gradient(rgba(244, 244, 250, 0.5), rgba(244, 244, 250, 0.5)) right top / 1px 12px no-repeat,
+          linear-gradient(rgba(244, 244, 250, 0.5), rgba(244, 244, 250, 0.5)) left bottom / 12px 1px no-repeat,
+          linear-gradient(rgba(244, 244, 250, 0.5), rgba(244, 244, 250, 0.5)) left bottom / 1px 12px no-repeat,
+          linear-gradient(rgba(244, 244, 250, 0.5), rgba(244, 244, 250, 0.5)) right bottom / 12px 1px no-repeat,
+          linear-gradient(rgba(244, 244, 250, 0.5), rgba(244, 244, 250, 0.5)) right bottom / 1px 12px no-repeat,
+          radial-gradient(120% 90% at 0% 0%, rgba(244, 244, 250, 0.05), rgba(244, 244, 250, 0) 60%),
+          #121217;
+        box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.07);
       }
+      .otv-tile-outline {
+        background:
+          linear-gradient(rgba(244, 244, 250, 0.9), rgba(244, 244, 250, 0.9)) left top / 7px 1px no-repeat,
+          linear-gradient(rgba(244, 244, 250, 0.9), rgba(244, 244, 250, 0.9)) left top / 1px 7px no-repeat,
+          linear-gradient(rgba(244, 244, 250, 0.9), rgba(244, 244, 250, 0.9)) right top / 7px 1px no-repeat,
+          linear-gradient(rgba(244, 244, 250, 0.9), rgba(244, 244, 250, 0.9)) right top / 1px 7px no-repeat,
+          linear-gradient(rgba(244, 244, 250, 0.9), rgba(244, 244, 250, 0.9)) left bottom / 7px 1px no-repeat,
+          linear-gradient(rgba(244, 244, 250, 0.9), rgba(244, 244, 250, 0.9)) left bottom / 1px 7px no-repeat,
+          linear-gradient(rgba(244, 244, 250, 0.9), rgba(244, 244, 250, 0.9)) right bottom / 7px 1px no-repeat,
+          linear-gradient(rgba(244, 244, 250, 0.9), rgba(244, 244, 250, 0.9)) right bottom / 1px 7px no-repeat;
+      }
+      .otv-option { opacity: 0.42; transition: opacity 160ms ease; }
+      .otv-option[data-on="true"] { opacity: 1; }
+      .otv-option[data-on="true"] > :first-child { border-color: rgba(244, 244, 250, 0.85); }
       @keyframes otv-float { 0%,100% { transform: translateY(0) rotate(-8deg) } 50% { transform: translateY(-10px) rotate(-6deg) } }
       @keyframes otv-shimmer { 0% { background-position: -320px 0 } 100% { background-position: 320px 0 } }
       @keyframes otv-pulse { 0%,100% { opacity: .4 } 50% { opacity: 1 } }
@@ -188,6 +193,33 @@ function layoutKind(info: LayoutInfo): LayoutKind {
     return info.parentDirection.startsWith("column") ? "column" : "row";
   }
   return "flow";
+}
+
+/**
+ * One entry in a layout legend. It is lit while the watched element is laid
+ * out as `kind` and sits back otherwise, so the matching type shows live.
+ */
+export function LayoutOption({
+  watch,
+  kind,
+  children,
+}: {
+  watch: string;
+  /** "static" lights for anything laid out in the flow (not absolute). */
+  kind: LayoutKind | "static";
+  children: ReactNode;
+}) {
+  const { anchor, info } = useWatchedLayout(watch);
+  const current = info === null ? null : layoutKind(info);
+  const on =
+    current !== null &&
+    (kind === "static" ? current !== "absolute" : current === kind);
+  return (
+    <div className="otv-option flex flex-col gap-2" data-on={on}>
+      {children}
+      <span ref={anchor} hidden />
+    </div>
+  );
 }
 
 /**
