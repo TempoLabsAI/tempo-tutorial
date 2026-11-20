@@ -200,7 +200,7 @@ export function CommentThread({
           </button>
         </div>
       </div>
-      <div className="flex min-h-0 flex-col gap-6 overflow-y-auto pt-[16px] px-4 pb-5 [scrollbar-width:thin] [scrollbar-color:var(--surface-container-highest)_transparent] [&::-webkit-scrollbar]:w-[6px] [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-surface-container-highest">
+      <div className={"flex min-h-0 flex-col gap-x-6 gap-y-[54px] overflow-y-auto pt-[16px] px-4 pb-5 [scrollbar-width:thin] [scrollbar-color:var(--surface-container-highest)_transparent] [&::-webkit-scrollbar]:w-[6px] [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-surface-container-highest"}>
         <div className="flex flex-col gap-4">{children}</div>
         <div className="flex items-start gap-2.5">
           <Avatar
