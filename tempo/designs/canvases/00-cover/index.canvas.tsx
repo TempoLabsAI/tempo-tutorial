@@ -1,4 +1,3 @@
-import type { TempoPage, TempoStoryboard } from 'tempo-sdk';
 import type { ReactNode } from 'react';
 import { Heart, Search, Star, MapPin, Check, ArrowRight, ArrowDown, Eye, Send } from 'lucide-react';
 import {
@@ -10,16 +9,10 @@ import {
   FONT_MONO,
   DARK,
 } from '@/design-system/canvas-chrome';
-
-const page: TempoPage = {
-  name: "00 · Cover & Index",
-};
-
-export default page;
+import { Canvas, Storyboard } from "tempo-sdk/canvas";
 
 /* ── 00 · Cover — UI3 overview-style hero with image placeholder ──── */
-export const Cover: TempoStoryboard = {
-  render: () => (
+const Cover = () => (
     <div className="flex-col w-[1920px] h-[1551px]"
       style={{ background: DARK.paper, color: DARK.ink, display: "flex", fontFamily: FONT_SANS }}
     >
@@ -325,10 +318,7 @@ export const Cover: TempoStoryboard = {
 
       {/* Right — giant placeholder for SVG */}
     </div>
-  ),
-  name: "00 · Cover",
-  layout: { x: 0, y: 0, width: 1920, height: 1551 , intrinsicSizing: "root-element" },
-};
+  );
 
 /* ── Index — workspace map ────────────────────────────────────────── */
 
@@ -395,8 +385,7 @@ function IndexCard({
   );
 }
 
-export const Index: TempoStoryboard = {
-  render: () => (
+const Index = () => (
     <div className="w-[1280px] h-[2276px]">
     <DarkSheet
       index="01"
@@ -693,10 +682,7 @@ export const Index: TempoStoryboard = {
       </div>
     </DarkSheet>
     </div>
-  ),
-  name: "01 · Index",
-  layout: { x: 2041, y: 0, width: 1280, height: 2276, intrinsicSizing: "root-element" },
-};
+  );
 
 /* ── Legend — visual conventions ──────────────────────────────────── */
 
@@ -765,8 +751,7 @@ function LegendRow({
   );
 }
 
-export const Legend: TempoStoryboard = {
-  render: () => (
+const Legend = () => (
     <div className="w-[1280px]">
     <DarkSheet
       index="02"
@@ -865,9 +850,31 @@ export const Legend: TempoStoryboard = {
 
     </DarkSheet>
     </div>
-  ),
-  name: "02 · Legend",
-  layout: { x: 3321, y: 1, width: 1280, height: 1137, intrinsicSizing: "root-element" },
-};
+  );
 
 /* ── 03 · Anatomy ────────────────────────────────────────────────── */
+
+export default function CoverIndexCanvas() {
+  return (
+    <Canvas name={"00 · Cover & Index"}>
+      <Storyboard
+        id="Cover"
+        name="00 · Cover"
+        component={Cover}
+        layout={{ x: 0, y: 0, width: 1920, height: 1551, intrinsicSizing: "root-element" }}
+      />
+      <Storyboard
+        id="Index"
+        name="01 · Index"
+        component={Index}
+        layout={{ x: 2041, y: 0, width: 1280, height: 2276, intrinsicSizing: "root-element" }}
+      />
+      <Storyboard
+        id="Legend"
+        name="02 · Legend"
+        component={Legend}
+        layout={{ x: 3321, y: 1, width: 1280, height: 1137, intrinsicSizing: "root-element" }}
+      />
+    </Canvas>
+  );
+}
