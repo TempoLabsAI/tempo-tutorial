@@ -9,12 +9,10 @@ import {
 import { CommentMessage, CommentPin, CommentThread } from "./_ui/comments";
 import { InlineResourceChip } from "./_ui/primitives";
 import { CheckingState, SHARE_POPOVER_SURFACE } from "./_ui/share-progress";
-const shareBg = "https://raw.githubusercontent.com/TempoLabsAI/tempo-tutorial/0c865c0/tempo/designs/canvases/welcome-to-tempo/assets/share-bg.png";
-const gitBg = "https://raw.githubusercontent.com/TempoLabsAI/tempo-tutorial/0c865c0/tempo/designs/canvases/welcome-to-tempo/assets/git-bg.png";
 import { TutorialStyles } from "./_bits";
 import { THEME_BRIDGE } from "./_themeBridge";
 import { ShareCursors } from "./_shareCursors";
-import { SubtleSpace } from "./_introSpace";
+import { LessonBackdrop, StepLabel } from "./_ascii";
 
 // Variant E: comment -> commit -> share as a zigzag path. Each step is a
 // 560x330 photo card that alternates sides, joined by dashed connectors that
@@ -64,11 +62,13 @@ export function ShareWithYourTeam() {
   return (
     <div
       data-theme="dark"
+      data-tutorial-token-scope=""
       style={THEME_BRIDGE}
-      className="relative isolate flex w-[1014px] flex-col gap-12 overflow-hidden rounded-[24px] border border-border-primary bg-surface-dim px-14 py-14 font-sans text-text-primary"
+      className="relative isolate flex w-[1014px] flex-col gap-12 overflow-hidden rounded-[10px] border border-border-primary bg-[#050508] px-14 pb-14 pt-[88px] font-sans text-text-primary"
     >
       <TutorialStyles />
-      <SubtleSpace />
+      <LessonBackdrop shape="link" x={70} y={905} size={420} opacity={0.45} />
+      <StepLabel>04 / 05 · Share</StepLabel>
       <div className="flex flex-col gap-3">
         <h2 className="text-[40px] leading-[46px] font-semibold tracking-[-0.025em]">
           Share it with your team
@@ -81,9 +81,9 @@ export function ShareWithYourTeam() {
       <div className="relative flex flex-col gap-12">
         {/* Comment */}
         <div className="flex h-[330px] flex-row items-center gap-10">
-          <div className="otv-bg-sky relative h-[330px] w-[560px] shrink-0 overflow-hidden rounded-2xl shadow-[0_14px_36px_rgba(0,0,0,0.3)]">
+          <div className="otv-bg-sky relative h-[330px] w-[560px] shrink-0 overflow-hidden rounded-none">
             {/* User content being reviewed: a simple card layout */}
-            <div className="absolute left-[32px] top-[40px] flex w-[232px] flex-col rounded-lg bg-[#F7F5F0] p-4 shadow-[0_14px_36px_rgba(0,0,0,0.18)]">
+            <div className="absolute left-[32px] top-[40px] flex w-[232px] flex-col rounded-[4px] bg-[#F7F5F0] p-4 shadow-[0_14px_36px_rgba(0,0,0,0.18)]">
               <span className="block h-2.5 w-20 rounded-full bg-[#1F3A2E]/70" />
               <span className="mt-2 block h-1.5 w-32 rounded-full bg-[#1F3A2E]/25" />
               <div className="mt-4 flex flex-row gap-1.5">
@@ -133,10 +133,7 @@ export function ShareWithYourTeam() {
 
         {/* Commit & deploy */}
         <div className="flex h-[330px] flex-row-reverse items-center gap-10">
-          <div
-            className="relative h-[330px] w-[560px] shrink-0 overflow-hidden rounded-2xl bg-cover bg-center shadow-[0_14px_36px_rgba(0,0,0,0.3)]"
-            style={{ backgroundImage: `url(${gitBg})` }}
-          >
+          <div className="otv-bg-sky relative h-[330px] w-[560px] shrink-0 overflow-hidden rounded-none">
             <div className="absolute left-[60px] top-[40px] flex h-[330px] w-[440px] flex-col overflow-hidden rounded-t-lg border-x border-t border-border-primary bg-surface-container-low shadow-[0_18px_44px_rgba(0,0,0,0.35)]">
               <ChangesPanel
                 label="Changes"
@@ -168,12 +165,9 @@ export function ShareWithYourTeam() {
 
         {/* Share */}
         <div className="flex h-[330px] flex-row items-center gap-10">
-          <div
-            className="relative h-[330px] w-[560px] shrink-0 overflow-hidden rounded-2xl bg-cover bg-center shadow-[0_14px_36px_rgba(0,0,0,0.3)]"
-            style={{ backgroundImage: `url(${shareBg})` }}
-          >
+          <div className="otv-bg-sky relative h-[330px] w-[560px] shrink-0 overflow-hidden rounded-none">
             <div className="absolute left-[72px] top-[34px] flex w-[416px] flex-col gap-2">
-              <div className="flex items-center justify-between gap-2 rounded-lg border border-border-primary bg-surface-container py-1.5 pl-3 pr-1.5 shadow-[0_12px_30px_rgba(0,0,0,0.3)]">
+              <div className="flex items-center justify-between gap-2 rounded-[4px] border border-border-primary bg-surface-container py-1.5 pl-3 pr-1.5 shadow-[0_12px_30px_rgba(0,0,0,0.3)]">
                 <InlineResourceChip type="canvas" label="playground" />
                 {/* ShareCanvasButton's trigger, verbatim classes + icon. The real
                     component wraps the live SharePopover (Convex-backed), so
@@ -188,7 +182,7 @@ export function ShareWithYourTeam() {
                 </span>
               </div>
               <div
-                className={`rounded-lg border shadow-[0_22px_50px_rgba(0,0,0,0.4)] ${SHARE_POPOVER_SURFACE.className}`}
+                className={`rounded-[4px] border shadow-[0_22px_50px_rgba(0,0,0,0.4)] ${SHARE_POPOVER_SURFACE.className}`}
               >
                 <div className="flex flex-col gap-3">
                   <CheckingState
@@ -218,23 +212,21 @@ export function ShareWithYourTeam() {
           fill="none"
         >
           <path
-            d="M 560 250 C 690 250, 734 286, 734 378"
-            stroke="rgba(255,255,255,0.4)"
-            strokeWidth="2"
+            d="M 560 250 H 722 Q 734 250 734 262 V 378"
+            stroke="rgba(244,244,250,0.32)"
+            strokeWidth="1"
             strokeLinecap="round"
-            strokeDasharray="6 8"
           />
-          <circle cx="560" cy="250" r="4" fill="rgba(255,255,255,0.7)" />
-          <circle cx="734" cy="378" r="4" fill="rgba(255,255,255,0.7)" />
+          <circle cx="560" cy="250" r="2.5" fill="#f4f4fa" />
+          <circle cx="734" cy="378" r="2.5" fill="#f4f4fa" />
           <path
-            d="M 342 628 C 212 628, 168 664, 168 756"
-            stroke="rgba(255,255,255,0.4)"
-            strokeWidth="2"
+            d="M 342 628 H 180 Q 168 628 168 640 V 756"
+            stroke="rgba(244,244,250,0.32)"
+            strokeWidth="1"
             strokeLinecap="round"
-            strokeDasharray="6 8"
           />
-          <circle cx="342" cy="628" r="4" fill="rgba(255,255,255,0.7)" />
-          <circle cx="168" cy="756" r="4" fill="rgba(255,255,255,0.7)" />
+          <circle cx="342" cy="628" r="2.5" fill="#f4f4fa" />
+          <circle cx="168" cy="756" r="2.5" fill="#f4f4fa" />
         </svg>
       </div>
       <ShareCursors />

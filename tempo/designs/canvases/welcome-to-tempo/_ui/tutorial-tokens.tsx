@@ -7,13 +7,13 @@
  * tokens and the lesson roots' `THEME_BRIDGE` points Tailwind's `--color-*`
  * at them. A user's repo has none of that (and may define its own,
  * different values), so the dark values are declared here, scoped to the
- * lesson roots only: an element that directly holds this style tag. Nothing
- * outside a lesson is affected. Values are resolved from theme.css (dark).
+ * lesson and menu roots marked with data-tutorial-token-scope. Values are
+ * resolved from theme.css (dark).
  */
 const TOKENS = `
   /* Text renders as in the app and on the design canvas: antialiased, with
      the app's line height and font features, whatever the host's body sets. */
-  :has(> style[data-tutorial-tokens]) {
+  div[data-tutorial-token-scope] {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
@@ -24,22 +24,22 @@ const TOKENS = `
   /* The app's base layer: borders default to the text color (even in hosts
      that restore Tailwind v3's gray default) and scrollbars are hidden. */
   @layer base {
-    :has(> style[data-tutorial-tokens]),
-    :has(> style[data-tutorial-tokens]) *,
-    :has(> style[data-tutorial-tokens]) ::before,
-    :has(> style[data-tutorial-tokens]) ::after {
+    div[data-tutorial-token-scope],
+    div[data-tutorial-token-scope] *,
+    div[data-tutorial-token-scope] ::before,
+    div[data-tutorial-token-scope] ::after {
       border-color: currentColor;
     }
-    :has(> style[data-tutorial-tokens]),
-    :has(> style[data-tutorial-tokens]) * {
+    div[data-tutorial-token-scope],
+    div[data-tutorial-token-scope] * {
       scrollbar-width: none;
     }
-    :has(> style[data-tutorial-tokens])::-webkit-scrollbar,
-    :has(> style[data-tutorial-tokens]) *::-webkit-scrollbar {
+    div[data-tutorial-token-scope]::-webkit-scrollbar,
+    div[data-tutorial-token-scope] *::-webkit-scrollbar {
       display: none;
     }
   }
-  [data-theme="dark"]:has(> style[data-tutorial-tokens]) {
+  div[data-tutorial-token-scope][data-theme="dark"] {
     --base-accent: #d4d4d4;
     --base-accent-subtle: color-mix(in srgb, #d4d4d4 16%, #0e0e0e);
     --base-accent-subtle-hover: color-mix(in srgb, #d4d4d4 24%, #0e0e0e);
@@ -208,19 +208,19 @@ const TOKENS = `
   /* Some hosts style bare headings and images globally, and unlayered rules
      beat Tailwind's layered utilities. Inside a lesson, hand those
      properties back to the lesson's own classes. */
-  :has(> style[data-tutorial-tokens]) :is(h1, h2, h3, h4, h5, h6) {
+  div[data-tutorial-token-scope] :is(h1, h2, h3, h4, h5, h6) {
     color: revert-layer;
     font-family: revert-layer;
     font-weight: revert-layer;
     letter-spacing: revert-layer;
     line-height: revert-layer;
   }
-  :has(> style[data-tutorial-tokens]) img {
+  div[data-tutorial-token-scope] img {
     display: revert-layer;
     max-width: revert-layer;
   }
   /* The design system's dark lavender accent pair (button-accent-lavender). */
-  [data-theme="dark"]:has(> style[data-tutorial-tokens]) .button-accent-lavender {
+  div[data-tutorial-token-scope][data-theme="dark"] .button-accent-lavender {
     --accent: var(--lavender-400);
     --on-accent: var(--lavender-990);
     --accent-subtle: var(--lavender-800-a20);
