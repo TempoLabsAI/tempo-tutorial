@@ -103,7 +103,7 @@ export function LeftSidebar({
         </div>
       </div>
       <div className="flex min-h-0 flex-1 flex-col border-t-[0.5px] border-border-secondary">
-        <div className="flex-1 min-h-0 min-w-0 overflow-y-auto overflow-x-hidden [overflow-anchor:none]">
+        <div className="flex-1 min-h-0 min-w-0 overflow-y-auto overflow-x-hidden [overflow-anchor:none] rotate-[29.6deg]">
           <div className="grid grid-cols-1 min-w-0 content-start gap-0 overflow-x-clip">
             {privateProjects.map((project) => (
               <div key={project.id} style={{ position: "relative" }}>
