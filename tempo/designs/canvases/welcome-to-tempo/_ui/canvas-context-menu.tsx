@@ -52,6 +52,7 @@ export function CanvasContextMenu({
     // tokens and font itself (as the app's menus inherit them).
     <div
       data-theme="dark"
+      data-tutorial-token-scope=""
       className="z-50 font-sans"
       style={{
         ...THEME_BRIDGE,

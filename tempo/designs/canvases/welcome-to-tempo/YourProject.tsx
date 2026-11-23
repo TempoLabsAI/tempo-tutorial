@@ -5,7 +5,7 @@ import { requestImportDesigns } from "./_tutorialBridge";
 import { TutorialStyles } from "./_bits";
 import { ProjectSetupPreview, SidebarAddProjectPreview } from "./_finale";
 import { THEME_BRIDGE } from "./_themeBridge";
-import { SubtleSpace } from "./_introSpace";
+import { LessonBackdrop, StepLabel } from "./_ascii";
 import type { ReactNode } from "react";
 import { defineControls } from "tempo-sdk/assets";
 
@@ -18,11 +18,19 @@ export function StartProject({ footer }: { footer?: ReactNode }) {
   return (
     <div
       data-theme="dark"
+      data-tutorial-token-scope=""
       style={THEME_BRIDGE}
-      className="relative isolate flex w-[1014px] flex-col gap-10 overflow-hidden rounded-[24px] border border-border-primary bg-surface-dim px-14 py-14 font-sans text-text-primary"
+      className="relative isolate flex w-[1014px] flex-col gap-10 overflow-hidden rounded-[10px] border border-border-primary bg-[#050508] px-14 pb-14 pt-[88px] font-sans text-text-primary"
     >
       <TutorialStyles />
-      <SubtleSpace />
+      <LessonBackdrop
+        shape="planet"
+        x={1040}
+        y={805}
+        size={480}
+        opacity={0.4}
+      />
+      <StepLabel>05 / 05 · Make it yours</StepLabel>
       <div className="flex flex-col gap-3">
         <h2 className="text-[40px] leading-[46px] font-semibold tracking-[-0.025em]">
           Ready to make your own?
@@ -44,7 +52,7 @@ export function StartProject({ footer }: { footer?: ReactNode }) {
               It's at the bottom of the left sidebar.
             </span>
           </div>
-          <div className="otv-bg-lilac relative flex h-[460px] items-center justify-center overflow-hidden rounded-2xl shadow-[0_14px_36px_rgba(0,0,0,0.3)]">
+          <div className="otv-bg-lilac relative flex h-[460px] items-center justify-center overflow-hidden rounded-none">
             <SidebarAddProjectPreview />
           </div>
         </div>
@@ -60,9 +68,9 @@ export function StartProject({ footer }: { footer?: ReactNode }) {
               Describe something new, or open a folder you already have.
             </span>
           </div>
-          <div className="otv-bg-sky relative flex h-[460px] items-center justify-center overflow-hidden rounded-2xl shadow-[0_14px_36px_rgba(0,0,0,0.3)]">
+          <div className="otv-bg-sky relative flex h-[460px] items-center justify-center overflow-hidden rounded-none">
             <div className="h-[364px] w-[504px]">
-              <div className="origin-top-left scale-[0.7] rounded-xl shadow-[0_24px_60px_rgba(10,10,40,0.45)]">
+              <div className="origin-top-left scale-[0.7] rounded-[5px] shadow-[0_24px_60px_rgba(10,10,40,0.45)]">
                 <ProjectSetupPreview />
               </div>
             </div>
@@ -96,8 +104,8 @@ export function YourProject() {
                 recreate them with the components in your codebase.
               </p>
             </div>
-            <div className="otv-bg-gold flex min-h-[240px] items-center justify-center rounded-2xl p-7">
-              <div className="flex w-full flex-col gap-5 rounded-xl bg-surface-container-low p-6">
+            <div className="otv-bg-gold flex min-h-[240px] items-center justify-center rounded-none p-7">
+              <div className="flex w-full flex-col gap-5 rounded-[5px] p-6">
                 <Button
                   variant="secondary"
                   size="lg"

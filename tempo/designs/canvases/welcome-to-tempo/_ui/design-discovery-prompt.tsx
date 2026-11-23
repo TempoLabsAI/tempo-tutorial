@@ -4,41 +4,46 @@
  * rules it uses from design-discovery-prompt.css. Both cards call
  * `onImportDesigns`; the tutorial wires that to the app's Import designs
  * dialog.
+ *
+ * The class names carry a `tutorial-` prefix so they are this file's alone.
+ * Under the app's own names, a document that had also loaded the app's
+ * stylesheet (Tempo's own canvas, which renders both) restyled the replica
+ * with every rule the app has changed since the copy was made.
  */
 import { Sparkles } from "./icons";
 import { Button } from "./primitives";
 
 const DISCOVERY_STYLES = `
-.discovery-prompt {
-  --discovery-purple: var(--text-lavender);
-  --discovery-blue: var(--text-blueberry);
+.tutorial-discovery-prompt {
+  --tutorial-discovery-purple: var(--text-lavender);
+  --tutorial-discovery-blue: var(--text-blueberry);
   border: 1px solid var(--border-secondary);
   border-radius: 16px;
   background: linear-gradient(
     115deg,
     color-mix(
       in srgb,
-      var(--discovery-purple) 7%,
+      var(--tutorial-discovery-purple) 7%,
       var(--surface-container-low)
     ),
     var(--surface-container-low) 58%
   );
   color: var(--text-primary);
 }
-.discovery-title {
+.tutorial-discovery-title {
   font-size: 24px;
   line-height: 30px;
   letter-spacing: -0.6px;
   font-weight: 600;
   margin: 0;
 }
-.discovery-actions {
+.tutorial-discovery-actions {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 12px;
   min-width: 0;
 }
-.discovery-action {
+.tutorial-discovery-action {
   position: relative;
   display: flex;
   gap: 14px;
@@ -57,7 +62,7 @@ const DISCOVERY_STYLES = `
     border-color 150ms,
     background 150ms;
 }
-.discovery-action-system:hover {
+.tutorial-discovery-action-system:hover {
   border-color: color-mix(in srgb, var(--text-lavender) 55%, transparent);
   background: color-mix(
     in srgb,
@@ -65,7 +70,7 @@ const DISCOVERY_STYLES = `
     var(--surface-container)
   );
 }
-.discovery-action-flows:hover {
+.tutorial-discovery-action-flows:hover {
   border-color: color-mix(in srgb, var(--text-blueberry) 55%, transparent);
   background: color-mix(
     in srgb,
@@ -73,49 +78,49 @@ const DISCOVERY_STYLES = `
     var(--surface-container)
   );
 }
-.discovery-action-copy {
+.tutorial-discovery-action-copy {
   display: flex;
   flex: 1;
   min-width: 0;
   flex-direction: column;
   gap: 8px;
 }
-.discovery-action-art {
+.tutorial-discovery-action-art {
   display: contents;
 }
-.discovery-action-title {
+.tutorial-discovery-action-title {
   display: block;
   font-size: 13px;
   line-height: 18px;
   font-weight: 500;
   color: var(--text-primary);
 }
-.discovery-action-description {
+.tutorial-discovery-action-description {
   display: block;
   font-size: 12px;
   line-height: 18px;
   font-weight: 400;
   color: var(--text-secondary);
 }
-.discovery-prompt-chat {
+.tutorial-discovery-prompt-chat {
   position: relative;
   padding: 12px 14px 14px;
   border-radius: 12px;
   background: transparent;
 }
-.discovery-prompt-chat .discovery-intro {
+.tutorial-discovery-prompt-chat .tutorial-discovery-intro {
   margin-bottom: 10px;
 }
-.discovery-prompt-chat .discovery-title {
+.tutorial-discovery-prompt-chat .tutorial-discovery-title {
   font-size: 14px;
   line-height: 20px;
   letter-spacing: -0.1px;
   font-weight: 500;
 }
-.discovery-prompt-chat .discovery-actions {
+.tutorial-discovery-prompt-chat .tutorial-discovery-actions {
   gap: 8px;
 }
-.discovery-prompt-chat .discovery-action {
+.tutorial-discovery-prompt-chat .tutorial-discovery-action {
   flex-direction: column;
   align-items: flex-start;
   gap: 6px;
@@ -123,7 +128,7 @@ const DISCOVERY_STYLES = `
   padding: 10px 14px;
   background: var(--surface-container-low);
 }
-.discovery-prompt-chat .discovery-action-art {
+.tutorial-discovery-prompt-chat .tutorial-discovery-action-art {
   position: relative;
   display: flex;
   align-items: center;
@@ -132,7 +137,7 @@ const DISCOVERY_STYLES = `
   height: 34px;
   opacity: 0.88;
 }
-.discovery-prompt-chat .discovery-action .discovery-art {
+.tutorial-discovery-prompt-chat .tutorial-discovery-action .tutorial-discovery-art {
   position: absolute;
   top: 50%;
   height: 78px;
@@ -140,23 +145,23 @@ const DISCOVERY_STYLES = `
   transform: translateY(-50%) scale(0.56);
   transform-origin: left center;
 }
-.discovery-prompt-chat .discovery-action .discovery-art-flows {
+.tutorial-discovery-prompt-chat .tutorial-discovery-action .tutorial-discovery-art-flows {
   transform: translateY(calc(-50% + 3px)) scale(0.56);
 }
-.discovery-prompt-chat .discovery-action-copy {
+.tutorial-discovery-prompt-chat .tutorial-discovery-action-copy {
   gap: 2px;
 }
-.discovery-prompt-chat .discovery-action-description {
+.tutorial-discovery-prompt-chat .tutorial-discovery-action-description {
   line-height: 16px;
 }
-.discovery-art {
+.tutorial-discovery-art {
   position: relative;
   display: block;
   width: 80px;
   height: 78px;
   flex: 0 0 80px;
 }
-.discovery-art-back {
+.tutorial-discovery-art-back {
   position: absolute;
   width: 51px;
   height: 51px;
@@ -175,11 +180,11 @@ const DISCOVERY_STYLES = `
   gap: 5px;
   padding: 10px;
 }
-.discovery-art-back > span {
+.tutorial-discovery-art-back > span {
   border-radius: 3px;
   background: color-mix(in srgb, var(--text-lavender) 45%, transparent);
 }
-.discovery-art-front {
+.tutorial-discovery-art-front {
   position: absolute;
   top: 24px;
   left: 5px;
@@ -194,7 +199,7 @@ const DISCOVERY_STYLES = `
   transform: rotate(-8deg);
   padding: 6px 8px;
 }
-.discovery-art-type {
+.tutorial-discovery-art-type {
   display: block;
   font-size: 18px;
   line-height: 22px;
@@ -202,24 +207,24 @@ const DISCOVERY_STYLES = `
   color: var(--text-lavender);
   font-weight: 500;
 }
-.discovery-art-swatches {
+.tutorial-discovery-art-swatches {
   display: flex;
   gap: 4px;
   margin-top: 3px;
 }
-.discovery-art-swatches i {
+.tutorial-discovery-art-swatches i {
   width: 9px;
   height: 5px;
   border-radius: 2px;
   background: var(--text-lavender);
 }
-.discovery-art-swatches i:nth-child(2) {
+.tutorial-discovery-art-swatches i:nth-child(2) {
   background: var(--text-blueberry);
 }
-.discovery-art-swatches i:nth-child(3) {
+.tutorial-discovery-art-swatches i:nth-child(3) {
   background: var(--text-primary);
 }
-.discovery-art-spark {
+.tutorial-discovery-art-spark {
   position: absolute;
   left: 0;
   top: 7px;
@@ -227,12 +232,12 @@ const DISCOVERY_STYLES = `
   height: 12px;
   color: var(--text-lavender);
 }
-.discovery-art-flows {
+.tutorial-discovery-art-flows {
   display: flex;
   align-items: center;
   gap: 5px;
 }
-.discovery-art-link {
+.tutorial-discovery-art-link {
   position: absolute;
   left: 6px;
   right: 3px;
@@ -241,7 +246,7 @@ const DISCOVERY_STYLES = `
   background: var(--text-blueberry);
   opacity: 0.5;
 }
-.discovery-art-screen {
+.tutorial-discovery-art-screen {
   position: relative;
   display: flex;
   flex: 1;
@@ -254,25 +259,25 @@ const DISCOVERY_STYLES = `
   border-radius: 5px;
   background: var(--surface-container-high);
 }
-.discovery-art-screen:nth-child(3) {
+.tutorial-discovery-art-screen:nth-child(3) {
   transform: translateY(-10px);
 }
-.discovery-art-screen:nth-child(4) {
+.tutorial-discovery-art-screen:nth-child(4) {
   transform: translateY(7px);
 }
-.discovery-art-screen i {
+.tutorial-discovery-art-screen i {
   display: block;
   height: 13px;
   border-radius: 2px;
   background: color-mix(in srgb, var(--text-blueberry) 45%, transparent);
 }
-.discovery-art-screen > span {
+.tutorial-discovery-art-screen > span {
   display: block;
   height: 2px;
   border-radius: 1px;
   background: color-mix(in srgb, var(--text-blueberry) 25%, transparent);
 }
-.discovery-art-screen > span:last-child {
+.tutorial-discovery-art-screen > span:last-child {
   width: 60%;
 }
 `;
@@ -280,37 +285,43 @@ const DISCOVERY_STYLES = `
 /** Decorative building blocks, not a second implementation of an app surface. */
 export function DiscoveryArtwork({ kind }: { kind: "system" | "flows" }) {
   return kind === "system" ? (
-    <span className="discovery-art discovery-art-system" aria-hidden="true">
-      <span className="discovery-art-back">
+    <span
+      className="tutorial-discovery-art tutorial-discovery-art-system"
+      aria-hidden="true"
+    >
+      <span className="tutorial-discovery-art-back">
         <span />
         <span />
         <span />
         <span />
       </span>
-      <span className="discovery-art-front">
-        <span className="discovery-art-type">Aa</span>
-        <span className="discovery-art-swatches">
+      <span className="tutorial-discovery-art-front">
+        <span className="tutorial-discovery-art-type">Aa</span>
+        <span className="tutorial-discovery-art-swatches">
           <i />
           <i />
           <i />
         </span>
       </span>
-      <Sparkles className="discovery-art-spark" />
+      <Sparkles className="tutorial-discovery-art-spark" />
     </span>
   ) : (
-    <span className="discovery-art discovery-art-flows" aria-hidden="true">
-      <span className="discovery-art-link" />
-      <span className="discovery-art-screen">
+    <span
+      className="tutorial-discovery-art tutorial-discovery-art-flows"
+      aria-hidden="true"
+    >
+      <span className="tutorial-discovery-art-link" />
+      <span className="tutorial-discovery-art-screen">
         <i />
         <span />
         <span />
       </span>
-      <span className="discovery-art-screen">
+      <span className="tutorial-discovery-art-screen">
         <i />
         <span />
         <span />
       </span>
-      <span className="discovery-art-screen">
+      <span className="tutorial-discovery-art-screen">
         <i />
         <span />
         <span />
@@ -328,25 +339,27 @@ export function DesignDiscoveryPrompt({
 }) {
   return (
     <section
-      className="discovery-prompt discovery-prompt-chat"
+      className="tutorial-discovery-prompt tutorial-discovery-prompt-chat"
       aria-label="Bring your project onto the canvas"
     >
       <style>{DISCOVERY_STYLES}</style>
-      <div className="discovery-intro">
-        <h3 className="discovery-title">Import designs</h3>
+      <div className="tutorial-discovery-intro">
+        <h3 className="tutorial-discovery-title">Import designs</h3>
       </div>
-      <div className="discovery-actions">
+      <div className="tutorial-discovery-actions">
         <Button
           variant="ghost"
           onClick={onImportDesigns}
-          className="discovery-action discovery-action-system"
+          className="tutorial-discovery-action tutorial-discovery-action-system"
         >
-          <span className="discovery-action-art">
+          <span className="tutorial-discovery-action-art">
             <DiscoveryArtwork kind="system" />
           </span>
-          <span className="discovery-action-copy">
-            <span className="discovery-action-title">Import design system</span>
-            <span className="discovery-action-description">
+          <span className="tutorial-discovery-action-copy">
+            <span className="tutorial-discovery-action-title">
+              Import design system
+            </span>
+            <span className="tutorial-discovery-action-description">
               Components, colors &amp; type.
             </span>
           </span>
@@ -354,16 +367,16 @@ export function DesignDiscoveryPrompt({
         <Button
           variant="ghost"
           onClick={onImportDesigns}
-          className="discovery-action discovery-action-flows"
+          className="tutorial-discovery-action tutorial-discovery-action-flows"
         >
-          <span className="discovery-action-art">
+          <span className="tutorial-discovery-action-art">
             <DiscoveryArtwork kind="flows" />
           </span>
-          <span className="discovery-action-copy">
-            <span className="discovery-action-title">
+          <span className="tutorial-discovery-action-copy">
+            <span className="tutorial-discovery-action-title">
               Import screen templates
             </span>
-            <span className="discovery-action-description">
+            <span className="tutorial-discovery-action-description">
               Recreate screens pixel for pixel.
             </span>
           </span>

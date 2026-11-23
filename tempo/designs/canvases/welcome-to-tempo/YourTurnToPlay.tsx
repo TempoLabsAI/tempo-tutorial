@@ -7,9 +7,9 @@ import {
 } from "./_ui/canvas-design-toolbar";
 import { ColumnIcon, RowIcon } from "./_ui/canvas-toolbar-icons";
 import { Kbd } from "./_ui/primitives";
-import { PositionMatch, TutorialStyles, type Theme } from "./_bits";
+import { LayoutOption, TutorialStyles, type Theme } from "./_bits";
 import { THEME_BRIDGE } from "./_themeBridge";
-import { SubtleSpace } from "./_introSpace";
+import { LessonBackdrop, StepLabel } from "./_ascii";
 
 const noop = () => {};
 
@@ -76,8 +76,13 @@ const TOOLBAR_ITEMS: CanvasToolbarItem[] = [
   },
 ];
 
-// Layout: three lessons, each a teach column on the left (title, one line,
-// keycaps) and a colorful panel on the right holding a calm try-it area.
+// Layout: three numbered lessons, stacked. Each has a header row (title and
+// one line on the left, its shortcut keys at the right edge) and a full-width
+// plate underneath holding a calm try-it area.
+
+// The practice cards are monochrome and told apart by fill: one solid, one
+// hatched, one outline only. Their classes are written out in full on each
+// card so the canvas can edit them directly.
 
 /** Lesson 02: draw, auto layout and positioning, each with a try-it area. */
 export function YourTurnToPlay({
@@ -90,11 +95,13 @@ export function YourTurnToPlay({
   return (
     <div
       data-theme={theme}
+      data-tutorial-token-scope=""
       style={THEME_BRIDGE}
-      className="relative isolate flex w-[1014px] flex-col gap-14 overflow-hidden rounded-[24px] border border-border-primary bg-surface-dim px-14 py-14 font-sans text-text-primary"
+      className="relative isolate flex w-[1014px] flex-col gap-16 overflow-hidden rounded-[10px] border border-border-primary bg-[#050508] px-14 pb-14 pt-[88px] font-sans text-text-primary"
     >
       <TutorialStyles />
-      <SubtleSpace />
+      <LessonBackdrop shape="frame" x={1010} y={840} size={640} opacity={0.4} />
+      <StepLabel>02 / 05 · Your turn</StepLabel>
 
       <div className="flex flex-col gap-3">
         <h2 className="text-[40px] leading-[46px] font-semibold tracking-[-0.025em]">
@@ -106,9 +113,12 @@ export function YourTurnToPlay({
       </div>
 
       {/* Lesson 1 · Draw */}
-      <div className="flex flex-row gap-10">
-        <div className="flex w-[256px] shrink-0 flex-col gap-6 pt-2">
-          <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-7 border-t border-white/10 pt-5">
+        <span className="font-mono text-[11px] tracking-[0.22em] text-text-tertiary">
+          01
+        </span>
+        <div className="flex flex-row items-start gap-12">
+          <div className="flex w-[300px] shrink-0 flex-col gap-2">
             <span className="text-[24px] font-semibold leading-[30px] tracking-[-0.01em]">
               Draw anything
             </span>
@@ -116,36 +126,28 @@ export function YourTurnToPlay({
               Pick a tool, then drag in the box.
             </span>
           </div>
-          <div className="flex flex-col gap-2.5">
+          <div className="ml-auto flex flex-row flex-wrap items-center gap-x-7 gap-y-3">
             <div className="flex flex-row items-center gap-3 text-[15px] font-medium">
-              <Kbd variant="large" className="w-8">
-                F
-              </Kbd>
+              <Kbd variant="key">F</Kbd>
               Frame
             </div>
             <div className="flex flex-row items-center gap-3 text-[15px] font-medium">
-              <Kbd variant="large" className="w-8">
-                T
-              </Kbd>
+              <Kbd variant="key">T</Kbd>
               Text
             </div>
             <div className="flex flex-row items-center gap-3 text-[15px] font-medium">
-              <Kbd variant="large" className="w-8">
-                R
-              </Kbd>
+              <Kbd variant="key">R</Kbd>
               Rectangle
             </div>
             <div className="flex flex-row items-center gap-3 text-[15px] font-medium">
-              <Kbd variant="large" className="w-8">
-                O
-              </Kbd>
+              <Kbd variant="key">O</Kbd>
               Ellipse
             </div>
           </div>
         </div>
-        <div className="relative flex-1">
-          <div className="otv-bg-mint overflow-hidden rounded-2xl p-6 shadow-[0_14px_36px_rgba(0,0,0,0.3)]">
-            <div className="relative h-[260px] w-full rounded-xl border border-dashed border-white/25 bg-surface-container">
+        <div className="relative">
+          <div className="otv-bg-mint overflow-hidden rounded-none p-6">
+            <div className="relative h-[260px] w-full rounded-[5px] border border-dashed border-white/25">
               <span className="absolute left-0 top-[118px] w-full text-center text-[14px] font-medium text-text-tertiary">
                 Draw here
               </span>
@@ -153,7 +155,7 @@ export function YourTurnToPlay({
             </div>
           </div>
           {/* Decorative: the real canvas toolbar, enlarged and tilted over the corner. */}
-          <div className="pointer-events-none absolute -bottom-7 -left-8 origin-bottom-left rotate-[-6deg] scale-[1.4] drop-shadow-[0_16px_28px_rgba(0,0,0,0.45)]">
+          <div className="pointer-events-none absolute -bottom-7 left-6 origin-bottom-left rotate-[-6deg] scale-[1.4] drop-shadow-[0_16px_28px_rgba(0,0,0,0.45)]">
             <CanvasDesignToolbar
               items={TOOLBAR_ITEMS}
               activeToolId="draw-div"
@@ -164,9 +166,12 @@ export function YourTurnToPlay({
       </div>
 
       {/* Lesson 2 · Auto layout: loose cards become a row with ⇧A. */}
-      <div className="flex flex-row gap-10">
-        <div className="flex w-[256px] shrink-0 flex-col gap-6 pt-2">
-          <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-7 border-t border-white/10 pt-5">
+        <span className="font-mono text-[11px] tracking-[0.22em] text-text-tertiary">
+          02
+        </span>
+        <div className="flex flex-row items-start gap-12">
+          <div className="flex w-[300px] shrink-0 flex-col gap-2">
             <span className="text-[24px] font-semibold leading-[30px] tracking-[-0.01em]">
               Auto layout
             </span>
@@ -174,99 +179,92 @@ export function YourTurnToPlay({
               Select all three cards and press ⇧A. They snap into a row!
             </span>
           </div>
-          <div className="flex flex-row items-center gap-1.5">
-            <Kbd variant="large" className="w-8">
-              ⇧
-            </Kbd>
-            <Kbd variant="large" className="w-8">
-              A
-            </Kbd>
-          </div>
-          <span className="text-[14px] leading-[21px] text-text-tertiary">
+          <span className="max-w-[380px] flex-1 text-[14px] leading-[21px] text-text-tertiary">
             Then flip it to a column or change the gap in the style panel.
           </span>
+          <div className="ml-auto flex flex-row items-center gap-2">
+            <Kbd variant="keyLarge">⇧</Kbd>
+            <Kbd variant="keyLarge">A</Kbd>
+          </div>
         </div>
-        <div className="otv-bg-gold flex-1 overflow-hidden rounded-2xl p-6 shadow-[0_14px_36px_rgba(0,0,0,0.3)]">
-          <div
-            data-otv-playground=""
-            className="flex flex-col overflow-hidden rounded-xl bg-surface-container"
-          >
-            <div className="relative h-[190px]">
+        <div className="otv-bg-gold overflow-hidden rounded-none p-6">
+          <div data-otv-playground="" className="flex flex-col overflow-hidden">
+            <div className="relative h-[276px]">
               <span className="absolute left-5 top-4 text-[11px] font-medium text-text-tertiary">
                 Select these
               </span>
-              <div className="p-0 gap-[103px] size-[max-content] flex flex-row flex-nowrap grid-cols-none grid-rows-none items-start justify-start box-border absolute [grid-template-areas:none] [grid-auto-flow:row] [grid-auto-columns:auto] [grid-auto-rows:auto] [align-content:start] [justify-items:start] left-[64px] top-[46px]">
-                <div className="p-0 gap-[103px] size-[max-content] flex flex-row flex-nowrap grid-cols-none grid-rows-none items-start justify-start box-border [grid-template-areas:none] [grid-auto-flow:row] [grid-auto-columns:auto] [grid-auto-rows:auto] [align-content:start] [justify-items:start]">
+              <div className="p-0 gap-[150px] size-[max-content] flex flex-row flex-nowrap grid-cols-none grid-rows-none items-start justify-start box-border absolute [grid-template-areas:none] [grid-auto-flow:row] [grid-auto-columns:auto] [grid-auto-rows:auto] [align-content:start] [justify-items:start] left-1/2 -translate-x-1/2 top-[76px]">
+                <div className="p-0 gap-[150px] size-[max-content] flex flex-row flex-nowrap grid-cols-none grid-rows-none items-start justify-start box-border [grid-template-areas:none] [grid-auto-flow:row] [grid-auto-columns:auto] [grid-auto-rows:auto] [align-content:start] [justify-items:start]">
                   <div
                     data-otv-watch="line-card"
-                    className="left-auto top-auto relative [order:0] [grid-row-start:auto] [grid-row-end:auto] [grid-column-start:auto] [grid-column-end:auto] flex h-[48px] items-center rounded-xl px-5 text-[15px] font-semibold text-[#141414] bg-[#CD9DFA] flex-row"
+                    className="left-auto top-auto relative [order:0] [grid-row-start:auto] [grid-row-end:auto] [grid-column-start:auto] [grid-column-end:auto] flex h-[70px] items-center px-7 text-[16px] flex-row font-mono font-medium uppercase tracking-[0.16em] bg-[#f4f4fa] text-[#0c0c10]"
                   >
                     One
                   </div>
-                  <div className="left-auto top-auto relative [order:0] [grid-row-start:auto] [grid-row-end:auto] [grid-column-start:auto] [grid-column-end:auto] flex h-[48px] items-center rounded-xl px-5 text-[15px] font-semibold text-[#141414] bg-[#99DFFE] flex-row">
+                  <div className="left-auto top-auto relative [order:0] [grid-row-start:auto] [grid-row-end:auto] [grid-column-start:auto] [grid-column-end:auto] flex h-[70px] items-center px-7 text-[16px] flex-row font-mono font-medium uppercase tracking-[0.16em] bg-[#16161c] [background-image:repeating-linear-gradient(135deg,rgba(244,244,250,0.34)_0_1px,transparent_1px_6px)] text-[#f4f4fa] shadow-[inset_0_0_0_1px_rgba(244,244,250,0.6)] [text-shadow:0_0_3px_#16161c,0_0_6px_#16161c]">
                     Two
                   </div>
-                  <div className="left-auto top-auto relative [order:0] [grid-row-start:auto] [grid-row-end:auto] [grid-column-start:auto] [grid-column-end:auto] flex h-[48px] items-center rounded-xl px-5 text-[15px] font-semibold text-[#141414] bg-[#F5C26B] flex-row">
+                  <div className="left-auto top-auto relative [order:0] [grid-row-start:auto] [grid-row-end:auto] [grid-column-start:auto] [grid-column-end:auto] flex h-[70px] items-center px-7 text-[16px] flex-row font-mono font-medium uppercase tracking-[0.16em] otv-tile-outline text-[#f4f4fa] shadow-[inset_0_0_0_1px_rgba(244,244,250,0.3)]">
                     Three
                   </div>
                 </div>
               </div>
             </div>
 
-            {/* Auto layout types; the dot lights up once the cards are laid out. */}
-            <div className="flex flex-row gap-14 border-t border-border-primary bg-surface-container-low px-5 py-4">
-              <div className="flex flex-col gap-2">
+            {/* Auto layout types; the one in use is lit once the cards are laid out. */}
+            <div className="flex flex-row justify-center gap-14 border-t border-border-primary px-5 py-4">
+              <LayoutOption watch="line-card" kind="row">
                 <div className="flex h-[30px] w-[44px] flex-row items-center gap-[3px] rounded-[5px] border border-border-secondary p-[4px]">
                   <span className="h-full flex-1 rounded-[2px] bg-text-tertiary/50" />
                   <span className="h-full flex-1 rounded-[2px] bg-text-tertiary/50" />
                   <span className="h-full flex-1 rounded-[2px] bg-text-tertiary/50" />
                 </div>
-                <div className="flex flex-row items-center gap-1.5 text-[12px] font-semibold text-text-primary">
+                <div className="text-[12px] font-semibold text-text-primary">
                   Row
-                  <PositionMatch watch="line-card" kind="row" />
                 </div>
                 <span className="text-[11px] text-text-tertiary">
                   ⇧R draws one
                 </span>
-              </div>
-              <div className="flex flex-col gap-2">
+              </LayoutOption>
+              <LayoutOption watch="line-card" kind="column">
                 <div className="flex h-[30px] w-[44px] flex-col gap-[3px] rounded-[5px] border border-border-secondary p-[4px]">
                   <span className="w-full flex-1 rounded-[2px] bg-text-tertiary/50" />
                   <span className="w-full flex-1 rounded-[2px] bg-text-tertiary/50" />
                   <span className="w-full flex-1 rounded-[2px] bg-text-tertiary/50" />
                 </div>
-                <div className="flex flex-row items-center gap-1.5 text-[12px] font-semibold text-text-primary">
+                <div className="text-[12px] font-semibold text-text-primary">
                   Column
-                  <PositionMatch watch="line-card" kind="column" />
                 </div>
                 <span className="text-[11px] text-text-tertiary">
                   ⇧C draws one
                 </span>
-              </div>
-              <div className="flex flex-col gap-2">
+              </LayoutOption>
+              <LayoutOption watch="line-card" kind="grid">
                 <div className="grid h-[30px] w-[44px] grid-cols-2 gap-[3px] rounded-[5px] border border-border-secondary p-[4px]">
                   <span className="rounded-[2px] bg-text-tertiary/50" />
                   <span className="rounded-[2px] bg-text-tertiary/50" />
                   <span className="rounded-[2px] bg-text-tertiary/50" />
                   <span className="rounded-[2px] bg-text-tertiary/50" />
                 </div>
-                <div className="flex flex-row items-center gap-1.5 text-[12px] font-semibold text-text-primary">
+                <div className="text-[12px] font-semibold text-text-primary">
                   Grid
-                  <PositionMatch watch="line-card" kind="grid" />
                 </div>
                 <span className="text-[11px] text-text-tertiary">
                   ⇧G draws one
                 </span>
-              </div>
+              </LayoutOption>
             </div>
           </div>
         </div>
       </div>
 
       {/* Lesson 3 · Positioning: pull a card out of the row and back in. */}
-      <div className="flex flex-row gap-10">
-        <div className="flex w-[256px] shrink-0 flex-col gap-6 pt-2">
-          <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-7 border-t border-white/10 pt-5">
+        <span className="font-mono text-[11px] tracking-[0.22em] text-text-tertiary">
+          03
+        </span>
+        <div className="flex flex-row items-start gap-12">
+          <div className="flex w-[300px] shrink-0 flex-col gap-2">
             <span className="text-[24px] font-semibold leading-[30px] tracking-[-0.01em]">
               Positioning
             </span>
@@ -275,66 +273,58 @@ export function YourTurnToPlay({
               and it floats free. Drop it back and it snaps into line.
             </span>
           </div>
-          <div className="flex flex-row items-center gap-1.5 text-[14px] font-medium text-text-secondary">
-            <Kbd variant="large" className="w-8">
-              ⌘
-            </Kbd>
-            + click
+          <div className="ml-auto flex flex-row items-center gap-2 text-[17px] font-medium text-text-primary">
+            <Kbd variant="keyLarge">⌘</Kbd>+ click
           </div>
         </div>
-        <div className="otv-bg-lilac flex-1 overflow-hidden rounded-2xl p-6 shadow-[0_14px_36px_rgba(0,0,0,0.3)]">
-          <div
-            data-otv-playground=""
-            className="flex flex-col overflow-hidden rounded-xl bg-surface-container"
-          >
-            <div className="relative h-[190px]">
+        <div className="otv-bg-lilac overflow-hidden rounded-none p-6">
+          <div data-otv-playground="" className="flex flex-col overflow-hidden">
+            <div className="relative h-[276px]">
               <span className="absolute left-5 top-4 text-[11px] font-medium text-text-tertiary">
                 Auto layout row
               </span>
-              <div className="absolute left-5 top-[40px] flex min-w-[300px] flex-row gap-2.5 rounded-xl border border-dashed border-[#99DFFE] bg-surface-blueberry p-2.5">
-                <div className="flex h-[64px] w-[84px] items-center justify-center rounded-lg bg-[#99DFFE] text-[13px] font-semibold text-[#141414]">
+              <div className="absolute left-1/2 top-[70px] flex min-w-[420px] -translate-x-1/2 flex-row gap-3.5 border border-dashed border-white/30 bg-white/[0.03] p-3.5">
+                <div className="flex h-[92px] w-[122px] items-center justify-center text-[15px] font-mono font-medium uppercase tracking-[0.16em] bg-[#16161c] [background-image:repeating-linear-gradient(135deg,rgba(244,244,250,0.34)_0_1px,transparent_1px_6px)] text-[#f4f4fa] shadow-[inset_0_0_0_1px_rgba(244,244,250,0.6)] [text-shadow:0_0_3px_#16161c,0_0_6px_#16161c]">
                   One
                 </div>
                 <div
                   data-otv-watch="float-card"
-                  className="flex h-[64px] w-[84px] items-center justify-center rounded-lg bg-[#CD9DFA] text-[13px] font-semibold text-[#141414] shadow-[0_10px_24px_rgba(0,0,0,0.35)]"
+                  className="flex h-[92px] w-[122px] items-center justify-center bg-[#CD9DFA] text-[15px] text-[#141414] shadow-[0_10px_24px_rgba(0,0,0,0.35)] font-mono font-medium uppercase tracking-[0.16em]"
                 >
                   Drag me
                 </div>
-                <div className="flex h-[64px] w-[84px] items-center justify-center rounded-lg bg-[#F5C26B] text-[13px] font-semibold text-[#141414]">
+                <div className="flex h-[92px] w-[122px] items-center justify-center text-[15px] font-mono font-medium uppercase tracking-[0.16em] otv-tile-outline text-[#f4f4fa] shadow-[inset_0_0_0_1px_rgba(244,244,250,0.3)]">
                   Three
                 </div>
               </div>
             </div>
 
-            {/* Position types; the dot follows the purple card live. */}
-            <div className="flex flex-row gap-14 border-t border-border-primary bg-surface-container-low px-5 py-4">
-              <div className="flex flex-col gap-2">
+            {/* Position types; the one in use follows the purple card live. */}
+            <div className="flex flex-row justify-center gap-14 border-t border-border-primary px-5 py-4">
+              <LayoutOption watch="float-card" kind="static">
                 <div className="flex h-[30px] w-[44px] flex-row items-center gap-[3px] rounded-[5px] border border-border-secondary p-[4px]">
                   <span className="h-full flex-1 rounded-[2px] bg-text-tertiary/50" />
                   <span className="h-full flex-1 rounded-[2px] bg-[#CD9DFA]" />
                   <span className="h-full flex-1 rounded-[2px] bg-text-tertiary/50" />
                 </div>
-                <div className="flex flex-row items-center gap-1.5 text-[12px] font-semibold text-text-primary">
+                <div className="text-[12px] font-semibold text-text-primary">
                   In the flow
-                  <PositionMatch watch="float-card" kind="static" />
                 </div>
                 <span className="text-[11px] text-text-tertiary">
                   Follows the layout
                 </span>
-              </div>
-              <div className="flex flex-col gap-2">
+              </LayoutOption>
+              <LayoutOption watch="float-card" kind="absolute">
                 <div className="relative h-[30px] w-[44px] rounded-[5px] border border-border-secondary">
                   <span className="absolute left-[18px] top-[9px] h-[14px] w-[18px] rounded-[2px] bg-[#CD9DFA]" />
                 </div>
-                <div className="flex flex-row items-center gap-1.5 text-[12px] font-semibold text-text-primary">
+                <div className="text-[12px] font-semibold text-text-primary">
                   Absolute
-                  <PositionMatch watch="float-card" kind="absolute" />
                 </div>
                 <span className="text-[11px] text-text-tertiary">
                   Floats free
                 </span>
-              </div>
+              </LayoutOption>
             </div>
           </div>
         </div>

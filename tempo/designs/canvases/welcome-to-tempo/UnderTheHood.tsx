@@ -8,7 +8,7 @@ import { requestImportDesigns } from "./_tutorialBridge";
 import { ChatComposer } from "./_chat";
 import { Keycap } from "./_keycap";
 import { CopyButton, TutorialStyles } from "./_bits";
-import { SubtleSpace } from "./_introSpace";
+import { LessonBackdrop, StepLabel } from "./_ascii";
 import { THEME_BRIDGE } from "./_themeBridge";
 
 const CHANGE_PROMPT =
@@ -27,11 +27,13 @@ function LessonFrame({
   return (
     <div
       data-theme="dark"
+      data-tutorial-token-scope=""
       style={THEME_BRIDGE}
-      className="relative isolate flex w-[1014px] flex-col gap-14 overflow-hidden rounded-[24px] border border-border-primary bg-surface-dim p-14 font-sans text-text-primary"
+      className="relative isolate flex w-[1014px] flex-col gap-14 overflow-hidden rounded-[10px] border border-border-primary bg-[#050508] px-14 pb-14 pt-[88px] font-sans text-text-primary"
     >
       <TutorialStyles />
-      <SubtleSpace />
+      <LessonBackdrop shape="torus" x={965} y={75} size={420} opacity={0.5} />
+      <StepLabel>03 / 05 · Under the hood</StepLabel>
       <div className="flex flex-col gap-3">
         <h2 className="text-[40px] font-semibold leading-[46px] tracking-[-0.025em]">
           {title}
@@ -63,8 +65,8 @@ function ChatLesson() {
           <Keycap>L</Keycap>
         </div>
       </div>
-      <div className="otv-bg-lilac flex min-w-0 flex-1 flex-col justify-center gap-5 rounded-2xl p-6">
-        <div className="rounded-xl bg-surface-container-low p-4">
+      <div className="otv-bg-lilac flex min-w-0 flex-1 flex-col justify-center gap-5 rounded-none p-6">
+        <div className="rounded-[5px] p-4">
           <ChatComposer
             text={CHANGE_PROMPT}
             contextItems={[
@@ -118,9 +120,9 @@ export function UnderTheHood() {
               This is a real button. Press Play to try it.
             </p>
           </div>
-          <div className="otv-bg-lilac flex min-w-0 flex-1 flex-col gap-5 rounded-2xl p-6">
-            <div className="flex min-h-[100px] items-center justify-center rounded-xl border border-border-primary bg-surface-container-low">
-              <span className="rounded-lg border-2 border-text-blueberry p-1.5">
+          <div className="otv-bg-lilac flex min-w-0 flex-1 flex-col gap-5 rounded-none p-6">
+            <div className="flex min-h-[100px] items-center justify-center rounded-[5px] border border-border-primary">
+              <span className="rounded-[4px] border-2 border-text-blueberry p-1.5">
                 <Button
                   variant="secondary"
                   size="lg"
@@ -136,7 +138,7 @@ export function UnderTheHood() {
               </span>
             </div>
             {codeVisible ? (
-              <div className="overflow-hidden rounded-xl border border-border-primary bg-surface-container-low shadow-lg">
+              <div className="overflow-hidden rounded-[5px] border border-border-primary shadow-lg">
                 <div className="flex items-center gap-2 border-b border-border-secondary px-4 py-2 text-xs text-text-secondary">
                   <Code2 className="size-3.5" />
                   Button.tsx
@@ -171,8 +173,8 @@ export function UnderTheHood() {
               system. Keep designing with the components your team already uses.
             </p>
           </div>
-          <div className="otv-bg-sky min-w-0 flex-1 rounded-2xl p-6">
-            <div className="rounded-xl bg-surface-container-low p-4">
+          <div className="otv-bg-sky min-w-0 flex-1 rounded-none p-6">
+            <div className="rounded-[5px] p-4">
               <DesignDiscoveryPrompt
                 variant="chat"
                 onImportDesigns={requestImportDesigns}
