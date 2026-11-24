@@ -1,8 +1,8 @@
-import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Link, Outlet } from "react-router-dom";
 import { Navbar } from "@/design-system/layout/Navbar";
 import { Container } from "@/design-system/layout/Container";
 import { Button } from "@/design-system/primitives/Button";
-import { HomePage } from "@/pages/HomePage";
+import { PortfolioPage } from "@/pages/PortfolioPage";
 import { SearchPage } from "@/pages/SearchPage";
 import { ListingDetailPage } from "@/pages/ListingDetailPage";
 import { TripsPage } from "@/pages/TripsPage";
@@ -13,7 +13,9 @@ import { WishlistsPage } from "@/pages/WishlistsPage";
 function NotFound() {
   return (
     <Container className="py-32 text-center max-w-md">
-      <p className="text-[80px] font-semibold text-ink leading-none mb-6">404</p>
+      <p className="text-[80px] font-semibold text-ink leading-none mb-6">
+        404
+      </p>
       <p className="text-[24px] font-semibold text-ink mb-2">
         We can't seem to find that page
       </p>
@@ -35,10 +37,18 @@ function NotFound() {
 export default function App() {
   return (
     <BrowserRouter>
-      <Navbar />
-      <main className="bg-white min-h-screen">
-        <Routes>
-          <Route path="/" element={<HomePage />} />
+      <Routes>
+        <Route path="/" element={<PortfolioPage />} />
+        <Route
+          element={
+            <>
+              <Navbar />
+              <main className="bg-white min-h-screen">
+                <Outlet />
+              </main>
+            </>
+          }
+        >
           <Route path="/search" element={<SearchPage />} />
           <Route path="/listing/:id" element={<ListingDetailPage />} />
           <Route path="/trips" element={<TripsPage />} />
@@ -46,8 +56,8 @@ export default function App() {
           <Route path="/messages" element={<MessagesPage />} />
           <Route path="/wishlists" element={<WishlistsPage />} />
           <Route path="*" element={<NotFound />} />
-        </Routes>
-      </main>
+        </Route>
+      </Routes>
     </BrowserRouter>
   );
 }
