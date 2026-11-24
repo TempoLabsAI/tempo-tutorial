@@ -1,27 +1,47 @@
 import { useState, type ReactNode } from "react";
 import { defineControls } from "tempo-sdk/assets";
 import { Code2, Sparkles, X } from "./_ui/icons";
-import { Button, CodeBlock } from "./_ui/primitives";
+import { Button } from "./_ui/primitives";
 import { CanvasContextMenu } from "./_ui/canvas-context-menu";
-import { DesignDiscoveryPrompt } from "./_ui/design-discovery-prompt";
-import { requestImportDesigns } from "./_tutorialBridge";
 import { ChatComposer } from "./_chat";
 import { Keycap } from "./_keycap";
-import { CopyButton, TutorialStyles } from "./_bits";
+import { StackedLesson, TutorialStyles } from "./_bits";
 import { LessonBackdrop, StepLabel } from "./_ascii";
 import { THEME_BRIDGE } from "./_themeBridge";
 
 const CHANGE_PROMPT =
   "Give the selected element softer corners and try a different color. Keep the layout simple.";
-const SOURCE = `<Button variant="secondary" size="lg">\n  <Sparkles />\n  Make it yours\n</Button>`;
+type ButtonPart = "button" | "icon" | "label";
+
+// The button's source, a line at a time, with the part each line draws.
+const CODE_LINES: { text: string; part: ButtonPart }[] = [
+  { text: '<Button variant="secondary" size="lg">', part: "button" },
+  { text: "  <Sparkles />", part: "icon" },
+  { text: "  Make it yours", part: "label" },
+  { text: "</Button>", part: "button" },
+];
+// Where each line sits in the code panel: header, top padding, 22px rows.
+const FIRST_LINE_Y = 65;
+const LINE_H = 22;
+const SELECTED = "shadow-[0_0_0_1px_var(--blueberry-700)]";
+
+function LayerTag({ children }: { children: string }) {
+  return (
+    <span className="absolute -top-[19px] left-[-1px] whitespace-nowrap bg-[var(--blueberry-700)] px-1.5 text-[10px] font-medium leading-[18px] text-[#04121a]">
+      {children}
+    </span>
+  );
+}
 
 function LessonFrame({
   title,
   description,
+  label,
   children,
 }: {
   title: string;
   description: string;
+  label: string;
   children: ReactNode;
 }) {
   return (
@@ -29,11 +49,11 @@ function LessonFrame({
       data-theme="dark"
       data-tutorial-token-scope=""
       style={THEME_BRIDGE}
-      className="relative isolate flex w-[1014px] flex-col gap-14 overflow-hidden rounded-[10px] border border-border-primary bg-[#050508] px-14 pb-14 pt-[88px] font-sans text-text-primary"
+      className="relative isolate flex w-[1014px] flex-col gap-16 overflow-hidden rounded-[10px] border border-border-primary bg-[#050508] px-14 pb-14 pt-[88px] [counter-reset:lesson] font-sans text-text-primary"
     >
       <TutorialStyles />
       <LessonBackdrop shape="torus" x={965} y={75} size={420} opacity={0.5} />
-      <StepLabel>03 / 05 · Under the hood</StepLabel>
+      <StepLabel>{`03 / 05 · ${label}`}</StepLabel>
       <div className="flex flex-col gap-3">
         <h2 className="text-[40px] font-semibold leading-[46px] tracking-[-0.025em]">
           {title}
@@ -47,25 +67,72 @@ function LessonFrame({
   );
 }
 
-function ChatLesson() {
+/** One component from the codebase, as a tile: the real thing and its file. */
+function ComponentTile({
+  file,
+  children,
+}: {
+  file: string;
+  children: ReactNode;
+}) {
   return (
-    <div className="flex gap-10">
-      <div className="flex w-[256px] shrink-0 flex-col gap-5 pt-2">
-        <h3 className="text-[24px] font-semibold leading-[30px]">
-          A little help from chat
-        </h3>
-        <p className="text-[16px] leading-6 text-text-secondary">
-          Select an element on the canvas and press ⌘ L. Your selection travels
-          with your message, so Tempo knows what to change.
-        </p>
+    <div className="flex flex-1 flex-col gap-3 rounded-[5px] border border-border-primary p-4">
+      <div className="flex h-[72px] items-center justify-center">
+        {children}
+      </div>
+      <span className="font-mono text-[11px] text-text-tertiary">{file}</span>
+    </div>
+  );
+}
+
+/** New lesson: the components already in the codebase, ready on the canvas. */
+function DesignSystemLesson() {
+  return (
+    <StackedLesson
+      title="Real components, not copies"
+      text="This sample project comes with its own components. Click one to select it: it is the real thing, so you can restyle it or drag it out. Connect your project later and yours show up the same way."
+    >
+      <div className="otv-bg-mint flex flex-col gap-4 rounded-none p-6">
+        <span className="text-[11px] font-medium text-text-tertiary">
+          Assets · from this project's code
+        </span>
         <div className="flex gap-3">
-          <Keycap label="command" wide>
-            ⌘
-          </Keycap>
-          <Keycap>L</Keycap>
+          <ComponentTile file="Button.tsx">
+            <Button variant="secondary" size="lg">
+              <Sparkles className="size-5" />
+              Make it yours
+            </Button>
+          </ComponentTile>
+          <ComponentTile file="Button.tsx · primary">
+            <Button variant="primary" size="lg">
+              Continue
+            </Button>
+          </ComponentTile>
+          <ComponentTile file="Keycap.tsx">
+            <div className="flex gap-1.5">
+              <Keycap size="sm">⌘</Keycap>
+              <Keycap size="sm">K</Keycap>
+            </div>
+          </ComponentTile>
         </div>
       </div>
-      <div className="otv-bg-lilac flex min-w-0 flex-1 flex-col justify-center gap-5 rounded-none p-6">
+    </StackedLesson>
+  );
+}
+
+function ChatLesson() {
+  return (
+    <StackedLesson
+      title="A little help from chat"
+      text="⌘-click an element to select it, then press ⌘ L. Your selection travels with your message, so Tempo knows what to change."
+      aside={
+        <>
+          <Keycap size="md">⌘</Keycap>
+          <Keycap size="md">L</Keycap>
+        </>
+      }
+    >
+      <div className="otv-bg-lilac flex flex-col gap-5 rounded-none p-6">
         <div className="rounded-[5px] p-4">
           <ChatComposer
             text={CHANGE_PROMPT}
@@ -73,115 +140,182 @@ function ChatLesson() {
               {
                 id: "selected-card",
                 type: "canvas",
-                label: "Selected element",
+                label: "Button",
               },
             ]}
           />
         </div>
-        <div className="flex items-center justify-between gap-3">
-          <span className="text-sm text-surface-container-lowest">
-            Try a small change. Then make it your own.
-          </span>
-          <CopyButton text={CHANGE_PROMPT} />
-        </div>
+        <span className="text-sm text-text-secondary">
+          Try a small change. Then make it your own.
+        </span>
       </div>
-    </div>
+    </StackedLesson>
   );
 }
 
 /**
- * Lesson 03: view the code behind an element, ask chat for a change, and
- * bring your own app's screens and design system onto the canvas. The import
- * cards open the app's real Import designs dialog (Play mode).
+ * Lesson 03: the project's real components, the code behind an element, and
+ * asking chat for a change.
+ * Importing your own designs is the last screen's job.
  */
-export function UnderTheHood() {
+export function UnderTheHood({
+  title = "A familiar canvas. Real code.",
+  description = "Every element is part of your app. Edit it visually, inspect the source, or ask chat for a change.",
+  label = "Real code",
+}: {
+  title?: string;
+  description?: string;
+  /** The words after the step count, above the title. */
+  label?: string;
+} = {}) {
   const [host, setHost] = useState<HTMLDivElement | null>(null);
   const [codeVisible, setCodeVisible] = useState(true);
   const [menu, setMenu] = useState<{ x: number; y: number } | null>(null);
+  const [part, setPart] = useState<ButtonPart>("button");
+  const lineY =
+    FIRST_LINE_Y + LINE_H * CODE_LINES.findIndex((line) => line.part === part);
   return (
     <div ref={setHost} className="relative w-[1014px]">
-      <LessonFrame
-        title="A familiar canvas. Real code."
-        description="Every element is part of your app. Edit it visually, inspect the source, or bring your existing screens onto the canvas."
-      >
-        <div className="flex gap-10">
-          <div className="flex w-[256px] shrink-0 flex-col gap-4 pt-2">
-            <h3 className="text-[24px] font-semibold leading-[30px]">
-              Look under the hood
-            </h3>
-            <p className="text-[16px] leading-6 text-text-secondary">
-              Select an element, right-click, and choose{" "}
+      <LessonFrame title={title} description={description} label={label}>
+        <DesignSystemLesson />
+        <StackedLesson
+          title="Look under the hood"
+          text={
+            <>
+              ⌘-click the button to select it, right-click, and choose{" "}
               <strong className="font-medium text-text-primary">
                 View Code
               </strong>
-              . It opens the source behind what you see.
-            </p>
-            <p className="text-sm leading-6 text-text-tertiary">
-              This is a real button. Press Play to try it.
-            </p>
-          </div>
-          <div className="otv-bg-lilac flex min-w-0 flex-1 flex-col gap-5 rounded-none p-6">
-            <div className="flex min-h-[100px] items-center justify-center rounded-[5px] border border-border-primary">
-              <span className="rounded-[4px] border-2 border-text-blueberry p-1.5">
-                <Button
-                  variant="secondary"
-                  size="lg"
-                  onContextMenu={(event) => {
-                    event.preventDefault();
-                    setMenu({ x: event.clientX, y: event.clientY });
-                  }}
-                  onClick={() => setCodeVisible(true)}
+              . In Play, point at the icon or the label and its line of code
+              lights up.
+            </>
+          }
+        >
+          <div className="otv-bg-lilac rounded-none p-6">
+            <div className="relative flex flex-row items-stretch gap-5">
+              <div className="flex h-[170px] w-[340px] shrink-0 items-center justify-center rounded-[5px] border border-border-primary">
+                {/* Drawn as the canvas draws a selected layer: a hairline
+                    round the element and its name on a tag. Pointing at the
+                    icon or the label selects that part instead. */}
+                <span
+                  className={`relative inline-flex ${part === "button" ? SELECTED : ""}`}
+                  onMouseLeave={() => setPart("button")}
                 >
-                  <Sparkles className="size-4" />
-                  Make it yours
-                </Button>
-              </span>
-            </div>
-            {codeVisible ? (
-              <div className="overflow-hidden rounded-[5px] border border-border-primary shadow-lg">
-                <div className="flex items-center gap-2 border-b border-border-secondary px-4 py-2 text-xs text-text-secondary">
-                  <Code2 className="size-3.5" />
-                  Button.tsx
+                  {part === "button" ? <LayerTag>Button</LayerTag> : null}
                   <Button
-                    variant="ghost"
-                    size="sm"
-                    className="ml-auto"
-                    aria-label="Hide code"
-                    onClick={() => setCodeVisible(false)}
+                    variant="secondary"
+                    size="lg"
+                    onContextMenu={(event) => {
+                      event.preventDefault();
+                      setMenu({ x: event.clientX, y: event.clientY });
+                    }}
+                    onClick={() => setCodeVisible(true)}
                   >
-                    <X className="size-3.5" />
+                    <span
+                      className={`relative inline-flex ${part === "icon" ? SELECTED : ""}`}
+                      onMouseEnter={() => setPart("icon")}
+                    >
+                      {part === "icon" ? <LayerTag>Sparkles</LayerTag> : null}
+                      <Sparkles className="size-4" />
+                    </span>
+                    <span
+                      className={`relative inline-flex ${part === "label" ? SELECTED : ""}`}
+                      onMouseEnter={() => setPart("label")}
+                    >
+                      {part === "label" ? <LayerTag>Text</LayerTag> : null}
+                      Make it yours
+                    </span>
+                  </Button>
+                </span>
+              </div>
+              {codeVisible ? (
+                <div className="flex h-[170px] min-w-0 flex-1 flex-col overflow-hidden rounded-[5px] border border-border-primary bg-[#0b0b0f] shadow-lg">
+                  <div className="flex h-10 shrink-0 items-center gap-2 border-b border-border-secondary px-4 text-xs text-text-secondary">
+                    <Code2 className="size-3.5" />
+                    Button.tsx
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="ml-auto"
+                      aria-label="Hide code"
+                      onClick={() => setCodeVisible(false)}
+                    >
+                      <X className="size-3.5" />
+                    </Button>
+                  </div>
+                  {/* The source, with the selected part's lines lit. */}
+                  <div className="flex flex-col pt-3 font-mono text-[12px] leading-[22px]">
+                    {CODE_LINES.map((line, index) => {
+                      const lit = line.part === part;
+                      return (
+                        <div
+                          key={line.text}
+                          className="flex h-[22px] flex-row"
+                          style={{
+                            backgroundColor: lit
+                              ? "rgba(2,175,252,0.12)"
+                              : "transparent",
+                            boxShadow: lit
+                              ? "inset 2px 0 0 var(--blueberry-700)"
+                              : "none",
+                          }}
+                        >
+                          <span className="w-9 shrink-0 select-none pr-3 text-right text-text-tertiary">
+                            {index + 1}
+                          </span>
+                          <span
+                            className="whitespace-pre"
+                            style={{
+                              color: lit
+                                ? "var(--text-primary, #f4f4fa)"
+                                : "rgba(244,244,250,0.55)",
+                            }}
+                          >
+                            {line.text}
+                          </span>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              ) : (
+                <div className="flex min-w-0 flex-1 items-center justify-center">
+                  <Button
+                    variant="secondary"
+                    onClick={() => setCodeVisible(true)}
+                  >
+                    <Code2 className="size-4" />
+                    View Code
                   </Button>
                 </div>
-                <CodeBlock language="tsx">{SOURCE}</CodeBlock>
-              </div>
-            ) : (
-              <Button variant="secondary" onClick={() => setCodeVisible(true)}>
-                <Code2 className="size-4" />
-                View Code
-              </Button>
-            )}
-          </div>
-        </div>
-        <ChatLesson />
-        <div className="flex gap-10">
-          <div className="flex w-[256px] shrink-0 flex-col gap-4 pt-2">
-            <h3 className="text-[24px] font-semibold leading-[30px]">
-              Bring your app with you
-            </h3>
-            <p className="text-[16px] leading-6 text-text-secondary">
-              After you connect a project, capture its screens and design
-              system. Keep designing with the components your team already uses.
-            </p>
-          </div>
-          <div className="otv-bg-sky min-w-0 flex-1 rounded-none p-6">
-            <div className="rounded-[5px] p-4">
-              <DesignDiscoveryPrompt
-                variant="chat"
-                onImportDesigns={requestImportDesigns}
-              />
+              )}
+              {/* The thread from the selected element to its line of code. */}
+              {codeVisible ? (
+                <svg
+                  className="pointer-events-none absolute left-0 top-0"
+                  width="380"
+                  height="170"
+                  viewBox="0 0 380 170"
+                  fill="none"
+                >
+                  <path
+                    d={`M 238 85 C 300 85, 300 ${lineY}, 360 ${lineY}`}
+                    stroke="var(--blueberry-700)"
+                    strokeWidth="1.25"
+                  />
+                  <circle cx="238" cy="85" r="3" fill="var(--blueberry-700)" />
+                  <circle
+                    cx="360"
+                    cy={lineY}
+                    r="3"
+                    fill="var(--blueberry-700)"
+                  />
+                </svg>
+              ) : null}
             </div>
           </div>
-        </div>
+        </StackedLesson>
+        <ChatLesson />
       </LessonFrame>
       {menu && host && (
         <CanvasContextMenu
@@ -199,10 +333,15 @@ export function UnderTheHood() {
   );
 }
 
-defineControls(UnderTheHood, {});
+defineControls(UnderTheHood, {
+  title: { type: "text" },
+  description: { type: "text" },
+  label: { type: "text" },
+});
 defineControls(LessonFrame, {
   title: { type: "text" },
   description: { type: "text" },
+  label: { type: "text" },
   children: false,
 });
 defineControls(ChatLesson, {});

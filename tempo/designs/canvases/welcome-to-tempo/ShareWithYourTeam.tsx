@@ -1,18 +1,19 @@
 import * as React from "react";
 import { defineControls } from "tempo-sdk/assets";
-import { HugeiconsIcon, Share01Icon } from "./_ui/icons";
+import { Check, HugeiconsIcon, Share01Icon } from "./_ui/icons";
 import {
   ChangesPanel,
   type ChangesFile,
   type ChangesViewMode,
 } from "./_ui/changes-panel";
 import { CommentMessage, CommentPin, CommentThread } from "./_ui/comments";
-import { InlineResourceChip } from "./_ui/primitives";
+import { Button, InlineResourceChip } from "./_ui/primitives";
 import { CheckingState, SHARE_POPOVER_SURFACE } from "./_ui/share-progress";
 import { TutorialStyles } from "./_bits";
 import { THEME_BRIDGE } from "./_themeBridge";
 import { ShareCursors } from "./_shareCursors";
 import { LessonBackdrop, StepLabel } from "./_ascii";
+import { SamplePricing } from "./_samplePricing";
 
 // Variant E: comment -> commit -> share as a zigzag path. Each step is a
 // 560x330 photo card that alternates sides, joined by dashed connectors that
@@ -54,8 +55,108 @@ const FILES: ChangesFile[] = [
   },
 ];
 
-/** Lesson 04: comment, commit and share, joined as a zigzag path. */
-export function ShareWithYourTeam() {
+/** The card under review, as on the Comment lesson: before, or with the
+ *  middle column made to pop. `mark` outlines what changed. */
+function ReviewedCard({ after = false }: { after?: boolean }) {
+  return <SamplePricing lifted={after} width={186} />;
+}
+
+/** One side of the comparison: a mono label over the screenshot. */
+function ReviewPane({
+  label,
+  note,
+  children,
+}: {
+  label: string;
+  note?: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <div className="flex min-h-0 flex-1 flex-col gap-2.5 px-6 py-4">
+      <div className="flex items-center justify-between font-mono text-[10px] uppercase tracking-[0.18em]">
+        <span className="text-text-secondary">{label}</span>
+        {note ? <span className="text-text-tertiary">{note}</span> : null}
+      </div>
+      <div className="flex flex-1 items-center justify-center">{children}</div>
+    </div>
+  );
+}
+
+/** New lesson: visual review. Continues the zigzag and its connector. */
+function ReviewLesson() {
+  return (
+    <div className="relative flex h-[330px] flex-row-reverse items-center gap-10">
+      {/* Connector from the Commit frame above, in this row's own pixels. */}
+      <svg
+        className="pointer-events-none absolute left-0 top-[-128px]"
+        width="902"
+        height="128"
+        viewBox="0 0 902 128"
+        fill="none"
+      >
+        <path
+          d="M 560 0 H 722 Q 734 0 734 12 V 128"
+          stroke="rgba(244,244,250,0.32)"
+          strokeWidth="1"
+          strokeLinecap="round"
+        />
+        <circle cx="560" cy="2.5" r="2.5" fill="#f4f4fa" />
+        <circle cx="734" cy="125.5" r="2.5" fill="#f4f4fa" />
+      </svg>
+      <div className="otv-bg-sky relative flex h-[330px] w-[560px] shrink-0 flex-col overflow-hidden rounded-none">
+        {/* What changed, and on which pull request */}
+        <div className="flex items-center justify-between border-b border-white/10 px-6 py-3">
+          <div className="flex flex-col gap-1">
+            <span className="text-[14px] font-medium text-text-primary">
+              Refine the playground
+            </span>
+            <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-text-tertiary">
+              Pull request · 1 of 12 screens changed
+            </span>
+          </div>
+          <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-text-secondary">
+            Needs your review
+          </span>
+        </div>
+        {/* Before and after, side by side */}
+        <div className="flex min-h-0 flex-1 divide-x divide-white/10">
+          <ReviewPane label="Before">
+            <ReviewedCard />
+          </ReviewPane>
+          <ReviewPane label="After" note="1 change">
+            <ReviewedCard after />
+          </ReviewPane>
+        </div>
+        {/* The decision */}
+        <div className="flex items-center justify-end gap-2 border-t border-white/10 px-6 py-3">
+          <Button variant="ghost" size="sm">
+            Request changes
+          </Button>
+          <Button variant="primary" size="sm">
+            <Check className="size-4" />
+            Approve
+          </Button>
+        </div>
+      </div>
+      <div className="flex max-w-[280px] flex-col gap-2 text-right">
+        <span className="text-[24px] font-semibold leading-[30px] tracking-[-0.01em]">
+          Review
+        </span>
+        <span className="text-[16px] leading-[24px] text-text-secondary">
+          Tempo screenshots your screens on every pull request and shows what
+          changed. Nothing merges until you approve.
+        </span>
+      </div>
+    </div>
+  );
+}
+
+/** Lesson 04: share, comment, commit and review, joined as a zigzag path. */
+export function ShareWithYourTeam({
+  subtitle = "Live link, feedback, commit, review. All in one place.",
+}: {
+  subtitle?: string;
+} = {}) {
   const [viewMode, setViewMode] =
     React.useState<ChangesViewMode>("uncommitted");
   const [message, setMessage] = React.useState("Refine the playground");
@@ -74,95 +175,11 @@ export function ShareWithYourTeam() {
           Share it with your team
         </h2>
         <p className="text-[17px] leading-[26px] text-text-secondary">
-          Feedback, commit, live link. All in one place.
+          {subtitle}
         </p>
       </div>
 
       <div className="relative flex flex-col gap-12">
-        {/* Comment */}
-        <div className="flex h-[330px] flex-row items-center gap-10">
-          <div className="otv-bg-sky relative h-[330px] w-[560px] shrink-0 overflow-hidden rounded-none">
-            {/* User content being reviewed: a simple card layout */}
-            <div className="absolute left-[32px] top-[40px] flex w-[232px] flex-col rounded-[4px] bg-[#F7F5F0] p-4 shadow-[0_14px_36px_rgba(0,0,0,0.18)]">
-              <span className="block h-2.5 w-20 rounded-full bg-[#1F3A2E]/70" />
-              <span className="mt-2 block h-1.5 w-32 rounded-full bg-[#1F3A2E]/25" />
-              <div className="mt-4 flex flex-row gap-1.5">
-                <span className="h-[150px] flex-1 rounded bg-[#1F3A2E]/10" />
-                <span className="h-[150px] flex-1 rounded bg-[#D9654B]/85" />
-                <span className="h-[150px] flex-1 rounded bg-[#1F3A2E]/10" />
-              </div>
-            </div>
-            <div className="absolute left-[150px] top-[92px]">
-              <CommentPin
-                users={[{ initials: "M", color: "#ce5347" }]}
-                status="unread"
-              />
-            </div>
-            <div className="absolute right-[32px] top-[40px]">
-              <CommentThread
-                replyAuthor={{ initials: "V", color: "#7c6bd6" }}
-                showResolve
-                onResolve={noop}
-                onMarkUnread={noop}
-                onCopyLink={noop}
-                onDeleteThread={noop}
-                replyInputProps={{ value: "" }}
-              >
-                <CommentMessage
-                  authorName="Maya"
-                  authorInitials="M"
-                  authorColor="#ce5347"
-                  timestamp="2 min. ago"
-                  onReactionClick={noop}
-                  reactions={[{ emoji: "\u{1F440}", count: 1 }]}
-                >
-                  Can this card pop a bit more?
-                </CommentMessage>
-              </CommentThread>
-            </div>
-          </div>
-          <div className="flex max-w-[280px] flex-col gap-2">
-            <span className="text-[24px] font-semibold leading-[30px] tracking-[-0.01em]">
-              Comment
-            </span>
-            <span className="text-[16px] leading-[24px] text-text-secondary">
-              Your team leaves feedback right on the canvas.
-            </span>
-          </div>
-        </div>
-
-        {/* Commit & deploy */}
-        <div className="flex h-[330px] flex-row-reverse items-center gap-10">
-          <div className="otv-bg-sky relative h-[330px] w-[560px] shrink-0 overflow-hidden rounded-none">
-            <div className="absolute left-[60px] top-[40px] flex h-[330px] w-[440px] flex-col overflow-hidden rounded-t-lg border-x border-t border-border-primary bg-surface-container-low shadow-[0_18px_44px_rgba(0,0,0,0.35)]">
-              <ChangesPanel
-                label="Changes"
-                viewMode={viewMode}
-                onViewModeChange={setViewMode}
-                files={FILES}
-                currentBranch="playground"
-                defaultBranch="main"
-                branches={["main", "playground"]}
-                onBranchChange={noop}
-                hasRemote
-                hasStagedFiles
-                commitMessage={message}
-                onCommitMessageChange={setMessage}
-                onCommit={noop}
-                onCommitAndPush={noop}
-              />
-            </div>
-          </div>
-          <div className="flex max-w-[280px] flex-col gap-2 text-right">
-            <span className="text-[24px] font-semibold leading-[30px] tracking-[-0.01em]">
-              Commit &amp; deploy
-            </span>
-            <span className="text-[16px] leading-[24px] text-text-secondary">
-              Connect your Git and ship in a click.
-            </span>
-          </div>
-        </div>
-
         {/* Share */}
         <div className="flex h-[330px] flex-row items-center gap-10">
           <div className="otv-bg-sky relative h-[330px] w-[560px] shrink-0 overflow-hidden rounded-none">
@@ -198,7 +215,85 @@ export function ShareWithYourTeam() {
               Share
             </span>
             <span className="text-[16px] leading-[24px] text-text-secondary">
-              One click. Shippy handles the rest!
+              One click and the link is ready.
+            </span>
+          </div>
+        </div>
+
+        {/* Comment */}
+        <div className="flex h-[330px] flex-row-reverse items-center gap-10">
+          <div className="otv-bg-sky relative h-[330px] w-[560px] shrink-0 overflow-hidden rounded-none">
+            {/* The design being reviewed: three plan cards */}
+            <div className="absolute left-[20px] top-[48px] shadow-[0_14px_36px_rgba(0,0,0,0.18)]">
+              <SamplePricing width={300} />
+            </div>
+            <div className="absolute left-[150px] top-[112px]">
+              <CommentPin
+                users={[{ initials: "M", color: "#CD9DFA" }]}
+                status="unread"
+              />
+            </div>
+            <div className="absolute right-[32px] top-[40px]">
+              <CommentThread
+                replyAuthor={{ initials: "V", color: "#7c6bd6" }}
+                showResolve
+                onResolve={noop}
+                onMarkUnread={noop}
+                onCopyLink={noop}
+                onDeleteThread={noop}
+                replyInputProps={{ value: "" }}
+              >
+                <CommentMessage
+                  authorName="Maya"
+                  authorInitials="M"
+                  authorColor="#CD9DFA"
+                  timestamp="2 min. ago"
+                  onReactionClick={noop}
+                  reactions={[{ emoji: "\u{1F440}", count: 1 }]}
+                >
+                  Can this card pop a bit more?
+                </CommentMessage>
+              </CommentThread>
+            </div>
+          </div>
+          <div className="flex max-w-[280px] flex-col gap-2 text-right">
+            <span className="text-[24px] font-semibold leading-[30px] tracking-[-0.01em]">
+              Comment
+            </span>
+            <span className="text-[16px] leading-[24px] text-text-secondary">
+              Your team leaves feedback right on the canvas.
+            </span>
+          </div>
+        </div>
+
+        {/* Commit & deploy */}
+        <div className="flex h-[330px] flex-row items-center gap-10">
+          <div className="otv-bg-sky relative h-[330px] w-[560px] shrink-0 overflow-hidden rounded-none">
+            <div className="absolute left-[60px] top-[40px] flex h-[330px] w-[440px] flex-col overflow-hidden rounded-t-lg border-x border-t border-border-primary bg-surface-container-low shadow-[0_18px_44px_rgba(0,0,0,0.35)]">
+              <ChangesPanel
+                label="Changes"
+                viewMode={viewMode}
+                onViewModeChange={setViewMode}
+                files={FILES}
+                currentBranch="playground"
+                defaultBranch="main"
+                branches={["main", "playground"]}
+                onBranchChange={noop}
+                hasRemote
+                hasStagedFiles
+                commitMessage={message}
+                onCommitMessageChange={setMessage}
+                onCommit={noop}
+                onCommitAndPush={noop}
+              />
+            </div>
+          </div>
+          <div className="flex max-w-[280px] flex-col gap-2">
+            <span className="text-[24px] font-semibold leading-[30px] tracking-[-0.01em]">
+              Commit &amp; deploy
+            </span>
+            <span className="text-[16px] leading-[24px] text-text-secondary">
+              Connect your Git and ship in a click.
             </span>
           </div>
         </div>
@@ -229,9 +324,12 @@ export function ShareWithYourTeam() {
           <circle cx="168" cy="756" r="2.5" fill="#f4f4fa" />
         </svg>
       </div>
+      <ReviewLesson />
       <ShareCursors />
     </div>
   );
 }
 
-defineControls(ShareWithYourTeam, {});
+defineControls(ShareWithYourTeam, {
+  subtitle: { type: "text" },
+});

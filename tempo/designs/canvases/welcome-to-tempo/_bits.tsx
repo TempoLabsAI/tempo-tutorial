@@ -68,6 +68,46 @@ export function TutorialStyles() {
   );
 }
 
+/**
+ * One numbered lesson in the stacked layout: a rule and its number, the
+ * title and text on the left with an optional aside (shortcut keys) at the
+ * right edge, then the demo at full width. The number comes from a CSS
+ * counter, so the parent sets `[counter-reset:lesson]`.
+ */
+export function StackedLesson({
+  title,
+  text,
+  aside,
+  children,
+}: {
+  title: string;
+  text: ReactNode;
+  aside?: ReactNode;
+  children: ReactNode;
+}) {
+  return (
+    <div className="flex flex-col gap-7 border-t border-white/10 pt-5 [counter-increment:lesson]">
+      <span className="font-mono text-[11px] tracking-[0.22em] text-text-tertiary before:content-[counter(lesson,decimal-leading-zero)]" />
+      <div className="flex flex-row items-start gap-12">
+        <div className="flex max-w-[560px] flex-col gap-2">
+          <h3 className="text-[24px] font-semibold leading-[30px] tracking-[-0.01em]">
+            {title}
+          </h3>
+          <div className="text-[16px] leading-[24px] text-text-secondary">
+            {text}
+          </div>
+        </div>
+        {aside ? (
+          <div className="ml-auto flex flex-row items-center gap-2.5">
+            {aside}
+          </div>
+        ) : null}
+      </div>
+      {children}
+    </div>
+  );
+}
+
 /** Copies `text` to the clipboard and confirms inline. */
 export function CopyButton({
   text,

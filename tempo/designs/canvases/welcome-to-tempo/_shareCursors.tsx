@@ -43,14 +43,14 @@ export function ShareCursors() {
         @keyframes otv-cursor-b { 0%,100% { transform: translate(0,0) } 40% { transform: translate(-12px,12px) } 75% { transform: translate(10px,4px) } }
         @keyframes otv-cursor-c { 0%,100% { transform: translate(0,0) } 35% { transform: translate(10px,10px) } 70% { transform: translate(-14px,-6px) } }
       `}</style>
-      {/* Maya: top right corner of the Comment frame */}
+      {/* Devon: top right corner of the Share frame */}
       <div
         className="pointer-events-none absolute left-[588px] top-[232px] z-10"
         style={{ animation: "otv-cursor-a 7s ease-in-out infinite", ...BIG }}
       >
-        <TeammateCursor name="Maya" color="var(--salmon-700)" />
+        <TeammateCursor name="Devon" color="#99DFFE" />
       </div>
-      {/* Devon: left edge of the Commit frame */}
+      {/* Maya: left edge of the Comment frame, where her comment is */}
       <div
         className="pointer-events-none absolute left-[352px] top-[614px] z-10"
         style={{
@@ -58,9 +58,9 @@ export function ShareCursors() {
           ...BIG,
         }}
       >
-        <TeammateCursor name="Devon" color="var(--kiwi-700)" />
+        <TeammateCursor name="Maya" color="#CD9DFA" />
       </div>
-      {/* Priya: bottom right corner of the Share frame */}
+      {/* Priya: bottom right corner of the Commit frame */}
       <div
         className="pointer-events-none absolute left-[584px] top-[1236px] z-10"
         style={{
@@ -68,7 +68,7 @@ export function ShareCursors() {
           ...BIG,
         }}
       >
-        <TeammateCursor name="Priya" color="var(--blueberry-700)" />
+        <TeammateCursor name="Priya" color="#F5C26B" />
       </div>
     </>
   );

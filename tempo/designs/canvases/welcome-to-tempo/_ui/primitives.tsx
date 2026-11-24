@@ -96,7 +96,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 );
 
 // ── Kbd (primitives/kbd.tsx) ────────────────────────────────────────────────
-type KbdVariant = "default" | "raised" | "large" | "key" | "keyLarge";
+type KbdVariant = "default" | "raised" | "large";
 // Pre-merged: each variant's own text color replaces the base tertiary one.
 const KBD_VARIANT: Record<KbdVariant, string> = {
   default:
@@ -105,11 +105,6 @@ const KBD_VARIANT: Record<KbdVariant, string> = {
     "inline-flex items-center justify-center font-mono min-w-5 rounded border border-border-secondary border-b-2 bg-surface-container px-1.5 py-0.5 text-micro leading-micro font-medium text-text-secondary shadow-sm",
   large:
     "inline-flex items-center justify-center font-mono h-8 min-w-8 rounded-md border border-border-primary bg-transparent px-2.5 text-[15px] font-medium text-text-secondary",
-  // Tutorial keys: a solid white cap, so the thing to press is the brightest
-  // thing in a lesson header. keyLarge is a lesson's own shortcut.
-  key: "inline-flex items-center justify-center h-[34px] w-[34px] rounded-[3px] bg-[#f4f4fa] text-[15px] font-semibold text-[#0c0c10] shadow-[0_2px_0_rgba(244,244,250,0.38)]",
-  keyLarge:
-    "inline-flex items-center justify-center h-[46px] w-[46px] rounded-[4px] bg-[#f4f4fa] text-[20px] font-semibold text-[#0c0c10] shadow-[0_2px_0_rgba(244,244,250,0.38)]",
 };
 
 export function Kbd({
