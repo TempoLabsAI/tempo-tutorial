@@ -1,9 +1,12 @@
-import { useState, type ReactNode } from "react";
+import { useState, type CSSProperties, type ReactNode } from "react";
 import { defineControls } from "tempo-sdk/assets";
 import { Code2, Sparkles, X } from "./_ui/icons";
 import { Button } from "./_ui/primitives";
 import { CanvasContextMenu } from "./_ui/canvas-context-menu";
 import { ChatComposer } from "./_chat";
+import { Avatar } from "@/design-system/primitives/Avatar";
+import { Badge } from "@/design-system/primitives/Badge";
+import { Button as AppButton } from "@/design-system/primitives/Button";
 import { Keycap } from "./_keycap";
 import { StackedLesson, TutorialStyles } from "./_bits";
 import { LessonBackdrop, StepLabel } from "./_ascii";
@@ -67,6 +70,12 @@ function LessonFrame({
   );
 }
 
+const APP_ACCENT = {
+  "--color-accent": "var(--accent)",
+  "--color-accent-hover": "var(--accent-hover)",
+  "--color-accent-press": "var(--accent-press)",
+} as CSSProperties;
+
 /** One component from the codebase, as a tile: the real thing and its file. */
 function ComponentTile({
   file,
@@ -77,10 +86,12 @@ function ComponentTile({
 }) {
   return (
     <div className="flex flex-1 flex-col gap-3 rounded-[5px] border border-border-primary p-4">
-      <div className="flex h-[72px] items-center justify-center">
+      {/* The tutorial's own theme recolours the accent inside its lessons.
+          Hand it back to the app here, so these look as they do in the app. */}
+      <div className="flex h-[72px] items-center justify-center" style={APP_ACCENT}>
         {children}
       </div>
-      <span className="font-mono text-[11px] text-text-tertiary">{file}</span>
+      <span className="font-mono text-[10px] text-text-tertiary">{file}</span>
     </div>
   );
 }
@@ -90,29 +101,27 @@ function DesignSystemLesson() {
   return (
     <StackedLesson
       title="Real components, not copies"
-      text="This sample project comes with its own components. Click one to select it: it is the real thing, so you can restyle it or drag it out. Connect your project later and yours show up the same way."
+      text="This sample project comes with its own components. These are the ones its app uses: restyle one here and the app changes too. Connect your project later and yours show up the same way."
     >
       <div className="otv-bg-mint flex flex-col gap-4 rounded-none p-6">
         <span className="text-[11px] font-medium text-text-tertiary">
           Assets · from this project's code
         </span>
+        {/* The sample app's own components, imported from where the app
+            imports them, so a change made here is a change to the app. */}
         <div className="flex gap-3">
-          <ComponentTile file="Button.tsx">
-            <Button variant="secondary" size="lg">
-              <Sparkles className="size-5" />
-              Make it yours
-            </Button>
-          </ComponentTile>
-          <ComponentTile file="Button.tsx · primary">
-            <Button variant="primary" size="lg">
-              Continue
-            </Button>
-          </ComponentTile>
-          <ComponentTile file="Keycap.tsx">
-            <div className="flex gap-1.5">
-              <Keycap size="sm">⌘</Keycap>
-              <Keycap size="sm">K</Keycap>
+          <ComponentTile file="src/design-system/primitives/Button.tsx">
+            <div className="w-[150px]">
+              <AppButton variant="primary" size="md">
+                Reserve
+              </AppButton>
             </div>
+          </ComponentTile>
+          <ComponentTile file="src/design-system/primitives/Badge.tsx">
+            <Badge variant="gold">Guest favorite</Badge>
+          </ComponentTile>
+          <ComponentTile file="src/design-system/primitives/Avatar.tsx">
+            <Avatar alt="Maya Chen" size="lg" />
           </ComponentTile>
         </div>
       </div>
@@ -167,7 +176,7 @@ export function UnderTheHood({
   description?: string;
   /** The words after the step count, above the title. */
   label?: string;
-} = {}) {
+}) {
   const [host, setHost] = useState<HTMLDivElement | null>(null);
   const [codeVisible, setCodeVisible] = useState(true);
   const [menu, setMenu] = useState<{ x: number; y: number } | null>(null);

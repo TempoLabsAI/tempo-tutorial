@@ -156,7 +156,7 @@ export function ShareWithYourTeam({
   subtitle = "Live link, feedback, commit, review. All in one place.",
 }: {
   subtitle?: string;
-} = {}) {
+}) {
   const [viewMode, setViewMode] =
     React.useState<ChangesViewMode>("uncommitted");
   const [message, setMessage] = React.useState("Refine the playground");

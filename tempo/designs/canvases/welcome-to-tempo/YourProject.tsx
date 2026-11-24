@@ -56,7 +56,7 @@ export function StartProject({
  * Lesson 05: start your own project, or bring designs you already have.
  * "Import designs" opens the app's real Import designs dialog (Play mode).
  */
-export function YourProject({ title }: { title?: string } = {}) {
+export function YourProject({ title }: { title?: string }) {
   return (
     <div className="relative w-[1014px]">
       <StartProject
