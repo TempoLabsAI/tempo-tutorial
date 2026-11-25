@@ -1,12 +1,13 @@
 import { type CSSProperties, useEffect, useRef } from "react";
-import { usePlayMode } from "./_playMode";
+import { usePlayMotion } from "./_playMode";
 
 // A small solid drawn in ASCII, in the same hand as the intro's planet: the
 // lit side is written in code, the shadow side thins out to punctuation. It
 // holds still at rest. In Play it turns, and the cursor clears a hole in it
-// with a ring of scattered code glyphs, as on the planet.
+// with a ring of scattered code glyphs, as on the planet. With reduced motion
+// on, it stays still in Play too.
 
-export type AsciiShapeKind = "frame" | "torus" | "link" | "planet";
+export type AsciiShapeKind = "frame" | "torus" | "link" | "planet" | "orbits";
 
 const SOURCE =
   `export function Hero() { return <section className="flex gap-6 p-12"> ` +
@@ -57,6 +58,14 @@ const SHAPES: Record<
       torus(x + 0.3, y, z, 0.46, 0.15),
       torus(x - 0.3, z, y, 0.46, 0.15),
     ),
+  // a globe with three thin rings, each tipped a different way
+  orbits: (x, y, z) =>
+    Math.min(
+      Math.hypot(x, y, z) - 0.4,
+      torus(x, y, z, 0.92, 0.035),
+      torus(x * 0.5 + y * 0.866, y * 0.5 - x * 0.866, z, 0.92, 0.035),
+      torus(x * 0.5 - y * 0.866, y * 0.5 + x * 0.866, z, 0.92, 0.035),
+    ),
   // a globe and its ring
   planet: (x, y, z) =>
     Math.min(
@@ -84,7 +93,7 @@ export function AsciiShape({
   className?: string;
   style?: CSSProperties;
 }) {
-  const inPlay = usePlayMode();
+  const moving = usePlayMotion();
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
   useEffect(() => {
@@ -103,7 +112,13 @@ export function AsciiShape({
     const rows = Math.floor(height / CELL_H);
     // one unit of the solid, in px
     const unit = Math.min(width, height) * 0.46;
-    const tilt = { frame: 0.5, torus: 1.0, link: 0.75, planet: 0.42 }[shape];
+    const tilt = {
+      frame: 0.5,
+      torus: 1.0,
+      link: 0.75,
+      planet: 0.42,
+      orbits: 0.35,
+    }[shape];
     const cosT = Math.cos(tilt);
     const sinT = Math.sin(tilt);
     const mouse = { x: -999, y: -999, tx: -999, ty: -999, power: 0, on: false };
@@ -196,7 +211,7 @@ export function AsciiShape({
     };
 
     let angle = 0.7;
-    if (!inPlay) {
+    if (!moving) {
       draw(angle);
       return;
     }
@@ -231,7 +246,7 @@ export function AsciiShape({
       cancelAnimationFrame(raf);
       window.removeEventListener("pointermove", onMove);
     };
-  }, [inPlay, shape, width, height]);
+  }, [moving, shape, width, height]);
 
   return (
     <canvas

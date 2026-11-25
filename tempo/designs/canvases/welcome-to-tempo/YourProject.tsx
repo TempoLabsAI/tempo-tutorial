@@ -1,20 +1,27 @@
-import { CursorMascot } from "./_ui/cursor-mascot";
 import { Sparkles } from "./_ui/icons";
 import { Button } from "./_ui/primitives";
 import { requestImportDesigns } from "./_tutorialBridge";
 import { TutorialStyles } from "./_bits";
-import { ProjectSetupPreview, SidebarAddProjectPreview } from "./_finale";
+import { SidebarAddProjectPreview } from "./_finale";
 import { THEME_BRIDGE } from "./_themeBridge";
-import { LessonBackdrop, StepLabel } from "./_ascii";
+import { Stars, StepLabel } from "./_ascii";
+import { AsciiShape } from "./_asciiShape";
 import type { ReactNode } from "react";
 import { defineControls } from "tempo-sdk/assets";
 
 /**
  * 6. The tour's last stop: where to go to start your own project. In the app
  * it's "+ Add project" at the bottom of the left sidebar, which opens the
- * "Create or open a project" modal.
+ * "Create or open a project" modal. The lesson stops at the button: the modal
+ * explains itself once it opens.
  */
-export function StartProject({ footer }: { footer?: ReactNode }) {
+export function StartProject({
+  title = "Start your own project",
+  footer,
+}: {
+  title?: string;
+  footer?: ReactNode;
+}) {
   return (
     <div
       data-theme="dark"
@@ -23,61 +30,21 @@ export function StartProject({ footer }: { footer?: ReactNode }) {
       className="relative isolate flex w-[1014px] flex-col gap-10 overflow-hidden rounded-[10px] border border-border-primary bg-[#050508] px-14 pb-14 pt-[88px] font-sans text-text-primary"
     >
       <TutorialStyles />
-      <LessonBackdrop
-        shape="planet"
-        x={1040}
-        y={805}
-        size={480}
-        opacity={0.4}
-      />
-      <StepLabel>05 / 05 · Make it yours</StepLabel>
-      <div className="flex flex-col gap-3">
-        <h2 className="text-[40px] leading-[46px] font-semibold tracking-[-0.025em]">
-          Ready to make your own?
-        </h2>
-        <p className="text-[17px] leading-[26px] text-text-secondary">
-          You've seen the tour. Now bring in your own code, or start fresh.
-        </p>
+      <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
+        <Stars />
       </div>
-
-      <div className="flex flex-row gap-5">
-        {/* 1. Add project, bottom of the left sidebar */}
-        <div className="flex w-[340px] flex-col gap-4">
-          <div className="flex flex-col gap-1">
-            <span className="flex flex-row items-baseline gap-2 text-[16px] leading-[22px] font-semibold">
-              <span className="tabular-nums text-text-tertiary">1</span>
-              Click Add project
-            </span>
-            <span className="pl-[18px] text-[13px] leading-[19px] text-text-secondary">
-              It's at the bottom of the left sidebar.
-            </span>
-          </div>
-          <div className="otv-bg-lilac relative flex h-[460px] items-center justify-center overflow-hidden rounded-none">
-            <SidebarAddProjectPreview />
-          </div>
+      <StepLabel>05 / 05 · Make it yours</StepLabel>
+      <div className="flex flex-row items-center justify-between gap-10">
+        <div className="flex w-[420px] flex-col gap-3">
+          <h2 className="text-[40px] leading-[46px] font-semibold tracking-[-0.025em]">
+            {title}
+          </h2>
+          <p className="text-[17px] leading-[26px] text-text-secondary">
+            Click Add project at the bottom of the left sidebar.
+          </p>
         </div>
-
-        {/* 2. Create new or open existing */}
-        <div className="flex flex-1 flex-col gap-4">
-          <div className="flex flex-col gap-1">
-            <span className="flex flex-row items-baseline gap-2 text-[16px] leading-[22px] font-semibold">
-              <span className="tabular-nums text-text-tertiary">2</span>
-              Create or open a project
-            </span>
-            <span className="pl-[18px] text-[13px] leading-[19px] text-text-secondary">
-              Describe something new, or open a folder you already have.
-            </span>
-          </div>
-          <div className="otv-bg-sky relative flex h-[460px] items-center justify-center overflow-hidden rounded-none">
-            <div className="h-[364px] w-[504px]">
-              <div className="origin-top-left scale-[0.7] rounded-[5px] shadow-[0_24px_60px_rgba(10,10,40,0.45)]">
-                <ProjectSetupPreview />
-              </div>
-            </div>
-            <div className="pointer-events-none absolute right-[4px] top-[18px] scale-[0.6] rotate-[24deg] drop-shadow-[0_8px_18px_rgba(30,20,70,0.5)]">
-              <CursorMascot animated />
-            </div>
-          </div>
+        <div className="otv-bg-lilac relative flex h-[430px] w-[420px] shrink-0 items-center justify-center overflow-hidden rounded-none">
+          <SidebarAddProjectPreview />
         </div>
       </div>
       {footer}
@@ -89,35 +56,44 @@ export function StartProject({ footer }: { footer?: ReactNode }) {
  * Lesson 05: start your own project, or bring designs you already have.
  * "Import designs" opens the app's real Import designs dialog (Play mode).
  */
-export function YourProject() {
+export function YourProject({ title }: { title?: string }) {
   return (
     <div className="relative w-[1014px]">
       <StartProject
+        title={title}
         footer={
-          <div className="flex flex-col gap-6 border-t border-border-primary pt-10">
-            <div className="flex flex-col gap-2">
-              <h3 className="text-[24px] font-semibold leading-[30px]">
-                Already have designs?
-              </h3>
-              <p className="text-[16px] leading-6 text-text-secondary">
-                Bring a Figma file or screenshots into your project, then
-                recreate them with the components in your codebase.
+          // The send-off: the one thing left to do, beside a planet and its orbits.
+          // It runs to the frame's own edges, so it cancels the frame's padding.
+          <div className="relative -mx-14 -mb-14 mt-4 flex h-[460px] flex-col justify-center overflow-hidden border-t border-white/10 px-14">
+            <AsciiShape
+              shape="orbits"
+              width={900}
+              height={900}
+              className="pointer-events-none absolute left-[420px] top-[-60px] opacity-80"
+            />
+            <div className="relative z-10 flex w-[440px] flex-col gap-5">
+              <span className="font-mono text-[11px] font-medium uppercase tracking-[0.22em] text-text-tertiary">
+                End of the tour
+              </span>
+              <h2 className="text-[64px] font-semibold leading-[66px] tracking-[-0.035em]">
+                What will
+                <br />
+                you design?
+              </h2>
+              <p className="max-w-[395px] text-[17px] leading-[26px] text-text-secondary">
+                Already have designs? Once your project is open,
+                <br />
+                bring in a Figma file or screenshots.
               </p>
-            </div>
-            <div className="otv-bg-gold flex min-h-[240px] items-center justify-center rounded-none p-7">
-              <div className="flex w-full flex-col gap-5 rounded-[5px] p-6">
+              <div className="mt-2 flex items-center gap-4">
                 <Button
-                  variant="secondary"
+                  variant="primary"
                   size="lg"
                   onClick={requestImportDesigns}
                 >
                   <Sparkles className="size-5" />
                   Import designs
                 </Button>
-                <p className="text-center text-sm text-text-secondary">
-                  You can also copy a frame in Figma and paste it onto the
-                  canvas.
-                </p>
               </div>
             </div>
           </div>
@@ -127,5 +103,5 @@ export function YourProject() {
   );
 }
 
-defineControls(StartProject, { footer: false });
-defineControls(YourProject, {});
+defineControls(StartProject, { title: { type: "text" }, footer: false });
+defineControls(YourProject, { title: { type: "text" } });

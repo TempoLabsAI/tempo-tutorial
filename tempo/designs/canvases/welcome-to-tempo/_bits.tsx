@@ -54,8 +54,10 @@ export function TutorialStyles() {
           linear-gradient(rgba(244, 244, 250, 0.9), rgba(244, 244, 250, 0.9)) right bottom / 7px 1px no-repeat,
           linear-gradient(rgba(244, 244, 250, 0.9), rgba(244, 244, 250, 0.9)) right bottom / 1px 7px no-repeat;
       }
-      .otv-option { opacity: 0.42; transition: opacity 160ms ease; }
-      .otv-option[data-on="true"] { opacity: 1; }
+      .otv-option > :first-child { opacity: 0.42; transition: opacity 160ms ease; }
+      .otv-option > :nth-child(2) { color: var(--text-secondary); }
+      .otv-option[data-on="true"] > :first-child { opacity: 1; }
+      .otv-option[data-on="true"] > :nth-child(2) { color: var(--text-primary); }
       .otv-option[data-on="true"] > :first-child { border-color: rgba(244, 244, 250, 0.85); }
       @keyframes otv-float { 0%,100% { transform: translateY(0) rotate(-8deg) } 50% { transform: translateY(-10px) rotate(-6deg) } }
       @keyframes otv-shimmer { 0% { background-position: -320px 0 } 100% { background-position: 320px 0 } }
@@ -65,6 +67,46 @@ export function TutorialStyles() {
       }
     `}</style>
     </>
+  );
+}
+
+/**
+ * One numbered lesson in the stacked layout: a rule and its number, the
+ * title and text on the left with an optional aside (shortcut keys) at the
+ * right edge, then the demo at full width. The number comes from a CSS
+ * counter, so the parent sets `[counter-reset:lesson]`.
+ */
+export function StackedLesson({
+  title,
+  text,
+  aside,
+  children,
+}: {
+  title: string;
+  text: ReactNode;
+  aside?: ReactNode;
+  children: ReactNode;
+}) {
+  return (
+    <div className="flex flex-col gap-7 border-t border-white/10 pt-5 [counter-increment:lesson]">
+      <span className="font-mono text-[11px] tracking-[0.22em] text-text-tertiary before:content-[counter(lesson,decimal-leading-zero)]" />
+      <div className="flex flex-row items-start gap-12">
+        <div className="flex max-w-[560px] flex-col gap-2">
+          <h3 className="text-[24px] font-semibold leading-[30px] tracking-[-0.01em]">
+            {title}
+          </h3>
+          <div className="text-[16px] leading-[24px] text-text-secondary">
+            {text}
+          </div>
+        </div>
+        {aside ? (
+          <div className="ml-auto flex flex-row items-center gap-2.5">
+            {aside}
+          </div>
+        ) : null}
+      </div>
+      {children}
+    </div>
   );
 }
 

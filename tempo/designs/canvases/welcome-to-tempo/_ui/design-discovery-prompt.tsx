@@ -104,8 +104,9 @@ const DISCOVERY_STYLES = `
 }
 .tutorial-discovery-prompt-chat {
   position: relative;
-  padding: 12px 14px 14px;
-  border-radius: 12px;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
   background: transparent;
 }
 .tutorial-discovery-prompt-chat .tutorial-discovery-intro {

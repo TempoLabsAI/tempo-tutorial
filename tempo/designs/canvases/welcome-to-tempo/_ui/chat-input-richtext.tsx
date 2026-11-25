@@ -231,7 +231,7 @@ export const ChatInputRichtext = forwardRef<
                     </span>
                     <span
                       className="flex items-center min-w-0 shrink"
-                      style={{ maxWidth: "110px" }}
+                      style={{ maxWidth: "140px" }}
                     >
                       <button
                         type="button"

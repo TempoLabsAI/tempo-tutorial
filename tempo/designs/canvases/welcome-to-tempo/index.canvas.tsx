@@ -16,19 +16,19 @@ export default function WelcomeCanvas() {
       />
       <Storyboard
         id="YourTurnToPlay"
-        name="02 — Your turn to play"
+        name="02 — By hand"
         component={YourTurnToPlay}
         layout={{ x: 1134, y: 250, intrinsicSizing: "root-element" }}
       />
       <Storyboard
         id="UnderTheHood"
-        name="03 — Under the hood"
+        name="03 — Real code"
         component={UnderTheHood}
         layout={{ x: 2268, y: 250, intrinsicSizing: "root-element" }}
       />
       <Storyboard
         id="ShareWithYourTeam"
-        name="04 — Share with your team"
+        name="04 — Share and review"
         component={ShareWithYourTeam}
         layout={{ x: 3402, y: 250, intrinsicSizing: "root-element" }}
       />

@@ -30,14 +30,14 @@ export function ChatComposer({
       mentionGroups={[]}
       contextItems={contextItems}
       provider="claude"
-      model="opus-4.8"
-      modelDisplayName="Opus 4.8"
+      model="fable-5.1"
+      modelDisplayName="Fable 5.1"
       onModelChange={noop}
       modelGroups={[
         {
           label: "Claude",
           models: [
-            { id: "opus-4.8", shortName: "Opus 4.8", provider: "claude" },
+            { id: "fable-5.1", shortName: "Fable 5.1", provider: "claude" },
           ],
         },
       ]}

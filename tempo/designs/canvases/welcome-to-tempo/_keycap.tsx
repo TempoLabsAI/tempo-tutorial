@@ -8,7 +8,7 @@ import type { ReactNode } from "react";
  */
 
 type KeycapTone = "dark" | "light";
-type KeycapSize = "md" | "lg";
+type KeycapSize = "sm" | "md" | "lg";
 
 const TONE: Record<
   KeycapTone,
@@ -39,6 +39,14 @@ const SIZE: Record<
     label: string;
   }
 > = {
+  sm: {
+    square: "h-[44px] w-[44px]",
+    wide: "h-[44px] w-[56px]",
+    radius: "rounded-[10px]",
+    faceRadius: "rounded-[6px]",
+    glyph: "text-[17px]",
+    label: "text-[8px]",
+  },
   md: {
     square: "h-[64px] w-[64px]",
     wide: "h-[64px] w-[80px]",
@@ -71,7 +79,7 @@ export function KeycapStyles() {
 export function Keycap({
   children,
   label,
-  tone = "dark",
+  tone = "light",
   size = "lg",
   wide = false,
   press = "none",

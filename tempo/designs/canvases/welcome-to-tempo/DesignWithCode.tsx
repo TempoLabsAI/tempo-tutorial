@@ -1,7 +1,8 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, type ReactNode } from "react";
 import { defineControls } from "tempo-sdk/assets";
 import { ArrowUpRight } from "./_ui/icons";
-import { usePlayMode } from "./_playMode";
+import { TutorialStyles } from "./_bits";
+import { usePlayMode, usePlayMotion } from "./_playMode";
 import { THEME_BRIDGE } from "./_themeBridge";
 
 // Lesson 01: the title card. A planet rises out of the bottom right corner,
@@ -10,7 +11,8 @@ import { THEME_BRIDGE } from "./_themeBridge";
 // almost nothing in shadow. The ring is dust in three bands, in ordinary
 // ASCII shading characters. At rest it is one still frame. In Play the code
 // rides the globe as it spins, and the characters under the cursor burst:
-// the middle clears, and a ring of code glyphs scatters round it.
+// the middle clears, and a ring of code glyphs scatters round it. With
+// reduced motion on, the still frame stays.
 //
 // Its placement and every effect level are props with controls (see the
 // defineControls call at the bottom), so they can be tuned from the canvas.
@@ -79,6 +81,18 @@ type Props = {
   burstStrength?: number;
   /** Corner roundness of the frame, in px. */
   radius?: number;
+  /** The two lines under the headline. */
+  taglineFirst?: string;
+  taglineSecond?: string;
+  /** The small label and the two headline lines. */
+  eyebrow?: string;
+  headlineFirst?: string;
+  headlineSecond?: string;
+  /** Used as a closing band inside another lesson: no frame of its own and
+   *  no Play hint. */
+  embedded?: boolean;
+  /** Shown under the two lines, e.g. a button. */
+  action?: ReactNode;
 };
 
 export function DesignWithCode({
@@ -100,12 +114,20 @@ export function DesignWithCode({
   burstSize = 1,
   burstStrength = 1,
   radius = 10,
+  taglineFirst = "A canvas that feels familiar.",
+  taglineSecond = "Real code beneath everything you create.",
+  eyebrow = "01 / 05 · Welcome to Tempo",
+  headlineFirst = "Design",
+  headlineSecond = "with code.",
+  embedded = false,
+  action,
 }: Props) {
   const CX = planetX;
   const CY = planetY;
   const rimLevel = rim;
   const ringLevel = ring;
   const inPlay = usePlayMode();
+  const moving = usePlayMotion();
   const rootRef = useRef<HTMLDivElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
@@ -304,7 +326,7 @@ export function DesignWithCode({
       }
     };
 
-    if (!inPlay) {
+    if (!moving) {
       frame(false);
       return;
     }
@@ -365,7 +387,7 @@ export function DesignWithCode({
           root.style.removeProperty(`--g${i}${k}`);
     };
   }, [
-    inPlay,
+    moving,
     CX,
     CY,
     planetSize,
@@ -389,9 +411,14 @@ export function DesignWithCode({
       ref={rootRef}
       data-theme="dark"
       data-tutorial-token-scope=""
-      style={{ ...THEME_BRIDGE, borderRadius: radius }}
-      className="relative h-[600px] w-[1014px] overflow-hidden border border-border-primary bg-[#050508] font-sans text-text-primary"
+      style={{ ...THEME_BRIDGE, borderRadius: embedded ? 0 : radius }}
+      className={
+        embedded
+          ? "relative h-[600px] w-[1014px] overflow-hidden bg-[#050508] font-sans text-text-primary"
+          : "relative h-[600px] w-[1014px] overflow-hidden border border-border-primary bg-[#050508] font-sans text-text-primary"
+      }
     >
+      {embedded ? null : <TutorialStyles />}
       {/* An optional coloured light behind the planet. Off by default; the
           glow control turns it up. */}
       <div
@@ -439,23 +466,50 @@ export function DesignWithCode({
       />
       <div className="absolute left-14 top-1/2 z-20 flex w-[440px] -translate-y-[56%] flex-col gap-5">
         <span className="font-mono text-[11px] font-medium uppercase tracking-[0.22em] text-text-tertiary">
-          01 / 05 · Welcome to Tempo
+          {eyebrow}
         </span>
         <h1 className="text-[64px] font-semibold leading-[66px] tracking-[-0.035em]">
-          Design
+          {headlineFirst}
           <br />
-          with code.
+          {headlineSecond}
         </h1>
         <p className="max-w-[395px] text-[17px] leading-[26px] text-text-secondary">
-          A canvas that feels familiar.
+          {taglineFirst}
           <br />
-          Real code beneath everything you create.
+          {taglineSecond}
         </p>
+        {action}
       </div>
-      <div className="absolute right-6 top-5 z-20 flex items-center gap-2 text-[14px] font-medium text-text-secondary">
-        {inPlay ? "You're in. Have a play." : "Press Play up here"}
-        <ArrowUpRight className="size-5 text-[var(--blueberry-300)]" />
-      </div>
+      {embedded ? null : (
+        <div className="absolute right-6 top-5 z-20 flex items-center gap-2 text-[15px] font-medium text-text-primary">
+          {inPlay ? (
+            "You're in! Click outside to exit, then head right →"
+          ) : (
+            <>
+              Press
+              {/* A picture of the board's Play button, so it is easy to spot
+                  in the title bar. Not a control. */}
+              <span
+                aria-hidden
+                className="flex size-6 items-center justify-center rounded-sm bg-[rgba(2,175,252,0.2)] text-[var(--blueberry-200)]"
+              >
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                  <path
+                    d="M9.4453 6.423C9.26855 7.0945 8.43335 7.569 6.76285 8.51805C5.148 9.43545 4.3406 9.8942 3.68991 9.7098C3.4209 9.63355 3.1758 9.4888 2.97812 9.28935C2.5 8.80695 2.5 7.8713 2.5 6C2.5 4.1287 2.5 3.19305 2.97812 2.71066C3.1758 2.51123 3.4209 2.36644 3.68991 2.29021C4.3406 2.10583 5.148 2.56454 6.76285 3.48197C8.43335 4.43099 9.26855 4.9055 9.4453 5.577C9.51825 5.8542 9.51825 6.1458 9.4453 6.423Z"
+                    stroke="currentColor"
+                    strokeWidth="0.75"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </span>
+              Play up here
+            </>
+          )}
+          {inPlay ? null : (
+            <ArrowUpRight className="size-5 text-[var(--blueberry-300)]" />
+          )}
+        </div>
+      )}
     </div>
   );
 }
@@ -479,4 +533,11 @@ defineControls(DesignWithCode, {
   burstSize: { type: "range", min: 0.3, max: 3, step: 0.1 },
   burstStrength: { type: "range", min: 0, max: 2, step: 0.05 },
   radius: { type: "range", min: 0, max: 32, step: 1 },
+  taglineFirst: { type: "text" },
+  taglineSecond: { type: "text" },
+  eyebrow: { type: "text" },
+  headlineFirst: { type: "text" },
+  headlineSecond: { type: "text" },
+  embedded: { type: "boolean" },
+  action: false,
 });
