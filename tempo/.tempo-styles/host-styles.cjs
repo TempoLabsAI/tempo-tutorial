@@ -56,11 +56,21 @@ function refreshSources(scan = true) {
   if (scan || membership === undefined) membership = sourceMembership(directories);
   const text = "/* @tempo-owned: stylesheet sources; membership " + membership + "; revision " + sourceRevision + " */\n" +
     directories.map((dir) => "@source " + quoted(relative(policyFile, dir)) + ";").join("\n") + "\n";
-  if (!fs.existsSync(policyFile) || fs.readFileSync(policyFile, "utf8") !== text) {
-    fs.mkdirSync(path.dirname(policyFile), { recursive: true });
-    const temporary = policyFile + "." + process.pid + ".tmp";
-    fs.writeFileSync(temporary, text);
-    fs.renameSync(temporary, policyFile);
+  const temporary = policyFile + "." + process.pid + ".tmp";
+  try {
+    if (!fs.existsSync(policyFile) || fs.readFileSync(policyFile, "utf8") !== text) {
+      fs.mkdirSync(path.dirname(policyFile), { recursive: true });
+      fs.writeFileSync(temporary, text);
+      fs.renameSync(temporary, policyFile);
+    }
+  } catch (error) {
+    try { fs.unlinkSync(temporary); } catch {}
+    // Windows readers can temporarily prevent replacement. Keep the last
+    // policy and let the next source change or evaluation refresh it.
+    sourcePlan = undefined;
+    // With no policy, the generated @import cannot compile. Surface the
+    // original write error instead of hiding it behind a missing import.
+    if (!fs.existsSync(policyFile)) throw error;
   }
   return directories;
 }
@@ -146,7 +156,7 @@ function stopSources() {
   rebindSources = false;
   membershipChanged = false;
   membership = undefined;
-  sourceRevision = 0;
+  // Keep revisions monotonic when an evaluation rebinds after a failed write.
   closeWatchers();
   sourcePlan = undefined;
 }
