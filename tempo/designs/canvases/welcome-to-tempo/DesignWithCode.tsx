@@ -1,7 +1,8 @@
 import { useEffect, useRef, type ReactNode } from "react";
 import { defineControls } from "tempo-sdk/assets";
 import { ArrowUpRight } from "./_ui/icons";
-import { usePlayMode } from "./_playMode";
+import { TutorialStyles } from "./_bits";
+import { usePlayMode, usePlayMotion } from "./_playMode";
 import { THEME_BRIDGE } from "./_themeBridge";
 
 // Lesson 01: the title card. A planet rises out of the bottom right corner,
@@ -10,7 +11,8 @@ import { THEME_BRIDGE } from "./_themeBridge";
 // almost nothing in shadow. The ring is dust in three bands, in ordinary
 // ASCII shading characters. At rest it is one still frame. In Play the code
 // rides the globe as it spins, and the characters under the cursor burst:
-// the middle clears, and a ring of code glyphs scatters round it.
+// the middle clears, and a ring of code glyphs scatters round it. With
+// reduced motion on, the still frame stays.
 //
 // Its placement and every effect level are props with controls (see the
 // defineControls call at the bottom), so they can be tuned from the canvas.
@@ -125,6 +127,7 @@ export function DesignWithCode({
   const rimLevel = rim;
   const ringLevel = ring;
   const inPlay = usePlayMode();
+  const moving = usePlayMotion();
   const rootRef = useRef<HTMLDivElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
@@ -323,7 +326,7 @@ export function DesignWithCode({
       }
     };
 
-    if (!inPlay) {
+    if (!moving) {
       frame(false);
       return;
     }
@@ -384,7 +387,7 @@ export function DesignWithCode({
           root.style.removeProperty(`--g${i}${k}`);
     };
   }, [
-    inPlay,
+    moving,
     CX,
     CY,
     planetSize,
@@ -415,6 +418,7 @@ export function DesignWithCode({
           : "relative h-[600px] w-[1014px] overflow-hidden border border-border-primary bg-[#050508] font-sans text-text-primary"
       }
     >
+      {embedded ? null : <TutorialStyles />}
       {/* An optional coloured light behind the planet. Off by default; the
           glow control turns it up. */}
       <div

@@ -114,7 +114,7 @@ export function YourTurnToPlay({
       className="relative isolate flex w-[1014px] flex-col gap-16 overflow-hidden rounded-[10px] border border-border-primary bg-[#050508] px-14 pb-14 pt-[88px] font-sans text-text-primary"
     >
       <TutorialStyles />
-      <LessonBackdrop shape="frame" x={1010} y={840} size={640} opacity={0.3} />
+      <LessonBackdrop shape="frame" x={1010} y={1190} size={560} opacity={0.3} />
       <StepLabel>{`02 / 05 · ${label}`}</StepLabel>
 
       <div className="flex flex-col gap-3">
@@ -124,7 +124,7 @@ export function YourTurnToPlay({
         <p className="text-[17px] leading-[26px] text-text-secondary">
           {subtitle}
         </p>
-        <p className="text-[14px] leading-[20px] text-text-tertiary">
+        <p className="text-[14px] leading-[20px] text-text-secondary">
           Play lets you click things like a real app. Turn it off for this
           screen: you're designing now.
         </p>
@@ -170,7 +170,7 @@ export function YourTurnToPlay({
         <div className="relative">
           <div className="otv-bg-mint overflow-hidden rounded-none p-6">
             <div className="relative h-[260px] w-full rounded-[5px] border border-dashed border-white/25">
-              <span className="absolute left-0 top-[118px] w-full text-center text-[14px] font-medium text-text-tertiary">
+              <span className="absolute left-0 top-[118px] w-full text-center text-[14px] font-medium text-text-secondary">
                 Draw here
               </span>
               <div className="absolute box-border w-[157px] h-[87px] left-[120px] top-[42px]" />
@@ -210,7 +210,7 @@ export function YourTurnToPlay({
         <div className="otv-bg-gold overflow-hidden rounded-none p-6">
           <div data-otv-playground="" className="flex flex-col overflow-hidden">
             <div className="relative h-[220px]">
-              <span className="absolute left-5 top-4 text-[11px] font-medium text-text-tertiary">
+              <span className="absolute left-5 top-4 text-[11px] font-medium text-text-secondary">
                 Select these
               </span>
               <div className="p-0 gap-[150px] size-[max-content] flex flex-row flex-nowrap grid-cols-none grid-rows-none items-start justify-start box-border absolute [grid-template-areas:none] [grid-auto-flow:row] [grid-auto-columns:auto] [grid-auto-rows:auto] [align-content:start] [justify-items:start] left-1/2 -translate-x-1/2 top-[75px]">
@@ -239,10 +239,10 @@ export function YourTurnToPlay({
                   <span className="h-full flex-1 rounded-[2px] bg-text-tertiary/50" />
                   <span className="h-full flex-1 rounded-[2px] bg-text-tertiary/50" />
                 </div>
-                <div className="text-[12px] font-semibold text-text-primary">
+                <div className="text-[12px] font-semibold">
                   Row
                 </div>
-                <span className="text-[11px] text-text-tertiary">
+                <span className="text-[11px] text-text-secondary">
                   ⇧R to draw a row
                 </span>
               </LayoutOption>
@@ -252,10 +252,10 @@ export function YourTurnToPlay({
                   <span className="w-full flex-1 rounded-[2px] bg-text-tertiary/50" />
                   <span className="w-full flex-1 rounded-[2px] bg-text-tertiary/50" />
                 </div>
-                <div className="text-[12px] font-semibold text-text-primary">
+                <div className="text-[12px] font-semibold">
                   Column
                 </div>
-                <span className="text-[11px] text-text-tertiary">
+                <span className="text-[11px] text-text-secondary">
                   ⇧C to draw a column
                 </span>
               </LayoutOption>
@@ -266,17 +266,17 @@ export function YourTurnToPlay({
                   <span className="rounded-[2px] bg-text-tertiary/50" />
                   <span className="rounded-[2px] bg-text-tertiary/50" />
                 </div>
-                <div className="text-[12px] font-semibold text-text-primary">
+                <div className="text-[12px] font-semibold">
                   Grid
                 </div>
-                <span className="text-[11px] text-text-tertiary">
+                <span className="text-[11px] text-text-secondary">
                   ⇧G to draw a grid
                 </span>
               </LayoutOption>
             </div>
           </div>
         </div>
-        <span className="-mt-3 text-[14px] leading-[21px] text-text-tertiary">
+        <span className="-mt-3 text-[14px] leading-[21px] text-text-secondary">
           Then flip it to a column or change the gap in the style panel.
         </span>
       </div>
@@ -303,7 +303,7 @@ export function YourTurnToPlay({
         <div className="otv-bg-lilac overflow-hidden rounded-none p-6">
           <div data-otv-playground="" className="flex flex-col overflow-hidden">
             <div className="relative h-[220px]">
-              <span className="absolute left-5 top-4 text-[11px] font-medium text-text-tertiary">
+              <span className="absolute left-5 top-4 text-[11px] font-medium text-text-secondary">
                 Auto layout row
               </span>
               <div className="absolute left-1/2 top-[50px] flex min-w-[420px] -translate-x-1/2 flex-row gap-3.5 border border-dashed border-white/30 bg-white/[0.03] p-3.5">
@@ -330,10 +330,10 @@ export function YourTurnToPlay({
                   <span className="h-full flex-1 rounded-[2px] bg-[#CD9DFA]" />
                   <span className="h-full flex-1 rounded-[2px] bg-text-tertiary/50" />
                 </div>
-                <div className="text-[12px] font-semibold text-text-primary">
+                <div className="text-[12px] font-semibold">
                   In the flow
                 </div>
-                <span className="text-[11px] text-text-tertiary">
+                <span className="text-[11px] text-text-secondary">
                   Follows the layout
                 </span>
               </LayoutOption>
@@ -341,10 +341,10 @@ export function YourTurnToPlay({
                 <div className="relative h-[30px] w-[44px] rounded-[5px] border border-border-secondary">
                   <span className="absolute left-[18px] top-[9px] h-[14px] w-[18px] rounded-[2px] bg-[#CD9DFA]" />
                 </div>
-                <div className="text-[12px] font-semibold text-text-primary">
+                <div className="text-[12px] font-semibold">
                   Absolute
                 </div>
-                <span className="text-[11px] text-text-tertiary">
+                <span className="text-[11px] text-text-secondary">
                   Floats free
                 </span>
               </LayoutOption>

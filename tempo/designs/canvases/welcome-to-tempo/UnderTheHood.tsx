@@ -91,7 +91,7 @@ function ComponentTile({
       <div className="flex h-[72px] items-center justify-center" style={APP_ACCENT}>
         {children}
       </div>
-      <span className="font-mono text-[10px] text-text-tertiary">{file}</span>
+      <span className="font-mono text-[10px] text-text-secondary">{file}</span>
     </div>
   );
 }
@@ -104,7 +104,7 @@ function DesignSystemLesson() {
       text="This sample project comes with its own components. These are the ones its app uses: restyle one here and the app changes too. Connect your project later and yours show up the same way."
     >
       <div className="otv-bg-mint flex flex-col gap-4 rounded-none p-6">
-        <span className="text-[11px] font-medium text-text-tertiary">
+        <span className="text-[11px] font-medium text-text-secondary">
           Assets · from this project's code
         </span>
         {/* The sample app's own components, imported from where the app

@@ -1,5 +1,5 @@
 import { AsciiShape, type AsciiShapeKind } from "./_asciiShape";
-import { usePlayMode } from "./_playMode";
+import { usePlayMotion } from "./_playMode";
 
 // The lessons' shared backdrop: near-black, a sprinkle of stars in the top
 // right corner, and one ASCII solid tucked behind the content.
@@ -36,7 +36,7 @@ const STARS = (() => {
 })();
 
 export function Stars() {
-  const inPlay = usePlayMode();
+  const moving = usePlayMotion();
   return (
     <div
       aria-hidden
@@ -55,7 +55,7 @@ export function Stars() {
         >
           <span
             style={
-              inPlay
+              moving
                 ? {
                     animation: `ascii-star 4.5s ease-in-out ${star.delay}s infinite`,
                   }

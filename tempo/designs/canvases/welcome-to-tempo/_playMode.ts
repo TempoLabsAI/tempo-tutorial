@@ -44,3 +44,29 @@ export function usePlayMode() {
   }, [inPlayFrame]);
   return previewPlaying ?? (inPlayFrame && active);
 }
+
+const REDUCED_MOTION = "(prefers-reduced-motion: reduce)";
+
+/** Whether the OS asks for less motion. Follows the setting live. */
+function useReducedMotion() {
+  const [reduced, setReduced] = useState(
+    () =>
+      typeof window !== "undefined" &&
+      window.matchMedia(REDUCED_MOTION).matches,
+  );
+  useEffect(() => {
+    const query = window.matchMedia(REDUCED_MOTION);
+    const update = () => setReduced(query.matches);
+    update();
+    query.addEventListener("change", update);
+    return () => query.removeEventListener("change", update);
+  }, []);
+  return reduced;
+}
+
+/** Whether to animate: in Play, unless the OS asks for reduced motion. */
+export function usePlayMotion() {
+  const inPlay = usePlayMode();
+  const reduced = useReducedMotion();
+  return inPlay && !reduced;
+}

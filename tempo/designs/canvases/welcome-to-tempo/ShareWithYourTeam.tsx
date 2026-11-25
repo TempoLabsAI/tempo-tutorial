@@ -168,7 +168,7 @@ export function ShareWithYourTeam({
       className="relative isolate flex w-[1014px] flex-col gap-12 overflow-hidden rounded-[10px] border border-border-primary bg-[#050508] px-14 pb-14 pt-[88px] font-sans text-text-primary"
     >
       <TutorialStyles />
-      <LessonBackdrop shape="link" x={70} y={905} size={420} opacity={0.45} />
+      <LessonBackdrop shape="link" x={70} y={950} size={420} opacity={0.45} />
       <StepLabel>04 / 05 · Share</StepLabel>
       <div className="flex flex-col gap-3">
         <h2 className="text-[40px] leading-[46px] font-semibold tracking-[-0.025em]">

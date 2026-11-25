@@ -1,10 +1,11 @@
 import { type CSSProperties, useEffect, useRef } from "react";
-import { usePlayMode } from "./_playMode";
+import { usePlayMotion } from "./_playMode";
 
 // A small solid drawn in ASCII, in the same hand as the intro's planet: the
 // lit side is written in code, the shadow side thins out to punctuation. It
 // holds still at rest. In Play it turns, and the cursor clears a hole in it
-// with a ring of scattered code glyphs, as on the planet.
+// with a ring of scattered code glyphs, as on the planet. With reduced motion
+// on, it stays still in Play too.
 
 export type AsciiShapeKind = "frame" | "torus" | "link" | "planet" | "orbits";
 
@@ -92,7 +93,7 @@ export function AsciiShape({
   className?: string;
   style?: CSSProperties;
 }) {
-  const inPlay = usePlayMode();
+  const moving = usePlayMotion();
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
   useEffect(() => {
@@ -210,7 +211,7 @@ export function AsciiShape({
     };
 
     let angle = 0.7;
-    if (!inPlay) {
+    if (!moving) {
       draw(angle);
       return;
     }
@@ -245,7 +246,7 @@ export function AsciiShape({
       cancelAnimationFrame(raf);
       window.removeEventListener("pointermove", onMove);
     };
-  }, [inPlay, shape, width, height]);
+  }, [moving, shape, width, height]);
 
   return (
     <canvas
